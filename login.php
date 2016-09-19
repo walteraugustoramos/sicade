@@ -14,7 +14,7 @@
                   </center>
                 </div>
                 <?php
-                unset($_SESSION['msg']['error']);
+                  session_unset();
                 }
                 ?>
 
