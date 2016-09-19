@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-4 col-md-offset-4" style="margin-top:15em;">      
-          <form action="#" method="post" class="form-signin" data-toggle="validator">
+          <form action="controller/login.php" method="post" class="form-signin" data-toggle="validator">
             
             <?php
               if(!empty($_SESSION['msg']['error'])){?>
