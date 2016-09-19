@@ -18,6 +18,32 @@
     <![endif]-->
   </head>
   <body>
+    <nav class="navbar navbar-inverse">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+        <span>SICADE</span>
+      </a>
+      </div><!--navbar-header-->
+    
+      <!--Inicio Menu-->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="index.php">Home</a></li>
+                <li><a href="#">Login</a></li>
+              </ul><!--ul-->
+            </div><!--navbar-collapse-->
+          </div><!--col-md-12-->
+        </div><!--row-->
+      </div><!--container-fluid-->    
+    </nav><!--navbar-->
     <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
