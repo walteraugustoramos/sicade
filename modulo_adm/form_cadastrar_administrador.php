@@ -61,21 +61,16 @@
 				</div><!--row < form-->
 
 				<div class="row">
-					<div class="col-md-2 form-group has-feedback">
+					<div class="col-md-3 form-group has-feedback">
 						<label for="estado">Estado: </label>
-						<select name="estado" id="estado" class="form-control" required="true" data-error="Selecione um estado.">
-							<option value="">Minas Gerais</option>
-						</select>
+						<select name="estado" id="estado" class="form-control" required="true" data-error="Selecione um estado."></select>
 						<span class="glyphicon form-control-feedback"></span>
 						<small class="help-block with-errors">Ex: Minas Gerais</small>
 					</div>
 
 					<div class="col-md-3 form-group has-feedback">
 						<label for="cidade">Cidade: </label>
-						<select name="cidade" id="cidade" class="form-control" required="true" data-error="Selecione uma cidade.">
-							<option value="">Ouro Verde de Minas</option>
-							<option value="">Frei Gaspar</option>
-						</select>
+						<select name="cidade" id="cidade" class="form-control" required="true" data-error="Selecione uma cidade."></select>
 						<span class="glyphicon form-control-feedback"></span>
 						<small class="help-block with-errors">Ex: Ouro Verde de Minas</small>
 					</div>
