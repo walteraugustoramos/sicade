@@ -9,6 +9,8 @@
         estado: document.getElementById('estado')
       })
     </script>
+    <!-- Script para Criar Mascara para campos do formulário-->
+    <script type="text/javascript" src="js/cria-mascara.js"></script>
     <!--Inclui os arquivos javascript do bootstrap-validator para validação de formularios-->
     <script src="../bootstrap-validator-master/js/validator.js"></script>
   </body>

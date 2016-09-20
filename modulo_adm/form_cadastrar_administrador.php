@@ -17,14 +17,14 @@
 
 					<div class="col-md-2 form-group has-feedback">
 						<label for="cpf">Cpf: </label>
-						<input type="text" name="cpf" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo.">
+						<input type="text" name="cpf" id="cpf" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onkeyup="criaMascara(this, '###.###.###-##');" maxlength="14">
 						<span class="glyphicon form-control-feedback"></span>
 						<small class="help-block with-errors">Ex: 123.456.789-81</small>
 					</div>
 
 					<div class="col-md-3 form-group has-feedback">
 						<label for="email">E-mail: </label>
-						<input type="email" name="email" class="form-control" required="true" placeholder="Seu melhor email" data-error="Preencha este campo.">
+						<input type="email" name="email" class="form-control" required="true" placeholder="Seu melhor email" data-error="Preencha este campo." pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
 						<span class="glyphicon form-control-feedback"></span>
 						<small class="help-block with-errors">Ex: jonsnow@westeros.com</small>
 					</div>
@@ -54,7 +54,7 @@
 
 					<div class="col-md-2 form-group has-feedback">
 						<label for="celular">Celular: </label>
-						<input type="text" name="celular" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo.">
+						<input type="tel" name="celular" class="form-control" required="true" placeholder="Somente numeros" pattern=".{14,14}" data-error="Preencha este campo." onkeyup="criaMascara(this, '(##)#####-####');">
 						<span class="glyphicon form-control-feedback"></span>
 						<small class="help-block with-errors">Ex: (33)988850155</small>
 					</div>
@@ -86,7 +86,14 @@
 
 					<div class="col-md-2 form-group has-feedback">
 						<label for="password">Senha: </label>
-						<input type="password" name="password" class="form-control" required="true" data-error="Preencha este campo.">
+						<input type="password" id="password" name="password" class="form-control" required="true" data-minlength="8" data-error="Sua senha deve ter no minimo 8 caracteres">
+						<span class="glyphicon form-control-feedback"></span>
+						<small class="help-block with-errors"></small>
+					</div>
+
+					<div class="col-md-2 form-group has-feedback">
+						<label for="repeat-password">Repetir senha: </label>
+						<input type="password" id="repeat-password" name="repeat-password" data-match="#password" class="form-control" required="true" data-error="Senhas devem ser iguais.">
 						<span class="glyphicon form-control-feedback"></span>
 						<small class="help-block with-errors"></small>
 					</div>
