@@ -46,7 +46,7 @@
           			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrador <span class="caret"></span></a>
           			<!--dropdown administrador-->
           			<ul class="dropdown-menu">
-            			<li><a href="#">Cadastrar</a></li>
+            			<li><a href="form_cadastrar_administrador.php">Cadastrar</a></li>
             			<li><a href="#">Pesquisar</a></li>
           			</ul><!--dropdown administrador-->
         		</li><!--dropdown-->
