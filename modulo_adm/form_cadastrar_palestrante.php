@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<form action="controller/index.php" method="post" data-toggle="validator">
-				<input type="hidden" name="nivel" value="0">
+				<input type="hidden" name="nivel" value="1">
 				<div class="row">
 					<div class="col-md-3 form-group has-feedback">
 						<label for="name">Nome: </label>

@@ -6,6 +6,8 @@
 		// verifico a permissão do usuario e redireciono para o modulo especifico
 		if($_SESSION['user']['nivel'] == '0'){
 			header('Location:../modulo_adm/index.php');
+		}else if($_SESSION['user']['nivel'] == '1'){
+			echo "Logou como Palestrante";
 		}
 	}else{
 		$_SESSION['msg']['error'] = 'Faça Login';
