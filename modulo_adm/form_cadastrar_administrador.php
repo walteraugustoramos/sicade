@@ -6,7 +6,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<form action="#" method="post" data-toggle="validator">
+			<form action="controller/index.php" method="post" data-toggle="validator">
 				<div class="row">
 					<div class="col-md-3 form-group has-feedback">
 						<label for="name">Nome: </label>
@@ -47,7 +47,7 @@
 
 					<div class="col-md-1 form-group has-feedback">
 						<label for="numero">N°</label>
-						<input type="number" name="numero" class="form-control" required="true" placeholder="0">
+						<input type="number" name="numero" min="1" class="form-control" required="true" placeholder="0">
 						<span class="glyphicon form-control-feedback"></span>
 						<small class="help-block with-errors">Ex: 42</small>
 					</div>
