@@ -11,13 +11,12 @@
 
  		$PDO = connection();
 
- 		$sql = 'SELECT *FROM users WHERE user_name = :user_name AND password = :password';
+ 		$sql = 'SELECT *FROM users WHERE user_name = :user_name';
 
  		$statement = $PDO->prepare($sql);
 
  		$statement->bindValue(':user_name',$user_name);
- 		$statement->bindValue(':password',$password);
-
+ 		
  		// executa consulta no banco de dados
  		$statement->execute();
 
@@ -26,12 +25,17 @@
  			// recupera os dados da consulta
  			$user_dados = $statement->fetch(pdo::FETCH_ASSOC);
 
- 			// monta a sessão com os dados do usuario
- 			$_SESSION['user']['id'] = $user_dados['id_user'];
- 			$_SESSION['user']['name'] = $user_dados['user_name'];
- 			$_SESSION['user']['password'] = $user_dados['password'];
- 			$_SESSION['user']['nivel'] = $user_dados['nivel'];
- 			header('Location:index.php');
+ 			if(password_verify($password, $user_dados['password'])){
+ 				// monta a sessão com os dados do usuario
+	 			$_SESSION['user']['id'] = $user_dados['id_user'];
+	 			$_SESSION['user']['name'] = $user_dados['user_name'];
+	 			$_SESSION['user']['password'] = $user_dados['password'];
+	 			$_SESSION['user']['nivel'] = $user_dados['nivel'];
+	 			header('Location:index.php');
+ 			}else{
+ 				$_SESSION['msg']['error'] = 'Usuario ou Senha Incorretos';
+ 				header('Location:../login.php');
+ 			}
  		}else{
  			$_SESSION['msg']['error'] = 'Usuario ou Senha Incorretos';
  			header('Location:../login.php');
