@@ -7,6 +7,8 @@
 	include 'PalestranteDAO.class.php';
 	include '../model/Curso.class.php';
 	include 'CursoDAO.class.php';
+	include '../model/Visitante.class.php';
+	include 'VisitanteDAO.class.php';
 
 	// verifico se existe sessao para o usuario, se não existir sessão redireciono para pagina de login
 	if(empty($_SESSION) && isset($_SESSION)){
@@ -99,5 +101,35 @@
 			$_SESSION['msg']['error'] = "Erro ao Cadastrar Curso!!!";
 			header("Location:../index.php");
 			}
+	}else if($_POST['action'] == 'cadastrar_visitante'){
+		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
+			$_SESSION['msg']['error'] = 'Preencha todos os campos.';
+			header('Location:../form_cadastrar_visitante.php');
+		}else{// todos os campos do formulario preenchidos executa o else
+			foreach ($_POST as $key => $value) {
+				$$key = $value;
+			}
+
+			$visitante = new Visitante();
+			$visitanteDAO = new VisitanteDAO();
+			$user_login = new UserLogin();
+
+			$visitante->setName($name);
+			$visitante->setCpf($cpf);
+			$visitante->setEmail($email);
+			$visitante->setCelular($celular);
+
+			$user_login->setName($user_name);
+			$user_login->setPassword($password);
+			$user_login->setNivel('3');	
+
+			if($visitanteDAO->cadastrarVisitante($visitante,$user_login)){
+				$_SESSION['msg']['success'] = "Visitante Cadastrado com Sucesso!!!";
+				header("Location:../index.php");
+			}else{
+				$_SESSION['msg']['error'] = "Erro ao Cadastrar Visitante!!!";
+				header("Location:../index.php");
+			}
+		}	
 	}
  ?>

@@ -84,7 +84,7 @@
           			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Visitante <span class="caret"></span></a>
           			<!--dropdown visitante-->
           			<ul class="dropdown-menu">
-            			<li><a href="#">Cadastrar</a></li>
+            			<li><a href="form_cadastrar_visitante.php">Cadastrar</a></li>
             			<li><a href="#">Pesquisar</a></li>
           			</ul><!--dropdown visitante-->
         		</li><!--dropdown-->
