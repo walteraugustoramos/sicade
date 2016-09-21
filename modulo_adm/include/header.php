@@ -40,7 +40,7 @@
       <!--Inicio Menu-->
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-8 col-md-offset-2">
+          <div class="col-md-10 col-md-offset-2">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Home</a></li>
@@ -61,6 +61,15 @@
             			<li><a href="#">Pesquisar</a></li>
           			</ul><!--dropdown palestrante-->
         		</li><!--dropdown-->
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Curso <span class="caret"></span></a>
+                <!--dropdown curso-->
+                <ul class="dropdown-menu">
+                  <li><a href="form_cadastrar_curso.php">Cadastrar</a></li>
+                  <li><a href="#">Pesquisar</a></li>
+                </ul><!--dropdown curso-->
+            </li><!--dropdown-->
 
         		<li class="dropdown">
           			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aluno <span class="caret"></span></a>

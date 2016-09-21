@@ -5,12 +5,14 @@
 	include '../../model/UserLogin.class.php';
 	include '../model/Palestrante.class.php';
 	include 'PalestranteDAO.class.php';
-	
+	include '../model/Curso.class.php';
+	include 'CursoDAO.class.php';
+
 	// verifico se existe sessao para o usuario, se não existir sessão redireciono para pagina de login
 	if(empty($_SESSION) && isset($_SESSION)){
 		$_SESSION['msg']['error'] = 'Faça Login';
 		header('Location:../login.php');
-	}else if($_POST['nivel'] == 0){
+	}else if($_POST['action'] == 'cadastrar_administrador'){
 		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
 			$_SESSION['msg']['error'] = 'Preencha todos os campos.';
 			header('Location:../form_cadastrar_administrador.php');
@@ -45,7 +47,7 @@
 				header("Location:../index.php");
 			}
 		}	
-	}else if($_POST['nivel'] == 1){
+	}else if($_POST['action'] == 'cadastrar_palestrante'){
 		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
 			$_SESSION['msg']['error'] = 'Preencha todos os campos.';
 			header('Location:../form_cadastrar_palestrante.php');
@@ -80,5 +82,22 @@
 				header("Location:../index.php");
 			}
 		}	
+	}else if($_POST['action'] == 'cadastrar_curso'){
+		foreach ($_POST as $key => $value) {
+				$$key = $value;
+			}
+
+		$curso = new Curso();
+		$cursoDAO = new CursoDAO();
+
+		$curso->setName($nome_curso);
+
+		if($cursoDAO->cadastrarCurso($curso)){
+			$_SESSION['msg']['success'] = "Curso Cadastrado com Sucesso!!!";
+			header("Location:../index.php");
+		}else{
+			$_SESSION['msg']['error'] = "Erro ao Cadastrar Curso!!!";
+			header("Location:../index.php");
+			}
 	}
  ?>
