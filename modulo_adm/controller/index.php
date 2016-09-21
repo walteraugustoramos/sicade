@@ -1,5 +1,6 @@
 <?php 
 	session_start();
+	include '../../include/config.php';
 	include '../model/Administrador.class.php';
 	include 'AdministradorDAO.class.php';
 	include '../../model/UserLogin.class.php';
@@ -9,6 +10,8 @@
 	include 'CursoDAO.class.php';
 	include '../model/Visitante.class.php';
 	include 'VisitanteDAO.class.php';
+	include '../model/Aluno.class.php';
+	include 'AlunoDAO.class.php';
 
 	// verifico se existe sessao para o usuario, se não existir sessão redireciono para pagina de login
 	if(empty($_SESSION) && isset($_SESSION)){
@@ -128,6 +131,42 @@
 				header("Location:../index.php");
 			}else{
 				$_SESSION['msg']['error'] = "Erro ao Cadastrar Visitante!!!";
+				header("Location:../index.php");
+			}
+		}	
+	}else if($_POST['action'] == 'cadastrar_aluno'){
+		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
+			$_SESSION['msg']['error'] = 'Preencha todos os campos.';
+			header('Location:../form_cadastrar_aluno.php');
+		}else{// todos os campos do formulario preenchidos executa o else
+			foreach ($_POST as $key => $value) {
+				$$key = $value;
+			}
+
+			$aluno = new Aluno();
+			$alunoDAO = new AlunoDAO();
+			$user_login = new UserLogin();
+
+			$aluno->setName($name);
+			$aluno->setCpf($cpf);
+			$aluno->setEmail($email);
+			$aluno->setEndereco($endereco);
+			$aluno->setNumero($numero);
+			$aluno->setBairro($bairro);
+			$aluno->setEstado($estado);
+			$aluno->setCidade($cidade);
+			$aluno->setCelular($celular);
+			$aluno->setPeriodo($periodo);
+
+			$user_login->setName($user_name);
+			$user_login->setPassword($password);
+			$user_login->setNivel('2');	
+
+			if($alunoDAO->cadastrarAluno($aluno,$user_login,$curso)){
+				$_SESSION['msg']['success'] = "Aluno Cadastrado com Sucesso!!!";
+				header("Location:../index.php");
+			}else{
+				$_SESSION['msg']['error'] = "Erro ao Cadastrar Aluno!!!";
 				header("Location:../index.php");
 			}
 		}	

@@ -1,6 +1,4 @@
 <?php
-	// inclue o arquivo que contem as configurações de conexão com banco de dados
-	include '../../include/config.php';
 
 	class AdministradorDAO{
 

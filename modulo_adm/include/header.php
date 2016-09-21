@@ -75,7 +75,7 @@
           			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aluno <span class="caret"></span></a>
           			<!--dropdown aluno-->
           			<ul class="dropdown-menu">
-            			<li><a href="#">Cadastrar</a></li>
+            			<li><a href="form_cadastrar_aluno.php">Cadastrar</a></li>
             			<li><a href="#">Pesquisar</a></li>
           			</ul><!--dropdown aluno-->
         		</li><!--dropdown-->
