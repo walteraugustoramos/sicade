@@ -47,5 +47,37 @@
 				$PDO->rollBack();
 			}
 		}
+
+		public function editarVisitante($visitante){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE visitante SET nome = :nome, email = :email, celular = :celular WHERE id_visitante = :id_visitante";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':nome', $visitante->getName());
+				$statement->bindValue(':email', $visitante->getEmail());
+				$statement->bindValue(':celular', $visitante->getCelular());
+				$statement->bindValue(':id_visitante', $visitante->getId());
+				
+				$update_visitante = $statement->execute();
+
+				if($update_visitante){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+
+			}catch(pdoexception $e){
+				echo 'Falha ao editar dados do visitante: '.$e->getMessage();
+				$PDO->rollBack();
+			}
+		}
 	}
  ?>

@@ -8,8 +8,8 @@
 	include 'PalestranteDAO.class.php';
 	include '../model/Curso.class.php';
 	include 'CursoDAO.class.php';
-	include '../model/Visitante.class.php';
-	include 'VisitanteDAO.class.php';
+	include '../../model/Visitante.class.php';
+	include '../../controller/VisitanteDAO.class.php';
 	include '../model/Aluno.class.php';
 	include 'AlunoDAO.class.php';
 	include '../model/Evento.class.php';

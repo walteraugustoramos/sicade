@@ -8,6 +8,10 @@
 			header('Location:../modulo_adm/index.php');
 		}else if($_SESSION['user']['nivel'] == '1'){
 			echo "Logou como Palestrante";
+		}else if($_SESSION['user']['nivel'] == '2'){
+			echo "Logou como Aluno";
+		}else if($_SESSION['user']['nivel'] == '3'){
+			header('Location:../modulo_visitante/index.php');
 		}
 	}else{
 		$_SESSION['msg']['error'] = 'Faça Login';
