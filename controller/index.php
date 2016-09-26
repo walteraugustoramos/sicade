@@ -7,7 +7,7 @@
 		if($_SESSION['user']['nivel'] == '0'){
 			header('Location:../modulo_adm/index.php');
 		}else if($_SESSION['user']['nivel'] == '1'){
-			echo "Logou como Palestrante";
+			header('Location:../modulo_palestrante/index.php');
 		}else if($_SESSION['user']['nivel'] == '2'){
 			echo "Logou como Aluno";
 		}else if($_SESSION['user']['nivel'] == '3'){

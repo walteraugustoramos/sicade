@@ -4,8 +4,8 @@
 	include '../model/Administrador.class.php';
 	include 'AdministradorDAO.class.php';
 	include '../../model/UserLogin.class.php';
-	include '../model/Palestrante.class.php';
-	include 'PalestranteDAO.class.php';
+	include '../../model/Palestrante.class.php';
+	include '../../controller/PalestranteDAO.class.php';
 	include '../model/Curso.class.php';
 	include 'CursoDAO.class.php';
 	include '../../model/Visitante.class.php';

@@ -50,7 +50,44 @@
 				}
 
 			}catch(pdoexception $e){
-				return 'Falha ao cadastrar usuário: '.$e->getMessage();
+				echo 'Falha ao cadastrar usuário: '.$e->getMessage();
+				$PDO->rollBack();
+			}
+		}
+
+		public function editarPalestrante($palestrante){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE palestrante SET nome = :nome, email = :email, endereco = :endereco, numero = :numero, bairro = :bairro, estado = :estado, cidade = :cidade, celular = :celular WHERE id_palestrante = :id_palestrante";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':nome', $palestrante->getName());
+				$statement->bindValue('email', $palestrante->getEmail());
+				$statement->bindValue('endereco', $palestrante->getEndereco());
+				$statement->bindValue('numero', $palestrante->getNumero());
+				$statement->bindValue('bairro', $palestrante->getBairro());
+				$statement->bindValue('estado', $palestrante->getEstado());
+				$statement->bindValue('cidade', $palestrante->getCidade());
+				$statement->bindValue('celular', $palestrante->getCelular());
+				$statement->bindValue('id_palestrante', $palestrante->getId());
+				
+				$update_palestrante = $statement->execute();
+
+				if($update_palestrante){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+
+			}catch(pdoexception $e){
+				echo 'Falha ao editar usuário: '.$e->getMessage();
 				$PDO->rollBack();
 			}
 		}

@@ -1,4 +1,4 @@
-<!--Inclusão do menu principal do administrador-->
+<!--Inclusão do menu principal do visitante-->
 <?php
   include 'include/header.php';
   include '../include/config.php';
