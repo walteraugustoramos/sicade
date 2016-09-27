@@ -3,7 +3,12 @@
 ?>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-4 col-md-offset-4" style="margin-top:15em;">      
+        <div class="col-md-2 col-md-offset-5 col-xs-6 col-xs-offset-3 col-sm-5">
+          <img src="img/logo_sicade.jpg" alt="" class="img-responsive img-rounded">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">      
           <form action="controller/login.php" method="post" class="form-signin" data-toggle="validator">
             
             <?php
@@ -16,7 +21,6 @@
                   session_unset();
                 }
                 ?>
-
             <div class="form-group has-feedback">
               <label for="user_name">Usuario: </label>
               <input type="text" name="user_name" class="form-control" autofocus="true" required="true" placeholder="Username" data-error="Digite seu usuario">
