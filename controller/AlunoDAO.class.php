@@ -54,5 +54,44 @@
 				$PDO->rollBack();
 			}
 		}
+
+		public function editarAluno($aluno,$curso){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE aluno SET nome = :nome, email = :email, endereco = :endereco, numero = :numero, bairro = :bairro, estado = :estado, cidade = :cidade, celular = :celular, periodo = :periodo, curso_id_curso = :id_curso WHERE id_aluno = :id_aluno";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':nome', $aluno->getName());
+				$statement->bindValue(':email', $aluno->getEmail());
+				$statement->bindValue(':endereco', $aluno->getEndereco());
+				$statement->bindValue(':numero', $aluno->getNumero());
+				$statement->bindValue(':bairro', $aluno->getBairro());
+				$statement->bindValue(':estado', $aluno->getEstado());
+				$statement->bindValue(':cidade', $aluno->getCidade());
+				$statement->bindValue(':celular', $aluno->getCelular());
+				$statement->bindValue(':periodo', $aluno->getPeriodo());
+				$statement->bindValue(':id_curso', $curso);
+				$statement->bindValue(':id_aluno', $aluno->getId());
+				
+				$update_aluno = $statement->execute();
+
+				if($update_aluno){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+
+			}catch(pdoexception $e){
+				echo 'Falha ao editar usuário: '.$e->getMessage();
+				$PDO->rollBack();
+			}
+		}
 	}
  ?>

@@ -9,7 +9,7 @@
 		}else if($_SESSION['user']['nivel'] == '1'){
 			header('Location:../modulo_palestrante/index.php');
 		}else if($_SESSION['user']['nivel'] == '2'){
-			echo "Logou como Aluno";
+			header('Location:../modulo_aluno/index.php');
 		}else if($_SESSION['user']['nivel'] == '3'){
 			header('Location:../modulo_visitante/index.php');
 		}

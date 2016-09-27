@@ -6,12 +6,12 @@
 	include '../../model/UserLogin.class.php';
 	include '../../model/Palestrante.class.php';
 	include '../../controller/PalestranteDAO.class.php';
-	include '../model/Curso.class.php';
-	include 'CursoDAO.class.php';
+	include '../../model/Curso.class.php';
+	include '../../controller/CursoDAO.class.php';
 	include '../../model/Visitante.class.php';
 	include '../../controller/VisitanteDAO.class.php';
-	include '../model/Aluno.class.php';
-	include 'AlunoDAO.class.php';
+	include '../../model/Aluno.class.php';
+	include '../../controller/AlunoDAO.class.php';
 	include '../model/Evento.class.php';
 	include 'EventoDAO.class.php';
 
