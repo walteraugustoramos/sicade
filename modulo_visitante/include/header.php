@@ -1,10 +1,10 @@
 <?php 
 	session_start();
-	// verifico se existe sessao para o usuario, se não existir sessão redireciono para pagina de login
-	if(empty($_SESSION) && isset($_SESSION)){
-		$_SESSION['msg']['error'] = 'Faça Login';
-		header('Location:../login.php');
-	}	
+  // verifico se existe sessao para o usuario, se não existir sessão redireciono para pagina de login
+  if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){
+    $_SESSION['msg']['error'] = 'Faça Login';
+    header('Location:../login.php');
+  }	
  ?>
 <!DOCTYPE html>
 <html lang="pt-br">

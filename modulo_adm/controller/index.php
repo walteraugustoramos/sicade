@@ -1,5 +1,8 @@
 <?php 
 	session_start();
+
+	var_dump($_SESSION);
+
 	include '../../include/config.php';
 	include '../model/Administrador.class.php';
 	include 'AdministradorDAO.class.php';
@@ -15,10 +18,10 @@
 	include '../model/Evento.class.php';
 	include 'EventoDAO.class.php';
 
-	// verifico se existe sessao para o usuario, se não existir sessão redireciono para pagina de login
-	if(empty($_SESSION) && isset($_SESSION)){
+	// verifico se existe sessão para o usuario, caso não exista redireciono para a pagina de login
+	if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){
 		$_SESSION['msg']['error'] = 'Faça Login';
-		header('Location:../login.php');
+    	header('Location:../../login.php');
 	}else if($_POST['action'] == 'cadastrar_administrador'){
 		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
 			$_SESSION['msg']['error'] = 'Preencha todos os campos.';

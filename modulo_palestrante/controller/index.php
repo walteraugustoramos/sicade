@@ -7,10 +7,10 @@
 	include '../../model/UserLogin.class.php';
 	include '../../controller/UserLoginDAO.class.php';
 
-	// verifico se existe sessão para o usuario, se não existir sessão redireciono para a pagina de login
-	if(empty($_SESSION) && isset($_SESSION)){
+	// verifico se existe sessão para o usuario, caso não exista redireciono para a pagina de login
+	if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){
 		$_SESSION['msg']['error'] = 'Faça Login';
-		header('../../login.php');
+    	header('Location:../../login.php');
 	}else if($_POST['action'] == 'editar_palestrante'){
 		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
 			$_SESSION['msg']['error'] = 'Preencha todos os campos';

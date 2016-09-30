@@ -18,7 +18,7 @@
                   </center>
                 </div>
                 <?php
-                  session_unset();
+                  unset($_SESSION['msg']['error']);
                 }
                 ?>
             <div class="form-group has-feedback">
