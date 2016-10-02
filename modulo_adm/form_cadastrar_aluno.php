@@ -72,7 +72,7 @@
 
 					<div class="col-md-1 form-group">
 				      <label for="periodo">Periodo: </label>
-				      <select class="form-control" name="periodo" class="form-control" required="true">
+				      <select class="form-control" name="periodo" required="true">
 				        <option value="1">1°</option>
 				        <option value="2">2°</option>
 				        <option value="3">3°</option>
