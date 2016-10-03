@@ -7,6 +7,8 @@
 	include 'UserLoginDAO.class.php';
 	include '../model/Aluno.class.php';
 	include 'AlunoDAO.class.php';
+	include '../model/Palestrante.class.php';
+	include 'PalestranteDAO.class.php';
 
 	// verifico se existe sessão para o usuario, se não existir redireciono para pagina de login com uma mensagem de error
 	if(!empty($_SESSION['user']['name']) && !empty($_SESSION['user']['password'])){
@@ -86,8 +88,42 @@
 				header('Location:../login.php');
 			}
 		}	
-	}
-	else{
+	}else if($_POST['action'] == 'cadastrar_palestrante'){
+		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
+			$_SESSION['msg']['error'] = 'Preencha todos os campos.';
+			header('Location:../login.php');
+		}else{// todos os campos do formulario preenchidos executa o else
+			foreach ($_POST as $key => $value) {
+				$$key = $value;
+			}
+
+			$palestrante = new Palestrante();
+			$palestranteDAO = new PalestranteDAO();
+			$user_login = new UserLogin();
+			$user_loginDAO = new UserLoginDAO();
+
+			$palestrante->setName($name);
+			$palestrante->setCpf($cpf);
+			$palestrante->setEmail($email);
+			$palestrante->setEndereco($endereco);
+			$palestrante->setNumero($numero);
+			$palestrante->setBairro($bairro);
+			$palestrante->setEstado($estado);
+			$palestrante->setCidade($cidade);
+			$palestrante->setCelular($celular);
+
+			$user_login->setName($user_name);
+			$user_login->setPassword($password);
+			$user_login->setNivel('1');	
+
+			if($palestranteDAO->cadastrarPalestrante($palestrante,$user_login)){
+				$user_loginDAO->Login($user_login->getName(),$user_login->getPassword());
+			}else{
+				$_SESSION['msg']['error'] = "Erro ao Cadastrar Palestrante!!!";
+				header('Location:../login.php');
+			}
+		}	
+	}else{
 		$_SESSION['msg']['error'] = 'Faça Login';
 		header('Location:../login.php');
 	}

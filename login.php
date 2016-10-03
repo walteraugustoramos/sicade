@@ -287,7 +287,7 @@
           
           <!--BEGIN FORM CADASTRO DE PALESTRANTE-->
           <div class="tab-pane" id="form_palestrante">
-            <form action="#" method="post" data-toggle="validator">
+            <form action="controller/index.php" method="post" data-toggle="validator">
               <input type="hidden" name="action" value="cadastrar_palestrante" >
               <div class="row">
                 <div class="col-md-4 form-group has-feedback">
