@@ -61,7 +61,7 @@
         <div class="tab-content">
           <!--BEGIN FORM CADASTRO DE ALUNO-->
           <div class="tab-pane active" id="form_aluno">
-            <form action="#" method="post" data-toggle="validator">
+            <form action="controller/index.php" method="post" data-toggle="validator">
               <input type="hidden" name="action" value="cadastrar_aluno">
               <div class="row">
                 <div class="col-md-4 form-group has-feedback">
@@ -193,14 +193,14 @@
 
                 <div class="col-md-3 form-group has-feedback">
                   <label for="password">Senha: </label>
-                  <input type="password" id="" name="password" class="form-control" required="true" data-minlength="8" data-error="Sua senha deve ter no minimo 8 caracteres">
+                  <input type="password" id="password_aluno" name="password" class="form-control" required="true" data-minlength="8" data-error="Sua senha deve ter no minimo 8 caracteres">
                   <span class="glyphicon form-control-feedback"></span>
                   <small class="help-block with-errors"></small>
                 </div>
 
                 <div class="col-md-3 form-group has-feedback">
                   <label for="repeat-password">Repetir senha: </label>
-                  <input type="password" id="repeat-password" name="repeat-password" data-match="" class="form-control" required="true" data-error="Senhas devem ser iguais.">
+                  <input type="password" id="repeat-password" name="repeat-password" data-match="#password_aluno" class="form-control" required="true" data-error="Senhas devem ser iguais.">
                   <span class="glyphicon form-control-feedback"></span>
                   <small class="help-block with-errors"></small>
                 </div>
@@ -262,14 +262,14 @@
 
                 <div class="col-md-3 form-group has-feedback">
                   <label for="password">Senha: </label>
-                  <input type="password" id="password" name="password" class="form-control" required="true" data-minlength="8" data-error="Sua senha deve ter no minimo 8 caracteres">
+                  <input type="password" id="password_visitante" name="password" class="form-control" required="true" data-minlength="8" data-error="Sua senha deve ter no minimo 8 caracteres">
                   <span class="glyphicon form-control-feedback"></span>
                   <small class="help-block with-errors"></small>
                 </div>
 
                 <div class="col-md-3 form-group has-feedback">
                   <label for="repeat-password">Repetir senha: </label>
-                  <input type="password" id="repeat-password" name="repeat-password" data-match="#password" class="form-control" required="true" data-error="Senhas devem ser iguais.">
+                  <input type="password" id="repeat-password" name="repeat-password" data-match="#password_visitante" class="form-control" required="true" data-error="Senhas devem ser iguais.">
                   <span class="glyphicon form-control-feedback"></span>
                   <small class="help-block with-errors"></small>
                 </div>
@@ -368,14 +368,14 @@
 
                 <div class="col-md-3 form-group has-feedback">
                   <label for="password">Senha: </label>
-                  <input type="password" id="" name="password" class="form-control" required="true" data-minlength="8" data-error="Sua senha deve ter no minimo 8 caracteres">
+                  <input type="password" id="password_palestrante" name="password" class="form-control" required="true" data-minlength="8" data-error="Sua senha deve ter no minimo 8 caracteres">
                   <span class="glyphicon form-control-feedback"></span>
                   <small class="help-block with-errors"></small>
                 </div>
 
                 <div class="col-md-3 form-group has-feedback">
                   <label for="repeat-password">Repetir senha: </label>
-                  <input type="password" id="repeat-password" name="repeat-password" data-match="" class="form-control" required="true" data-error="Senhas devem ser iguais.">
+                  <input type="password" id="repeat-password" name="repeat-password" data-match="#password_palestrante" class="form-control" required="true" data-error="Senhas devem ser iguais.">
                   <span class="glyphicon form-control-feedback"></span>
                   <small class="help-block with-errors"></small>
                 </div>
