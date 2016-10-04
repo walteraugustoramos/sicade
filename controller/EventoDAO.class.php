@@ -25,7 +25,6 @@
 				$statement->bindValue(':carga_horaria',$evento->getCargaHoraria());
 
 				$insert_evento = $statement->execute();
-
 				
 				// recupera o ultimo id do evento inserido
 				$lastId = $PDO->lastInsertId();
@@ -39,30 +38,7 @@
 
 				$insert_palestrante_has_evento = $statement->execute();
 				
-				// execulta um consulta no banco de dados e recupera o id do funcionario
-				$sql = "SELECT *FROM funcionario WHERE users_id_user = :user_id";
-
-				$statement = $PDO->prepare($sql);
-
-				$statement->bindValue(':user_id',$user_id);
-
-				$select_funcionario_id_administrador = $statement->execute();
-
-				if($statement->rowCount() != 0){
-					$funcionario_dados = $statement->fetch(pdo::FETCH_ASSOC);
-					$funcionario_id = $funcionario_dados['id_administrador'];
-				}
-
-				$sql = "INSERT INTO funcionario_has_evento(funcionario_id_administrador, evento_id_evento)VALUES(:funcionario_id_administrador, :evento_id_evento)";
-
-				$statement = $PDO->prepare($sql);
-
-				$statement->bindValue(':funcionario_id_administrador',$funcionario_id);
-				$statement->bindValue(':evento_id_evento',$lastId);
-
-				$insert_funcionario_id_administrador = $statement->execute();
-				
-				if($insert_evento && $insert_palestrante_has_evento && $select_funcionario_id_administrador && $insert_funcionario_id_administrador){
+				if($insert_evento && $insert_palestrante_has_evento){
 					$PDO->commit();
 					return true;
 				}else{

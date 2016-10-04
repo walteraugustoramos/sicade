@@ -15,8 +15,8 @@
 	include '../../controller/VisitanteDAO.class.php';
 	include '../../model/Aluno.class.php';
 	include '../../controller/AlunoDAO.class.php';
-	include '../model/Evento.class.php';
-	include 'EventoDAO.class.php';
+	include '../../model/Evento.class.php';
+	include '../../controller/EventoDAO.class.php';
 
 	// verifico se existe sessão para o usuario, caso não exista redireciono para a pagina de login
 	if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){

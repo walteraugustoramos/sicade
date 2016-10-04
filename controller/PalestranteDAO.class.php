@@ -55,6 +55,42 @@
 			}
 		}
 
+		public function getPalestrante($id_user){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM palestrante WHERE users_id_user = :id_user";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_user',$id_user);
+
+				$select_palestrante = $statement->execute();
+
+				if($select_palestrante){
+					if($statement->rowCount() != 0){
+						$palestrante_dados = $statement->fetch(pdo::FETCH_ASSOC);
+						return $palestrante_dados;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar dados do palestrante';
+						header('Location:../index.php');
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar dados do palestrante';
+					header('Location:../index.php');
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar dados do palestrante: '.$e->getMessage();
+				header('Location:../index.php');
+			}
+		}
+
 		public function editarPalestrante($palestrante){
 			$PDO = connection();
 
