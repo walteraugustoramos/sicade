@@ -38,7 +38,7 @@
 				</div>
 
 				<div class="col-md-2 form-group">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login" style="margin-top: 1.7em;">Participar</button>
+					<button type="button" id="participar" class="btn btn-primary" data-toggle="modal" data-target="#login" style="margin-top: 1.7em;" disabled>Participar</button>
 				</div>
 			</div>
 		</div>
