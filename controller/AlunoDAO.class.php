@@ -93,5 +93,93 @@
 				$PDO->rollBack();
 			}
 		}
+
+		public function getAluno($id_user){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM aluno WHERE users_id_user = :id_user";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_user',$id_user);
+
+				$select_aluno = $statement->execute();
+
+				if($select_aluno){
+					if($statement->rowCount() != 0){
+						$aluno_dados = $statement->fetch(pdo::FETCH_ASSOC);
+						return $aluno_dados;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno';
+						header('Location:../index.php');
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno';
+					header('Location:../index.php');
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno: '.$e->getMessage();
+				header('Location:../index.php');
+			}
+		}
+
+		public function inscreverAluno($id_aluno,$id_evento){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM aluno_has_evento WHERE aluno_id_aluno = :id_aluno AND evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_aluno',$id_aluno);
+				$statement->bindValue(':id_evento',$id_evento);
+
+				$select_evento = $statement->execute();
+
+				if($select_evento){
+					//Se rowCount diferente de zero, aluno já esta inscrito no evento
+					if($statement->rowCount() != 0){
+						$PDO->rollBack();
+						return false;
+					}else{// aluno não esta incrito neste evento faço a sua inscrição
+
+						$sql = "INSERT INTO aluno_has_evento(aluno_id_aluno,evento_id_evento,presente) VALUES(:id_aluno, :id_evento, :presente)";
+
+						$statement = $PDO->prepare($sql);
+
+						$statement->bindValue(':id_aluno',$id_aluno);
+						$statement->bindValue(':id_evento',$id_evento);
+						$statement->bindValue(':presente','0');// por padrão o aluno não está presente até que o palestrante realize a chamada
+
+						$insert_aluno_has_evento = $statement->execute();
+
+						if($insert_aluno_has_evento){
+							$PDO->commit();
+							return true;
+						}else{
+							$PDO->rollBack();
+							return false;
+						}
+					}
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao inscrever o aluno no evento: '.$e->getMessage();
+				header('Location:../index.php');	
+			}
+		}
 	}
  ?>

@@ -64,5 +64,27 @@
 				header("Location:../index.php");
 			}
 		}
+	}else if($_POST['action'] == 'inscrever_aluno'){
+		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
+			$_SESSION['msg']['error'] = 'Preencha todos os campos';
+			header('Location:../index.php');
+		}else{// todos os campos do formulario preenchidos executa o else
+			foreach ($_POST as $key => $value) {
+				$$key = $value;
+			}
+
+			$alunoDAO = new AlunoDAO();
+
+			$aluno = $alunoDAO->getAluno($_SESSION['user']['id']);
+			
+			if($alunoDAO->inscreverAluno($aluno['id_aluno'],$id_evento)){
+				$_SESSION['msg']['success'] = 'Inscrição realizada com sucesso.';
+			 	header('Location:../index.php');
+			}else{
+				$_SESSION['msg']['error'] = 'Desculpe mas você já se inscreveu neste evento.';
+			 	header('Location:../index.php');
+			}
+			
+		}
 	}
  ?>
