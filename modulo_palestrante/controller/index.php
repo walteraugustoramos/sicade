@@ -105,6 +105,41 @@
 				header("Location:../index.php");
 			}
 			
+		}
+	}else if($_POST['action'] == 'editar_evento'){
+		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
+			$_SESSION['msg']['error'] = 'Preencha todos os campos.';
+			header('Location:../form_cadastrar_evento.php');
+		}else{// todos os campos do formulario preenchidos executa o else
+			foreach ($_POST as $key => $value) {
+				$$key = $value;
+			}
+
+			$evento = new Evento();
+			$eventoDAO = new EventoDAO();
+
+			// formato a data para o padrao aceito pelo mysql
+			$data_inicio = implode("-",array_reverse(explode("/",$data_inicio)));
+			$data_fim = implode("-",array_reverse(explode("/",$data_fim)));
+
+			$evento->setIdEvento($id_evento);
+			$evento->setNome($name);
+			$evento->setDescricao($descricao);
+			$evento->setDataInicio($data_inicio);
+			$evento->setHoraInicio($hora_inicio.':00');// formato a hora para o padrao aceito pelo mysql
+			$evento->setDataFim($data_fim);
+			$evento->setHoraFim($hora_fim.':00');// formato a hora para o padrao aceito pelo mysql
+			$evento->setStatus('1');
+			$evento->setCargaHoraria($carga_horaria);			
+			
+			if($eventoDAO->editarEvento($evento)){
+				$_SESSION['msg']['success'] = "Dados do Evento Alterados Com Sucesso!!!";
+				header("Location:../index.php");
+			}else{
+				$_SESSION['msg']['error'] = "Erro ao Alterar Dados do Evento!!!";
+				header("Location:../index.php");
+			}
+			
 		}	
 	}
  ?>

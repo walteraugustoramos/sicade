@@ -58,7 +58,6 @@
           			<!--dropdown evento-->
           			<ul class="dropdown-menu">
             			<li><a href="form_cadastrar_evento.php">Cadastrar</a></li>
-                  <li><a href="#">Editar</a></li>
           			</ul><!--dropdown evento-->
         		</li><!--dropdown-->
 

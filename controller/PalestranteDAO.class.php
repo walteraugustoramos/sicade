@@ -123,8 +123,48 @@
 				}
 
 			}catch(pdoexception $e){
-				echo 'Falha ao editar usuário: '.$e->getMessage();
 				$PDO->rollBack();
+				$_SESSION['msg']['error'] = "Erro ao Alterar Dados do Palestrante!!!";
+			}
+		}
+
+		// retorna um array com os eventos cadastrados pelo palestrante
+		public function getPalestrantehasEvento($id_palestrante){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM palestrante_has_evento WHERE palestrante_id_palestrante = :id_palestrante";
+
+				$select_palestrante_has_evento = $statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_palestrante',$id_palestrante);
+
+				$statement->execute();
+
+				if($select_palestrante_has_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$palestrante_has_evento[] = $evento_dados;
+						}
+						return $palestrante_has_evento;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar os eventos cadastrados pelo palestrante';
+						header('Location:index.php');
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os eventos cadastrados pelo palestrante';
+					header('Location:index.php');
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos cadastrados pelo palestrante: '.$e->getMessage();
+				header('Location:index.php');
 			}
 		}
 	}
