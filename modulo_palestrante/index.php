@@ -17,8 +17,10 @@
   $palestrante_has_evento = $palestranteDAO->getPalestrantehasEvento($palestrante['id_palestrante']);
 
   for($i = 0; $i < count($palestrante_has_evento); $i++){
-    // retorna um arrauy contendo todas as informações do evento cadastrado pelo palestrante que esta logado no sistema
-    $eventos_dados[] = $eventoDAO->getEvento($palestrante_has_evento[$i]['evento_id_evento']);
+    // retorna um arrauy contendo todas as informações dos eventos cadastrado pelo palestrante que ainda não aconteceram
+    if($eventoDAO->getEvento($palestrante_has_evento[$i]['evento_id_evento'],1) != 0){
+      $eventos_dados[] = $eventoDAO->getEvento($palestrante_has_evento[$i]['evento_id_evento'],1);
+    }
   }
 ?>
 <div class="container-fluid">
@@ -116,7 +118,7 @@
                                   <?php } ?>
                                 </tbody>
                               </table>
-                            </div>  
+                            </div>
                             <button type="submit" class="btn btn-primary">Realizar Chamada</button>
                           </form>
                           <?php    

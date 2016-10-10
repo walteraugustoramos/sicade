@@ -50,17 +50,18 @@
 			}
 		}
 
-		public function getEvento($id_evento){
+		public function getEvento($id_evento,$status){
 			$PDO = connection();
 
 			try{
 				$PDO->beginTransaction();
 
-				$sql = "SELECT *FROM evento WHERE id_evento = :id_evento";
+				$sql = "SELECT *FROM evento WHERE id_evento = :id_evento AND status = :status";
 
 				$statement = $PDO->prepare($sql);
 
 				$statement->bindValue(':id_evento',$id_evento);
+				$statement->bindValue(':status',$status);
 
 				$select_evento = $statement->execute();
 
@@ -71,7 +72,7 @@
 						return $evento_dados;
 					}else{
 						$PDO->rollBack();
-						$_SESSION['msg']['error'] = 'Falha ao consultar informações sobre os eventos cadastrados pelo palestrante';
+						return 0;
 					}
 				}else{
 					$PDO->rollBack();
@@ -104,6 +105,37 @@
 				$statement->bindValue(':status',$evento->getStatus());
 				$statement->bindValue(':carga_horaria',$evento->getCargaHoraria());
 				$statement->bindValue(':id_evento',$evento->getIdEvento());
+
+				$update_evento = $statement->execute();
+
+				if($update_evento){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao editar dados do evento: '.$e->getMessage();
+			}
+
+
+		}
+
+		public function setStatusEvento($id_evento,$status){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE evento SET status = :status WHERE id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':status',$status);
+				$statement->bindValue(':id_evento',$id_evento);
 
 				$update_evento = $statement->execute();
 

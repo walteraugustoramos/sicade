@@ -153,11 +153,9 @@
 
 		$alunoDAO = new alunoDAO();
 		$palestranteDAO = new PalestranteDAO();
+		$eventoDAO = new EventoDAO();
 
-		
-
-
-		if($palestranteDAO->realizarChamadaPalestrante($id_palestrante,$id_evento,1)){
+		if($palestranteDAO->realizarChamadaPalestrante($id_palestrante,$id_evento,1) && $eventoDAO->setStatusEvento($id_evento,0)){
 			$boolean = false;
 
 			for($i = 0; $i < count($id_aluno); $i++){
