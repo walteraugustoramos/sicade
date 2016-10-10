@@ -128,7 +128,7 @@
 			}
 		}
 
-		// retorna um array com os eventos cadastrados pelo palestrante
+		// retorna um array com os ids dos eventos cadastrados pelo palestrante
 		public function getPalestrantehasEvento($id_palestrante){
 			$PDO = connection();
 
@@ -138,11 +138,11 @@
 
 				$sql = "SELECT *FROM palestrante_has_evento WHERE palestrante_id_palestrante = :id_palestrante";
 
-				$select_palestrante_has_evento = $statement = $PDO->prepare($sql);
+				$statement = $PDO->prepare($sql);
 
 				$statement->bindValue(':id_palestrante',$id_palestrante);
 
-				$statement->execute();
+				$select_palestrante_has_evento = $statement->execute();
 
 				if($select_palestrante_has_evento){
 					if($statement->rowCount() != 0){
@@ -165,6 +165,37 @@
 				$PDO->rollBack();
 				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos cadastrados pelo palestrante: '.$e->getMessage();
 				header('Location:index.php');
+			}
+		}
+
+		public function realizarChamadaPalestrante($id_palestrante,$id_evento,$presente){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE palestrante_has_evento SET presente = :presente WHERE palestrante_id_palestrante = :id_palestrante AND evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':presente', $presente);
+				$statement->bindValue(':id_palestrante', $id_palestrante);
+				$statement->bindValue(':id_evento', $id_evento);
+				
+				$update_palestrante_has_evento = $statement->execute();
+
+				if($update_palestrante_has_evento){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+
+			}catch(pdoexception $e){
+				echo 'Falha ao fazer a chamada: '.$e->getMessage();
+				$PDO->rollBack();
 			}
 		}
 	}

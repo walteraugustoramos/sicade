@@ -181,5 +181,106 @@
 				header('Location:../index.php');	
 			}
 		}
+
+		// retorna um array com os ids dos dos alunos que se inscreveram no evento
+		public function getAlunohasEvento($id_evento){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM aluno_has_evento WHERE evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_evento',$id_evento);
+
+				$select_aluno_has_evento = $statement->execute();
+
+				if($select_aluno_has_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$aluno_has_evento[] = $evento_dados;
+						}
+						return $aluno_has_evento;
+					}else{
+						$PDO->rollBack();
+						return 0;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os alunos inscritos';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os alunos inscritos: '.$e->getMessage();
+			}
+		}
+
+		public function getAlunoById($id_aluno){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM aluno WHERE id_aluno = :id_aluno";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_aluno',$id_aluno);
+
+				$select_aluno = $statement->execute();
+
+				if($select_aluno){
+					if($statement->rowCount() != 0){
+						$aluno_dados = $statement->fetch(pdo::FETCH_ASSOC);
+						return $aluno_dados;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno';
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno';
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno: '.$e->getMessage();
+			}
+		}
+
+		public function realizarChamadaAluno($id_aluno,$id_evento,$presente){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE aluno_has_evento SET presente = :presente WHERE aluno_id_aluno = :id_aluno AND evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':presente', $presente);
+				$statement->bindValue(':id_aluno', $id_aluno);
+				$statement->bindValue(':id_evento', $id_evento);
+				
+				$update_aluno_has_evento = $statement->execute();
+
+				if($update_aluno_has_evento){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+
+			}catch(pdoexception $e){
+				echo 'Falha ao fazer a chamada: '.$e->getMessage();
+				$PDO->rollBack();
+			}
+		}
 	}
  ?>

@@ -8,6 +8,7 @@
 	include '../../controller/UserLoginDAO.class.php';
 	include '../../model/Evento.class.php';
 	include '../../controller/EventoDAO.class.php';
+	include '../../controller/AlunoDAO.class.php';
 
 	// verifico se existe sessão para o usuario, caso não exista redireciono para a pagina de login
 	if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){
@@ -133,13 +134,48 @@
 			$evento->setCargaHoraria($carga_horaria);			
 			
 			if($eventoDAO->editarEvento($evento)){
-				$_SESSION['msg']['success'] = "Dados do Evento Alterados Com Sucesso!!!";
+				$_SESSION['msg']['success'] = 'Dados do Evento Alterados Com Sucesso!!!';
 				header("Location:../index.php");
 			}else{
-				$_SESSION['msg']['error'] = "Erro ao Alterar Dados do Evento!!!";
+				$_SESSION['msg']['error'] = 'Erro ao Alterar Dados do Evento!!!';
 				header("Location:../index.php");
 			}
 			
 		}	
+	}else if($_POST['action'] == 'realizar_chamada'){
+		echo "<pre>";
+		//var_dump($_POST);
+		echo "</pre>";
+
+		foreach ($_POST as $key => $value) {
+			$$key = $value;
+		}
+
+		$alunoDAO = new alunoDAO();
+		$palestranteDAO = new PalestranteDAO();
+
+		
+
+
+		if($palestranteDAO->realizarChamadaPalestrante($id_palestrante,$id_evento,1)){
+			$boolean = false;
+
+			for($i = 0; $i < count($id_aluno); $i++){
+				for($j = 0; $j < count($id_aluno); $j++){
+					$boolean = $alunoDAO->realizarChamadaAluno($id_aluno[$i][$j],$id_evento,$presente[$i][$j]);
+				}
+			}
+			
+			if($boolean){
+				$_SESSION['msg']['success'] = 'Chamada Realizada com Sucesso!!!';
+				header('Location:../index.php');
+			}else{
+				$_SESSION['msg']['error'] = 'Falha ao realizar chamada, tente novamente.';
+				header('Location:../index.php');
+			}
+		}else{
+			$_SESSION['msg']['error'] = 'Falha ao realizar chamada, tente novamente.';
+			header('Location:../index.php');
+		}
 	}
  ?>
