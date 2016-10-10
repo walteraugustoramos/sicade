@@ -16,7 +16,7 @@ $conexao = new PDO("mysql:host=".SERVER."; dbname=".DBNAME, USER, PASSWORD, $opc
 
 // Verifica se foi solicitado uma consulta para o autocomplete
 if($acao == 'autocomplete'):
-	$where = (!empty($parametro)) ? 'WHERE nome LIKE ?' : '';
+	$where = (!empty($parametro)) ? 'WHERE nome LIKE ? AND status != 0' : '';
 	$sql = "SELECT *FROM evento " . $where;
 
 	$stm = $conexao->prepare($sql);
