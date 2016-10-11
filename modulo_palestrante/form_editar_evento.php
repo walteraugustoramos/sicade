@@ -10,7 +10,7 @@
   }else{
   	$eventoDAO = new EventoDAO();
 
-  	$evento_dados = $eventoDAO->getEvento($_GET['id_evento']);
+  	$evento_dados = $eventoDAO->getEvento($_GET['id_evento'],1);
 
   	// conversão de data para o padrão brasileiro
   	$evento_dados['data_inicio'] = implode("/",array_reverse(explode("-",$evento_dados['data_inicio'])));

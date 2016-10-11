@@ -50,7 +50,7 @@
 	</div>
   <div id="list" class="row">
     <div class="table-responsive table-striped table-hover col-md-6 col-md-offset-3">
-      <table class="table">
+      <table class="table" id="list-eventos">
         <thead>
           <tr>
             <th>Evento</th>
