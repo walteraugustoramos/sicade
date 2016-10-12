@@ -80,16 +80,10 @@
 			$eventoDAO = new EventoDAO();
 			$palestranteDAO = new PalestranteDAO();
 
-			// formato a data para o padrao aceito pelo mysql
-			$data_inicio = implode("-",array_reverse(explode("/",$data_inicio)));
-			$data_fim = implode("-",array_reverse(explode("/",$data_fim)));
-
 			$evento->setNome($name);
 			$evento->setDescricao($descricao);
-			$evento->setDataInicio($data_inicio);
-			$evento->setHoraInicio($hora_inicio.':00');// formato a hora para o padrao aceito pelo mysql
-			$evento->setDataFim($data_fim);
-			$evento->setHoraFim($hora_fim.':00');// formato a hora para o padrao aceito pelo mysql
+			$evento->setDataInicio($eventoDAO->parseDate($data_inicio,'Y-m-d H:i:s'));
+			$evento->setDataFim($eventoDAO->parseDate($data_fim,'Y-m-d H:i:s'));
 			$evento->setStatus('1');
 			$evento->setCargaHoraria($carga_horaria);
 
@@ -119,19 +113,13 @@
 			$evento = new Evento();
 			$eventoDAO = new EventoDAO();
 
-			// formato a data para o padrao aceito pelo mysql
-			$data_inicio = implode("-",array_reverse(explode("/",$data_inicio)));
-			$data_fim = implode("-",array_reverse(explode("/",$data_fim)));
-
 			$evento->setIdEvento($id_evento);
 			$evento->setNome($name);
 			$evento->setDescricao($descricao);
-			$evento->setDataInicio($data_inicio);
-			$evento->setHoraInicio($hora_inicio.':00');// formato a hora para o padrao aceito pelo mysql
-			$evento->setDataFim($data_fim);
-			$evento->setHoraFim($hora_fim.':00');// formato a hora para o padrao aceito pelo mysql
+			$evento->setDataInicio($eventoDAO->parseDate($data_inicio,'Y-m-d H:i:s'));
+			$evento->setDataFim($eventoDAO->parseDate($data_fim,'Y-m-d H:i:s'));
 			$evento->setStatus('1');
-			$evento->setCargaHoraria($carga_horaria);			
+			$evento->setCargaHoraria($carga_horaria);		
 			
 			if($eventoDAO->editarEvento($evento)){
 				$_SESSION['msg']['success'] = 'Dados do Evento Alterados Com Sucesso!!!';
@@ -140,7 +128,6 @@
 				$_SESSION['msg']['error'] = 'Erro ao Alterar Dados do Evento!!!';
 				header("Location:../index.php");
 			}
-			
 		}	
 	}else if($_POST['action'] == 'realizar_chamada'){
 		echo "<pre>";

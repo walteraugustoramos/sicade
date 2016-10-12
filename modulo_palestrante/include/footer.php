@@ -1,5 +1,3 @@
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <!--Script Combobox Cidade e Estados-->
@@ -8,6 +6,27 @@
         cidade: document.getElementById('cidade'),
         estado: document.getElementById('estado')
       })
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            var dateToday = new Date();//pega a data atual
+            $('#datetimepicker6').datetimepicker({ 
+                minDate: dateToday,
+                format: 'DD/MM/YYYY HH:mm:ss'
+             });
+            $('#datetimepicker7').datetimepicker({
+                useCurrent: false, //Important! See issue #1075
+                minDate: dateToday,
+                format: 'DD/MM/YYYY HH:mm:ss'
+            });
+            $("#datetimepicker6").on("dp.change", function (e) {
+                $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+            });
+            $("#datetimepicker7").on("dp.change", function (e) {
+                $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+            });
+        });
     </script>
     
     <!--Script de inicialização do DataTable-->

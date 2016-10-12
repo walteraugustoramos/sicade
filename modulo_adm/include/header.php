@@ -15,10 +15,20 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Sicade Adm</title>
 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <!-- Bootstrap -->
     <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <!--Script Combobox Estados e Cidades-->
     <script language="JavaScript" type="text/javascript" src="js/cidades-estados-1.4-utf8.js"></script>
+
+    <!--Arquivos necessários para funcionamento do datepickertime-->
+    <script type="text/javascript" src="js/moment.min.js"></script>
+    
+    <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+    
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

@@ -9,16 +9,14 @@
 				// inicia a transação
 				$PDO->beginTransaction();
 
-				$sql = "INSERT INTO evento(nome, descricao, data_inicio, hora_inicio, data_fim, hora_fim, status, carga_horaria)VALUES(:nome, :descricao, :data_inicio, :hora_inicio, :data_fim, :hora_fim, :status, :carga_horaria)";
+				$sql = "INSERT INTO evento(nome, descricao, data_inicio, data_fim, status, carga_horaria)VALUES(:nome, :descricao, :data_inicio, :data_fim, :status, :carga_horaria)";
 
 				$statement = $PDO->prepare($sql);
 
 				$statement->bindValue(':nome',$evento->getNome());
 				$statement->bindValue(':descricao',$evento->getDescricao());
 				$statement->bindValue(':data_inicio',$evento->getDataInicio());
-				$statement->bindValue(':hora_inicio',$evento->getHoraInicio());
 				$statement->bindValue(':data_fim',$evento->getDataFim());
-				$statement->bindValue(':hora_fim',$evento->getHoraFim());
 				$statement->bindValue(':status',$evento->getStatus());
 				$statement->bindValue(':carga_horaria',$evento->getCargaHoraria());
 
@@ -92,16 +90,14 @@
 				// inicia a transação
 				$PDO->beginTransaction();
 
-				$sql = "UPDATE evento SET nome = :nome, descricao = :descricao, data_inicio = :data_inicio, hora_inicio = :hora_inicio, data_fim = :data_fim, hora_fim = :hora_fim, status = :status, carga_horaria = :carga_horaria WHERE id_evento = :id_evento";
+				$sql = "UPDATE evento SET nome = :nome, descricao = :descricao, data_inicio = :data_inicio, data_fim = :data_fim, status = :status, carga_horaria = :carga_horaria WHERE id_evento = :id_evento";
 
 				$statement = $PDO->prepare($sql);
 
 				$statement->bindValue(':nome',$evento->getNome());
 				$statement->bindValue(':descricao',$evento->getDescricao());
 				$statement->bindValue(':data_inicio',$evento->getDataInicio());
-				$statement->bindValue(':hora_inicio',$evento->getHoraInicio());
 				$statement->bindValue(':data_fim',$evento->getDataFim());
-				$statement->bindValue(':hora_fim',$evento->getHoraFim());
 				$statement->bindValue(':status',$evento->getStatus());
 				$statement->bindValue(':carga_horaria',$evento->getCargaHoraria());
 				$statement->bindValue(':id_evento',$evento->getIdEvento());
@@ -150,8 +146,33 @@
 				$PDO->rollBack();
 				$_SESSION['msg']['error'] = 'Falha ao editar dados do evento: '.$e->getMessage();
 			}
+		}
 
+		// função converte a data para o formato desejado
+		public function parseDate($date, $outputFormat){
+		    $formats = array(
+		        'd/m/Y',
+		        'd/m/Y H',
+		        'd/m/Y H:i',
+		        'd/m/Y H:i:s',
+		        'Y-m-d',
+		        'Y-m-d H',
+		        'Y-m-d H:i',
+		        'Y-m-d H:i:s',
+		    );
 
+		    foreach($formats as $format){
+		        $dateObj = DateTime::createFromFormat($format, $date);
+		        if($dateObj !== false){
+		            break;
+		        }
+		    }
+
+		    if($dateObj === false){
+		        throw new Exception('Invalid date:' . $date);
+		    }
+
+		    return $dateObj->format($outputFormat);
 		}
 	}
  ?>

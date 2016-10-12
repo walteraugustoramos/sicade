@@ -13,10 +13,10 @@
   	$evento_dados = $eventoDAO->getEvento($_GET['id_evento'],1);
 
   	// conversão de data para o padrão brasileiro
-  	$evento_dados['data_inicio'] = implode("/",array_reverse(explode("-",$evento_dados['data_inicio'])));
+  	$evento_dados['data_inicio'] = $eventoDAO->parseDate($evento_dados['data_inicio'], 'd/m/Y H:i:s');
 
   	// conversão de data para o padrão brasileiro
-  	$evento_dados['data_fim'] = implode("/",array_reverse(explode("-",$evento_dados['data_fim'])));
+  	$evento_dados['data_fim'] = $eventoDAO->parseDate($evento_dados['data_fim'], 'd/m/Y H:i:s');
   }
 ?>
 
@@ -43,35 +43,30 @@
 				</div><!--row < form-->
 
 				<div class="row">
-					<div class="col-md-2 form-group has-feedback">
-						<label for="data_inicio">Data Inicio: </label>
-						<input type="text" name="data_inicio" class="form-control date_picker" required="true" placeholder="DD/MM/YYYY" data-error="Preencha este campo." onkeyup="criaMascara(this, '##/##/####');" value="<?=$evento_dados['data_inicio']?>">
-						<span class="glyphicon form-control-feedback"></span>
-						<small class="help-block with-errors">Ex: 09/11/1994</small>
-					</div>
+					<div class='col-md-3 form-group has-feedback'>
+						<label for="data_inicio">Data Inicio:</label>
+			            <div class='input-group date' id='datetimepicker6'>
+			                <input type='text' name="data_inicio" class="form-control" required="true" data-error="Preencha este campo." value="<?=$evento_dados['data_inicio']?>"/>
+			                <span class="input-group-addon">
+			                    <span class="glyphicon glyphicon-calendar"></span>
+			                </span>
+			                <span class="glyphicon form-control-feedback"></span>
+							<small class="with-errors"></small>
+			            </div> 
+			    	</div>
 
-					<div class="col-md-2 form-group has-feedback">
-						<label for="hora_inicio">Hora Inicio: </label>
-						<input type="text" name="hora_inicio" class="form-control" required="true" placeholder="HH:MM" data-error="Preencha este campo." onkeyup="criaMascara(this, '##:##');" value="<?=$evento_dados['hora_inicio']?>">
-						<span class="glyphicon form-control-feedback"></span>
-						<small class="help-block with-errors">Ex: 21:00</small>
-					</div>
-
-					<div class="col-md-2 form-group has-feedback">
-						<label for="data_fim">Data Fim: </label>
-						<input type="text" name="data_fim" class="form-control date_picker" required="true" placeholder="DD/MM/YYYY" data-error="Preencha este campo." onkeyup="criaMascara(this, '##/##/####');" value="<?=$evento_dados['data_fim']?>">
-						<span class="glyphicon form-control-feedback"></span>
-						<small class="help-block with-errors">Ex: 09/11/1994</small>
-					</div>
-
-					<div class="col-md-2 form-group has-feedback">
-						<label for="hora_fim">Hora Fim: </label>
-						<input type="text" name="hora_fim" class="form-control" required="true" placeholder="HH:MM" data-error="Preencha este campo." onkeyup="criaMascara(this, '##:##');" value="<?=$evento_dados['hora_fim']?>">
-						<span class="glyphicon form-control-feedback"></span>
-						<small class="help-block with-errors">Ex: 22:00</small>
-					</div>
-
-				</div><!--row < form-->
+				    <div class='col-md-3 form-group has-feedback'>
+				    	<label for="data_inicio">Data Fim:</label>
+			            <div class='input-group date' id='datetimepicker7'>
+			                <input type='text' name="data_fim" class="form-control" required="true" data-error="Preencha este campo." value="<?=$evento_dados['data_fim']?>"/>
+			                <span class="input-group-addon">
+			                    <span class="glyphicon glyphicon-calendar"></span>
+			                </span>
+			                <span class="glyphicon form-control-feedback"></span>
+							<small class="with-errors"></small>
+			            </div>
+				    </div>
+		    	</div><!--row < form-->
 
 				<div class="row">
 					<div class="col-md-4 form-group">
