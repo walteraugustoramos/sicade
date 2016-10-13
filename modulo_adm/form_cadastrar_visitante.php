@@ -16,10 +16,11 @@
 						<small class="help-block with-errors">Ex: Jon Snow</small>
 					</div>
 
-					<div class="col-md-2 form-group has-feedback">
+					<div class="col-md-2 form-group">
 						<label for="cpf">Cpf: </label>
-						<input type="text" name="cpf" id="cpf" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onkeyup="criaMascara(this, '###.###.###-##');" maxlength="14">
-						<span class="glyphicon form-control-feedback"></span>
+						<input type="text" name="cpf" id="cpf" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onblur="javascript: validarCPF(this);" onkeyup="criaMascara(this, '###.###.###-##');" maxlength="14">
+						<span id="cpf-invalido" style="background-color: #F2DEDE; color: #A94442;"></span>
+						<span id="cpf-valido" style="background-color: #D9EDF7; color: #31708F;"></span>
 						<small class="help-block with-errors">Ex: 123.456.789-81</small>
 					</div>
 				</div><!--row < form-->

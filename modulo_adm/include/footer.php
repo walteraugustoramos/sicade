@@ -32,5 +32,7 @@
     <script type="text/javascript" src="js/cria-mascara.js"></script>
     <!--Inclui os arquivos javascript do bootstrap-validator para validação de formularios-->
     <script src="../bootstrap-validator-master/js/validator.js"></script>
+    <!--Script para validar cpf-->
+    <script type="text/javascript" src="js/validar-cpf.js"></script>
   </body>
 </html>
