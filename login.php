@@ -71,11 +71,12 @@
                   <span class="help-block with-errors"></span>
                 </div>
 
-                <div class="col-md-3 form-group has-feedback">
+                <div class="col-md-3 form-group">
                   <label for="cpf">Cpf: </label>
-                  <input type="text" name="cpf" id="cpf" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onkeyup="criaMascara(this,'###.###.###-##');" maxlength="14">
-                  <span class="gliphycon form-control-feedback"></span>
-                  <span class="help-block with-errors"></span>
+                  <input type="text" name="cpf" id="cpf_aluno" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onblur="javascript: validarCPFAluno(this);" onkeyup="criaMascara(this, '###.###.###-##');" maxlength="14">
+                  <span id="cpf_aluno-invalido" style="background-color: #F2DEDE; color: #A94442;"></span>
+                  <span id="cpf_aluno-valido" style="background-color: #D9EDF7; color: #31708F;"></span>
+                  <small class="help-block with-errors">Ex: 123.456.789-81</small>
                 </div>
 
                 <div class="col-md-4 form-group has-feedback">
@@ -228,12 +229,14 @@
                   <small class="help-block with-errors"></small>
                 </div>
 
-                <div class="col-md-3 form-group has-feedback">
+                <div class="col-md-3 form-group">
                   <label for="cpf">Cpf: </label>
-                  <input type="text" name="cpf" id="cpf" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onkeyup="criaMascara(this, '###.###.###-##');" maxlength="14">
-                  <span class="glyphicon form-control-feedback"></span>
-                  <small class="help-block with-errors"></small>
+                  <input type="text" name="cpf" id="cpf_visitante" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onblur="javascript: validarCPFVisitante(this);" onkeyup="criaMascara(this, '###.###.###-##');" maxlength="14">
+                  <span id="cpf_visitante-invalido" style="background-color: #F2DEDE; color: #A94442;"></span>
+                  <span id="cpf_visitante-valido" style="background-color: #D9EDF7; color: #31708F;"></span>
+                  <small class="help-block with-errors">Ex: 123.456.789-81</small>
                 </div>
+
               </div><!--row < form-->
 
               <div class="row">
@@ -297,11 +300,12 @@
                   <small class="help-block with-errors"></small>
                 </div>
 
-                <div class="col-md-3 form-group has-feedback">
+                <div class="col-md-3 form-group">
                   <label for="cpf">Cpf: </label>
-                  <input type="text" name="cpf" id="cpf" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onkeyup="criaMascara(this, '###.###.###-##');" maxlength="14">
-                  <span class="glyphicon form-control-feedback"></span>
-                  <small class="help-block with-errors"></small>
+                  <input type="text" name="cpf" id="cpf_palestrante" class="form-control" required="true" placeholder="Somente numeros" data-error="Preencha este campo." onblur="javascript: validarCPFPalestrante(this);" onkeyup="criaMascara(this, '###.###.###-##');" maxlength="14">
+                  <span id="cpf_palestrante-invalido" style="background-color: #F2DEDE; color: #A94442;"></span>
+                  <span id="cpf_palestrante-valido" style="background-color: #D9EDF7; color: #31708F;"></span>
+                  <small class="help-block with-errors">Ex: 123.456.789-81</small>
                 </div>
 
                 <div class="col-md-4 form-group has-feedback">

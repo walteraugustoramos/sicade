@@ -25,5 +25,7 @@
 
     <!--Java script que contem as funções de funcionamento do autocomplete-->
     <script src="custom.js"></script>
+    <!--Script para validar cpf-->
+    <script type="text/javascript" src="js/validar-cpf.js"></script>
   </body>
 </html>
