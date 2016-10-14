@@ -30,7 +30,8 @@ endif;
 
 // Verifica se foi solicitado uma consulta para preencher os campos do formulário
 if($acao == 'consulta'):
-	$sql = "SELECT id_evento, nome, carga_horaria, hora_inicio, DATE_FORMAT(data_inicio, '%d/%m/%Y') AS data_inicio FROM evento ";
+	$sql = "SELECT id_evento, nome, carga_horaria, date_format(`data_inicio`,'%d de %M às %Hh%i')
+ AS data_inicio FROM evento ";
 	$sql .= "WHERE nome LIKE ? LIMIT 1";
 
 	$stm = $conexao->prepare($sql);

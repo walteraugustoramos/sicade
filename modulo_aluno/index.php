@@ -46,7 +46,7 @@
         <form action="controller/index.php" method="post">
         <input type="hidden" name="action" value="inscrever_aluno">
         <input type="hidden" name="id_evento" id="id_evento">
-        <div class="col-md-2 col-md-offset-1 form-group">
+        <div class="col-md-2 col-md-offset-3 form-group">
           <label for="nome">Evento</label>
           <input type="text" name="nome" id="nome" class="form-control form_evento" readonly required="true">
         </div>
@@ -54,11 +54,6 @@
         <div class="col-md-2 form-group">
           <label for="nome">Data</label>
           <input type="text" name="data_inicio" id="data_inicio" class="form-control form_evento" readonly required="true">
-        </div>
-
-        <div class="col-md-2 form-group">
-          <label for="nome">Hora</label>
-          <input type="text" name="hora_inicio" id="hora_inicio" class="form-control form_evento" readonly required="true">
         </div>
 
         <div class="col-md-2 form-group">

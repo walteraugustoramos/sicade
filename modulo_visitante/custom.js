@@ -51,7 +51,6 @@ $(function() {
 	               $('#id_evento').val(data[0].id_evento);
 	               $('#nome').val(data[0].nome);
 	               $('#data_inicio').val(data[0].data_inicio);
-	               $('#hora_inicio').val(data[0].hora_inicio);
 	               $('#carga_horaria').val(data[0].carga_horaria);
 	               $("#participar").removeAttr("disabled");
 	            }
@@ -67,7 +66,6 @@ $(function() {
 		   $('#id_evento').val(data[0].id_evento);
 		   $('#nome').val(data[0].nome);
 		   $('#data_inicio').val(data[0].data_inicio);
-		   $('#hora_inicio').val(data[0].hora_inicio);
 		   $('#carga_horaria').val(data[0].carga_horaria);
        }
     }

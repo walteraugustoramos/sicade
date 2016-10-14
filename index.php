@@ -19,7 +19,7 @@
 		<div class="col-md-12">
 			<div class="row form_dados">
 				
-				<div class="col-md-2 col-md-offset-1 form-group">
+				<div class="col-md-2 col-md-offset-3 form-group">
 					<label for="nome">Evento</label>
 					<input type="text" id="nome" class="form-control form_evento" readonly>
 				</div>
@@ -27,11 +27,6 @@
 				<div class="col-md-2 form-group">
 					<label for="nome">Data</label>
 					<input type="text" id="data_inicio" class="form-control form_evento" readonly>
-				</div>
-
-				<div class="col-md-2 form-group">
-					<label for="nome">Hora</label>
-					<input type="text" id="hora_inicio" class="form-control form_evento" readonly>
 				</div>
 
 				<div class="col-md-2 form-group">
