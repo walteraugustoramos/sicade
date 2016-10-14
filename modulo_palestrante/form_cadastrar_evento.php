@@ -25,35 +25,30 @@
 				</div><!--row < form-->
 
 				<div class="row">
-					<div class="col-md-2 form-group has-feedback">
-						<label for="data_inicio">Data Inicio: </label>
-						<input type="text" name="data_inicio" class="form-control date_picker" required="true" placeholder="DD/MM/YYYY" data-error="Preencha este campo." onkeyup="criaMascara(this, '##/##/####');">
-						<span class="glyphicon form-control-feedback"></span>
-						<small class="help-block with-errors">Ex: 09/11/1994</small>
-					</div>
+					<div class='col-md-3 form-group has-feedback'>
+						<label for="data_inicio">Data Inicio:</label>
+			            <div class='input-group date' id='datetimepicker6'>
+			                <input type='text' name="data_inicio" class="form-control" required="true" data-error="Preencha este campo."/>
+			                <span class="input-group-addon">
+			                    <span class="glyphicon glyphicon-calendar"></span>
+			                </span>
+			                <span class="glyphicon form-control-feedback"></span>
+							<small class="with-errors"></small>
+			            </div> 
+			    	</div>
 
-					<div class="col-md-2 form-group has-feedback">
-						<label for="hora_inicio">Hora Inicio: </label>
-						<input type="text" name="hora_inicio" class="form-control" required="true" placeholder="HH:MM" data-error="Preencha este campo." onkeyup="criaMascara(this, '##:##');">
-						<span class="glyphicon form-control-feedback"></span>
-						<small class="help-block with-errors">Ex: 21:00</small>
-					</div>
-
-					<div class="col-md-2 form-group has-feedback">
-						<label for="data_fim">Data Fim: </label>
-						<input type="text" name="data_fim" class="form-control date_picker" required="true" placeholder="DD/MM/YYYY" data-error="Preencha este campo." onkeyup="criaMascara(this, '##/##/####');">
-						<span class="glyphicon form-control-feedback"></span>
-						<small class="help-block with-errors">Ex: 09/11/1994</small>
-					</div>
-
-					<div class="col-md-2 form-group has-feedback">
-						<label for="hora_fim">Hora Fim: </label>
-						<input type="text" name="hora_fim" class="form-control" required="true" placeholder="HH:MM" data-error="Preencha este campo." onkeyup="criaMascara(this, '##:##');">
-						<span class="glyphicon form-control-feedback"></span>
-						<small class="help-block with-errors">Ex: 22:00</small>
-					</div>
-
-				</div><!--row < form-->
+				    <div class='col-md-3 form-group has-feedback'>
+				    	<label for="data_inicio">Data Fim:</label>
+			            <div class='input-group date' id='datetimepicker7'>
+			                <input type='text' name="data_fim" class="form-control" required="true" data-error="Preencha este campo."/>
+			                <span class="input-group-addon">
+			                    <span class="glyphicon glyphicon-calendar"></span>
+			                </span>
+			                <span class="glyphicon form-control-feedback"></span>
+							<small class="with-errors"></small>
+			            </div>
+				    </div>
+		    	</div><!--row < form-->
 
 				<div class="row">
 					<div class="col-md-4 form-group">
