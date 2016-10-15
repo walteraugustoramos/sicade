@@ -1,0 +1,25 @@
+/*padding-top: 70px devido ao navbar-fixed-top*/
+body{ 
+	padding-top: 70px; 
+}
+*{
+	padding: 0;
+	margin: 0;
+}
+/*Style menu*/
+.menu ul li{
+	font-size: 16px;
+}
+
+.menu ul li:hover{
+	background-color: #e0e0e0;
+}
+
+.menu a:hover{
+	color: #ffffff !important;
+}
+
+.dropdown-menu li a:hover{
+	color: #ffffff !important;
+	background-color: gray !important;
+}
