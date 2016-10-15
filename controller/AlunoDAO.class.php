@@ -282,5 +282,43 @@
 				$PDO->rollBack();
 			}
 		}
+
+		// retorna um array com os ids dos eventos que o aluno esta inscrito e a presença já foi confirmada pelo palestrante
+		public function getEventoAluno($id_aluno, $presente){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM aluno_has_evento WHERE aluno_id_aluno = :id_aluno AND presente = :presente";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_aluno',$id_aluno);
+				$statement->bindValue(':presente',$presente);
+
+				$select_aluno_has_evento = $statement->execute();
+
+				if($select_aluno_has_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$aluno_has_evento[] = $evento_dados;
+						}
+						return $aluno_has_evento;
+					}else{
+						$PDO->rollBack();
+						return 0;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o aluno participou.';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o aluno participou: '.$e->getMessage();
+			}
+		}
 	}
  ?>

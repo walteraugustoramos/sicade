@@ -198,5 +198,43 @@
 				$PDO->rollBack();
 			}
 		}
+
+		// retorna um array com os ids dos eventos que o palestrante palestrou
+		public function getEventoPalestrante($id_palestrante, $presente){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM palestrante_has_evento WHERE palestrante_id_palestrante = :id_palestrante AND presente = :presente";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_palestrante',$id_palestrante);
+				$statement->bindValue(':presente',$presente);
+
+				$select_palestrante_has_evento = $statement->execute();
+
+				if($select_palestrante_has_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$palestrante_has_evento[] = $evento_dados;
+						}
+						return $palestrante_has_evento;
+					}else{
+						$PDO->rollBack();
+						return 0;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o palestrante palestrou.';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o palestrante palestrou: '.$e->getMessage();
+			}
+		}
 	}
  ?>

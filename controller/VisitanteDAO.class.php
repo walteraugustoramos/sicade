@@ -167,7 +167,7 @@
 				header('Location:../index.php');	
 			}
 		}
-		// retorna um array com os ids dos dos visitantes que se inscreveram no evento
+		// retorna um array com os ids dos visitantes que se inscreveram no evento
 		public function getVisitantehasEvento($id_evento){
 			$PDO = connection();
 
@@ -265,6 +265,44 @@
 			}catch(pdoexception $e){
 				echo 'Falha ao fazer a chamada: '.$e->getMessage();
 				$PDO->rollBack();
+			}
+		}
+
+		// retorna um array com os ids dos eventos que o visitante esta inscrito e a presença já foi confirmada pelo palestrante
+		public function getEventoVisitante($id_visitante, $presente){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM visitante_has_evento WHERE visitante_id_visitante = :id_visitante AND presente = :presente";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_visitante',$id_visitante);
+				$statement->bindValue(':presente',$presente);
+
+				$select_visitante_has_evento = $statement->execute();
+
+				if($select_visitante_has_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$visitante_has_evento[] = $evento_dados;
+						}
+						return $visitante_has_evento;
+					}else{
+						$PDO->rollBack();
+						return 0;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o visitante participou.';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o visitante participou: '.$e->getMessage();
 			}
 		}
 	}

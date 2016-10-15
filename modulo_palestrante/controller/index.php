@@ -190,7 +190,14 @@
 		}else{
 			$_SESSION['msg']['error'] = 'Falha ao realizar chamada, tente novamente.';
 			header('Location:../index.php');
+		}	
+	}else if($_POST['action'] == 'gerar_certificado'){
+		echo "<pre>";
+		var_dump($_POST);
+		echo "</pre>";
+
+		foreach($_POST as $key => $value){
+				$$key = $value;
 		}
-			
 	}
  ?>

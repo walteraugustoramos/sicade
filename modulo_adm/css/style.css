@@ -18,3 +18,8 @@ body{
 .menu a:hover{
 	color: #ffffff !important;
 }
+
+.dropdown-menu li a:hover{
+	color: #ffffff !important;
+	background-color: gray !important;
+}
