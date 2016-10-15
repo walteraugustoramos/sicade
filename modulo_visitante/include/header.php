@@ -15,6 +15,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Sicade Visitante</title>
 
+    <link rel="stylesheet" href="css/style.css">
+
     <!-- Bootstrap -->
     <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <!--Script Combobox Estados e Cidades-->
@@ -30,7 +32,7 @@
     <![endif]-->
   </head>
   <body>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
           <span class="icon-bar"></span>
@@ -43,7 +45,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-4 col-md-offset-4">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse menu" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Home</a></li>
                 <li class="dropdown">
