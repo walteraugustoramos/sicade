@@ -167,5 +167,105 @@
 				header('Location:../index.php');	
 			}
 		}
+		// retorna um array com os ids dos dos visitantes que se inscreveram no evento
+		public function getVisitantehasEvento($id_evento){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM visitante_has_evento WHERE evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_evento',$id_evento);
+
+				$select_visitante_has_evento = $statement->execute();
+
+				if($select_visitante_has_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$visitante_has_evento[] = $evento_dados;
+						}
+						return $visitante_has_evento;
+					}else{
+						$PDO->rollBack();
+						return 0;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os visitantes inscritos';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os visitantes inscritos: '.$e->getMessage();
+			}
+		}
+
+		public function getVisitanteById($id_visitante){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM visitante WHERE id_visitante = :id_visitante";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_visitante',$id_visitante);
+
+				$select_visitante = $statement->execute();
+
+				if($select_visitante){
+					if($statement->rowCount() != 0){
+						$visitante_dados = $statement->fetch(pdo::FETCH_ASSOC);
+						return $visitante_dados;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar dados do visitante.';
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar dados do visitante.';
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar dados do visitante: '.$e->getMessage();
+			}
+		}
+
+		public function realizarChamadaVisitante($id_visitante,$id_evento,$presente){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE visitante_has_evento SET presente = :presente WHERE visitante_id_visitante = :id_visitante AND evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':presente', $presente);
+				$statement->bindValue(':id_visitante', $id_visitante);
+				$statement->bindValue(':id_evento', $id_evento);
+				
+				$update_visitante_has_evento = $statement->execute();
+
+				if($update_visitante_has_evento){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+
+			}catch(pdoexception $e){
+				echo 'Falha ao fazer a chamada: '.$e->getMessage();
+				$PDO->rollBack();
+			}
+		}
 	}
  ?>
