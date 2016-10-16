@@ -252,7 +252,7 @@
 			}
 		}
 
-		public function realizarChamadaAluno($id_aluno,$id_evento,$presente){
+		public function realizarChamadaAluno($id_aluno, $id_evento, $presente, $id_palestrante){
 			$PDO = connection();
 
 			try{
@@ -269,7 +269,18 @@
 				
 				$update_aluno_has_evento = $statement->execute();
 
-				if($update_aluno_has_evento){
+				$sql = "INSERT INTO aluno_certificado(aluno_id_aluno, evento_id_evento, palestrante_id_palestrante, chave_validacao) VALUES(:id_aluno, :id_evento, :id_palestrante, :chave_validacao)";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_aluno', $id_aluno);
+				$statement->bindValue(':id_evento', $id_evento);
+				$statement->bindValue(':id_palestrante', $id_palestrante);
+				$statement->bindValue(':chave_validacao', md5(rand()));
+
+				$insert_aluno_certificado = $statement->execute();
+
+				if($update_aluno_has_evento && $insert_aluno_certificado){
 					$PDO->commit();
 					return true;
 				}else{

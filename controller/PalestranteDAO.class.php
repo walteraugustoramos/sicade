@@ -185,7 +185,17 @@
 				
 				$update_palestrante_has_evento = $statement->execute();
 
-				if($update_palestrante_has_evento){
+				$sql = "INSERT INTO palestrante_certificado(evento_id_evento, palestrante_id_palestrante, chave_validacao) VALUES(:id_evento, :id_palestrante, :chave_validacao)";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_evento', $id_evento);
+				$statement->bindValue(':id_palestrante', $id_palestrante);
+				$statement->bindValue(':chave_validacao', md5(rand()));
+
+				$insert_palestrante_certificado = $statement->execute();
+
+				if($update_palestrante_has_evento && $insert_palestrante_certificado){
 					$PDO->commit();
 					return true;
 				}else{

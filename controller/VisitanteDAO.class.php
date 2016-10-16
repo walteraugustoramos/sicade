@@ -237,7 +237,7 @@
 			}
 		}
 
-		public function realizarChamadaVisitante($id_visitante,$id_evento,$presente){
+		public function realizarChamadaVisitante($id_visitante, $id_evento, $presente, $id_palestrante){
 			$PDO = connection();
 
 			try{
@@ -254,7 +254,18 @@
 				
 				$update_visitante_has_evento = $statement->execute();
 
-				if($update_visitante_has_evento){
+				$sql = "INSERT INTO visitante_certificado(visitante_id_visitante, evento_id_evento, palestrante_id_palestrante, chave_validacao) VALUES(:id_visitante, :id_evento, :id_palestrante, :chave_validacao)";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_visitante', $id_visitante);
+				$statement->bindValue(':id_evento', $id_evento);
+				$statement->bindValue(':id_palestrante', $id_palestrante);
+				$statement->bindValue(':chave_validacao', md5(rand()));
+
+				$insert_visitante_certificado = $statement->execute();
+
+				if($update_visitante_has_evento && $insert_visitante_certificado){
 					$PDO->commit();
 					return true;
 				}else{

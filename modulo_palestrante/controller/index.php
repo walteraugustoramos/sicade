@@ -156,7 +156,7 @@
 					// faço a chamada dos alunos
 					for($i = 0; $i < count($id_aluno); $i++){
 						for($j = 0; $j < count($id_aluno); $j++){
-							$boolean_chamada_aluno = $alunoDAO->realizarChamadaAluno($id_aluno[$i][$j],$id_evento,$presente[$i][$j]);
+							$boolean_chamada_aluno = $alunoDAO->realizarChamadaAluno($id_aluno[$i][$j],$id_evento,$presente[$i][$j],$id_palestrante);
 						}
 					}
 				}
@@ -166,7 +166,7 @@
 					// faço a chamada dos visitantes
 					for($i = 0; $i < count($id_visitante); $i++){
 						for($j = 0; $j < count($id_visitante); $j++){
-							$boolean_chamada_visitante = $visitanteDAO->realizarChamadaVisitante($id_visitante[$i][$j],$id_evento,$presente[$i][$j]);
+							$boolean_chamada_visitante = $visitanteDAO->realizarChamadaVisitante($id_visitante[$i][$j],$id_evento,$presente[$i][$j],$id_palestrante);
 						}
 					}
 				}
