@@ -46,7 +46,8 @@
         <form action="controller/index.php" method="post">
         <input type="hidden" name="action" value="inscrever_aluno">
         <input type="hidden" name="id_evento" id="id_evento">
-        <div class="col-md-2 col-md-offset-3 form-group">
+        <input type="hidden" name="quantidade_inscritos" id="quantidade_inscritos">
+        <div class="col-md-2 col-md-offset-2 form-group">
           <label for="nome">Evento</label>
           <input type="text" name="nome" id="nome" class="form-control form_evento" readonly required="true">
         </div>
@@ -59,6 +60,11 @@
         <div class="col-md-2 form-group">
           <label for="nome">Carga Horaria</label>
           <input type="text" name="carga_horaria" id="carga_horaria" class="form-control form_evento" readonly required="true">
+        </div>
+
+        <div class="col-md-2 form-group">
+          <label for="nome">Quantidade Vagas</label>
+          <input type="text" name="quantidade_vagas" id="quantidade_vagas" class="form-control form_evento" readonly required="true">
         </div>
 
         <div class="col-md-2 form-group">

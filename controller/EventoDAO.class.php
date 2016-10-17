@@ -150,6 +150,36 @@
 			}
 		}
 
+		// incrementa a quantidade de inscritos
+		public function setQuantidadeInscritosEvento($id_evento,$quantidade_inscritos){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE evento SET quantidade_inscritos = :quantidade_inscritos WHERE id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':quantidade_inscritos',$quantidade_inscritos);
+				$statement->bindValue(':id_evento',$id_evento);
+
+				$update_evento = $statement->execute();
+
+				if($update_evento){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao incrementar a quantidade de inscritos do evento: '.$e->getMessage();
+			}
+		}
+
 		// função converte a data para o formato desejado
 		public function parseDate($date, $outputFormat){
 		    $formats = array(

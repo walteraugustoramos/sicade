@@ -52,6 +52,8 @@ $(function() {
 	               $('#nome').val(data[0].nome);
 	               $('#data_inicio').val(data[0].data_inicio);
 	               $('#carga_horaria').val(data[0].carga_horaria);
+	               $('#quantidade_vagas').val(data[0].quantidade_vagas);
+	               $('#quantidade_inscritos').val(data[0].quantidade_inscritos);
 	               $("#participar").removeAttr("disabled");
 	            }
 	        });
@@ -67,6 +69,8 @@ $(function() {
 		   $('#nome').val(data[0].nome);
 		   $('#data_inicio').val(data[0].data_inicio);
 		   $('#carga_horaria').val(data[0].carga_horaria);
+		   $('#quantidade_vagas').val(data[0].quantidade_vagas);
+		   $('#quantidade_inscritos').val(data[0].quantidade_inscritos);
        }
     }
 });

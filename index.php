@@ -19,7 +19,7 @@
 		<div class="col-md-12">
 			<div class="row form_dados">
 				
-				<div class="col-md-2 col-md-offset-3 form-group">
+				<div class="col-md-2 col-md-offset-2 form-group">
 					<label for="nome">Evento</label>
 					<input type="text" id="nome" class="form-control form_evento" readonly>
 				</div>
@@ -33,6 +33,11 @@
 					<label for="nome">Carga Horaria</label>
 					<input type="text" id="carga_horaria" class="form-control form_evento" readonly>
 				</div>
+
+        <div class="col-md-2 form-group">
+          <label for="nome">Quantidade Vagas</label>
+          <input type="text" name="quantidade_vagas" id="quantidade_vagas" class="form-control form_evento" readonly required="true">
+        </div>
 
 				<div class="col-md-2 form-group">
 					<button type="button" id="participar" class="btn btn-primary" data-toggle="modal" data-target="#login" style="margin-top: 1.7em;" disabled>Participar</button>

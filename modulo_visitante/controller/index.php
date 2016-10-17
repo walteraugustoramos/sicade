@@ -5,6 +5,7 @@
 	include '../../controller/VisitanteDAO.class.php';
 	include '../../model/UserLogin.class.php';
 	include '../../controller/UserLoginDAO.class.php';
+	include '../../controller/EventoDAO.class.php';
 	// verifico se existe sessão para o usuario, caso não exista redireciono para a pagina de login
 	if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){
 		$_SESSION['msg']['error'] = 'Faça Login';
@@ -67,17 +68,17 @@
 			}
 
 			$visitanteDAO = new VisitanteDAO();
+			$eventoDAO = new EventoDAO();
 
 			$visitante = $visitanteDAO->getVisitante($_SESSION['user']['id']);
-			
-			if($visitanteDAO->inscreverVisitante($visitante['id_visitante'],$id_evento)){
+
+			if($visitanteDAO->inscreverVisitante($visitante['id_visitante'],$id_evento) && $eventoDAO->setQuantidadeInscritosEvento($id_evento,($quantidade_inscritos+1))){
 				$_SESSION['msg']['success'] = 'Inscrição realizada com sucesso.';
 			 	header('Location:../index.php');
 			}else{
 				$_SESSION['msg']['error'] = 'Desculpe mas você já se inscreveu neste evento.';
 			 	header('Location:../index.php');
-			}
-			
+			}		
 		}
 	}else if($_POST['action'] == 'gerar_certificado'){
 		echo "<pre>";

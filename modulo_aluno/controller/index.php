@@ -5,6 +5,7 @@
 	include '../../controller/AlunoDAO.class.php';
 	include '../../model/UserLogin.class.php';
 	include '../../controller/UserLoginDAO.class.php';
+	include '../../controller/EventoDAO.class.php';
 		// verifico se existe sessão para o usuario, caso não exista redireciono para a pagina de login
 	if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){
 		$_SESSION['msg']['error'] = 'Faça Login';
@@ -74,10 +75,11 @@
 			}
 
 			$alunoDAO = new AlunoDAO();
+			$eventoDAO = new EventoDAO();
 
 			$aluno = $alunoDAO->getAluno($_SESSION['user']['id']);
 			
-			if($alunoDAO->inscreverAluno($aluno['id_aluno'],$id_evento)){
+			if($alunoDAO->inscreverAluno($aluno['id_aluno'],$id_evento) && $eventoDAO->setQuantidadeInscritosEvento($id_evento,($quantidade_inscritos+1))){
 				$_SESSION['msg']['success'] = 'Inscrição realizada com sucesso.';
 			 	header('Location:../index.php');
 			}else{
