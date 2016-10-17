@@ -121,7 +121,8 @@
 			$evento->setDataInicio($eventoDAO->parseDate($data_inicio,'Y-m-d H:i:s'));
 			$evento->setDataFim($eventoDAO->parseDate($data_fim,'Y-m-d H:i:s'));
 			$evento->setStatus('1');
-			$evento->setCargaHoraria($carga_horaria);		
+			$evento->setCargaHoraria($carga_horaria);
+			$evento->setQuantidadeVagas($quantidade_vagas);		
 			
 			if($eventoDAO->editarEvento($evento)){
 				$_SESSION['msg']['success'] = 'Dados do Evento Alterados Com Sucesso!!!';

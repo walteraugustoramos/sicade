@@ -14,17 +14,13 @@
   if($alunoDAO->getEventoAluno($aluno['id_aluno'], 1) != 0){
     // retorna um array contendo os ids dos eventos que o aluno está presente
     $eventos_ids = $alunoDAO->getEventoAluno($aluno['id_aluno'], 1);
-  }
-
-  for($i = 0; $i < count($eventos_ids); $i++){
-    if($eventoDAO->getEvento($eventos_ids[$i]['evento_id_evento'],0) != 0){
-      // retorna um array contendo todas as informações dos eventos que o aluno participou
-      $eventos_dados[] = $eventoDAO->getEvento($eventos_ids[$i]['evento_id_evento'],0);
+    
+    for($i = 0; $i < count($eventos_ids); $i++){
+      if($eventoDAO->getEvento($eventos_ids[$i]['evento_id_evento'],0) != 0){
+        // retorna um array contendo todas as informações dos eventos que o aluno participou
+        $eventos_dados[] = $eventoDAO->getEvento($eventos_ids[$i]['evento_id_evento'],0);
+      }
     }
-  }
-  echo "<pre>";
-  var_dump($eventos_dados);
-  echo "</pre>";
 ?>
 <div class="container-fluid">
 	<div class="row">
@@ -77,7 +73,15 @@
           </tr>
           <?php 
             }// fechamento do foreach($eventos_dados as $evento)
-           ?>
+          }else{?>
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <div class="alert alert-warning" role="alert">
+                  <span><center>Desculpe, nenhum certificado disponivel ainda.</center></span>
+                </div>
+              </div>
+            </div>
+          <?php }// fechamento do else?>
           </form>
         </tbody>
       </table>
