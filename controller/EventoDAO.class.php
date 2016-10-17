@@ -9,7 +9,7 @@
 				// inicia a transação
 				$PDO->beginTransaction();
 
-				$sql = "INSERT INTO evento(nome, descricao, data_inicio, data_fim, status, carga_horaria)VALUES(:nome, :descricao, :data_inicio, :data_fim, :status, :carga_horaria)";
+				$sql = "INSERT INTO evento(nome, descricao, data_inicio, data_fim, status, carga_horaria, quantidade_vagas)VALUES(:nome, :descricao, :data_inicio, :data_fim, :status, :carga_horaria, :quantidade_vagas)";
 
 				$statement = $PDO->prepare($sql);
 
@@ -19,6 +19,7 @@
 				$statement->bindValue(':data_fim',$evento->getDataFim());
 				$statement->bindValue(':status',$evento->getStatus());
 				$statement->bindValue(':carga_horaria',$evento->getCargaHoraria());
+				$statement->bindValue(':quantidade_vagas',$evento->getQuantidadeVagas());
 
 				$insert_evento = $statement->execute();
 				
@@ -90,7 +91,7 @@
 				// inicia a transação
 				$PDO->beginTransaction();
 
-				$sql = "UPDATE evento SET nome = :nome, descricao = :descricao, data_inicio = :data_inicio, data_fim = :data_fim, status = :status, carga_horaria = :carga_horaria WHERE id_evento = :id_evento";
+				$sql = "UPDATE evento SET nome = :nome, descricao = :descricao, data_inicio = :data_inicio, data_fim = :data_fim, status = :status, carga_horaria = :carga_horaria, quantidade_vagas = :quantidade_vagas WHERE id_evento = :id_evento";
 
 				$statement = $PDO->prepare($sql);
 
@@ -100,6 +101,7 @@
 				$statement->bindValue(':data_fim',$evento->getDataFim());
 				$statement->bindValue(':status',$evento->getStatus());
 				$statement->bindValue(':carga_horaria',$evento->getCargaHoraria());
+				$statement->bindValue(':quantidade_vagas',$evento->getQuantidadeVagas());
 				$statement->bindValue(':id_evento',$evento->getIdEvento());
 
 				$update_evento = $statement->execute();

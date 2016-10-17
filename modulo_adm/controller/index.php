@@ -193,6 +193,7 @@
 			$evento->setDataFim($eventoDAO->parseDate($data_fim,'Y-m-d H:i:s'));
 			$evento->setStatus('1');
 			$evento->setCargaHoraria($carga_horaria);
+			$evento->setQuantidadeVagas($quantidade_vagas);
 
 			// recupera o id do usuario logado
 			$user_id = $_SESSION['user']['id'];

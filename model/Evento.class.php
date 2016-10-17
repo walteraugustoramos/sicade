@@ -1,6 +1,6 @@
 <?php 
 	class Evento{
-		private $id_evento, $nome, $descricao, $data_inicio, $hora_inicio, $data_fim, $hora_fim, $status, $carga_horaria;
+		private $id_evento, $nome, $descricao, $data_inicio, $hora_inicio, $data_fim, $hora_fim, $status, $carga_horaria, $quantidade_vagas;
 
 		public function getIdEvento(){
 			return $this->id_evento;
@@ -72,6 +72,14 @@
 
 		public function setCargaHoraria($carga_horaria){
 			$this->carga_horaria = $carga_horaria;
+		}
+
+		public function getQuantidadeVagas(){
+			return $this->quantidade_vagas;
+		}
+
+		public function setQuantidadeVagas($quantidade_vagas){
+			$this->quantidade_vagas = $quantidade_vagas;
 		}
 	}
  ?>

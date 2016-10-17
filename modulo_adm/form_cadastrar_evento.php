@@ -87,6 +87,13 @@
 								<small class="with-errors"></small>
 				            </div>
 					    </div>
+
+						<div class="col-md-2 form-group has-feedback">
+							<label for="quantidade_vagas">Quantidade Vagas: </label>
+							<input type="number" name="quantidade_vagas" min="1" class="form-control" required="true" placeholder="0">
+							<span class="glyphicon form-control-feedback"></span>
+							<small class="help-block with-errors">Ex: 40</small>
+						</div>					    
 			    	</div><!--row < form-->
 
 					<div class="row">
