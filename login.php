@@ -36,14 +36,48 @@
             </div>
           
             <button type="submit" class="btn bnt-lg btn-primary btn-block" style="margin-top:1em;">Fazer login</button>
-            <span><a href="#">Esqueceu sua senha ?</a></span>
-            <span><a href="#" data-toggle="modal" data-toggle="modal" data-target=".bs-example-modal-lg">Criar uma conta</a></span>
+            <span><a href="#" data-toggle="modal" data-target="#esqueceu_senha" data-dismiss="modal">Esqueceu a senha?</a></span>
+            <span><a href="#" data-toggle="modal" data-toggle="modal" data-target=".bs-example-modal-lg">Crie uma conta é grátis.</a></span>
           </form>
         </div>
       </div><!--row-->
     </div><!--container-fluid-->
 
-<!-- Large modal -->
+<!-- Modal esqueceu senha?-->
+<div class="modal fade" id="esqueceu_senha" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Esqueceu a senha?</h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" method="post" data-toggle="validator">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <label for="email">Informe seu e-mail:</label>
+              <input type="email" name="email" class="form-control" required="true" placeholder="Seu melhor email" data-error="Preencha este campo." pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+              <span class="glyphicon form-control-feedback"></span>
+              <small class="help-block with-errors"></small>
+            </div>
+          </div><!--row < form-->
+          
+          <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+              <button type="submit" class="btn btn-primary">Recuperar</button>
+            </div>
+          </div>
+        </form>
+      </div><!--modal-body-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Fim modal esqueceu senha?-->
+
+<!-- modal criar conta -->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
