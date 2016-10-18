@@ -65,11 +65,12 @@
           <?php 
             foreach($eventos_dados as $evento){
            ?>
-          <tr>
-            <input type="hidden" name="id_evento" value="<?=$evento['id_evento']?>">
+           <tr>
             <td><?php echo $evento['nome']?></td>
             <td><?php echo $evento['carga_horaria']?></td>
-            <td><button type="submit" class="btn btn-primary btn-xs">Gerar</button></td>
+            <td>
+                <a href="controller/index.php?action=gerar_certificado&id_palestrante=<?=$palestrante['id_palestrante']?>&id_evento=<?=$evento['id_evento']?>" class="btn btn-primary btn-xs" target="_blank">Gerar Certificado</a>
+            </td>
           </tr>
           <?php 
             }// fechamento do foreach($eventos_dados as $evento)
@@ -82,7 +83,6 @@
               </div>
             </div>
           <?php }// fechamento do else?>
-          </form>
         </tbody>
       </table>
     </div>

@@ -1,6 +1,7 @@
 <?php
-	// inclue o arquivo que contem as configurações de conexão com banco de dados
-	//include '../../include/config.php';
+	// define o local e a timezone para imprimir a data e hora em formato brasileiro
+	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+	date_default_timezone_set('America/Sao_Paulo');
 
 	class PalestranteDAO{
 
@@ -321,5 +322,142 @@
 			}
 		}
 
+		public function gerarCertificadoPalestrante($id_palestrante, $id_evento){
+			// retorna um array contendo os dados do palestrante
+			$palestrante = $this->getPalestranteById($id_palestrante);
+
+			$eventoDAO = new EventoDAO();
+
+			// retorna um array contendo os dados do evento
+			$evento = $eventoDAO->getEvento($id_evento,0);
+
+			// conversão de data
+			$evento['data_inicio'] = strftime('%d de %B de %Y', strtotime($evento['data_inicio']));
+
+			// data que o certificado foi gerado
+			$data_certificado_gerado = strftime('%d de %B de %Y as ', strtotime('today'));
+			$data_certificado_gerado .= date('H:i:s');
+
+			// data atual do sistema
+			$data_atual = strftime('%d de %B de %Y', strtotime('today'));
+
+			$certificado = $this->getPalestranteHashCertificado($id_palestrante, $id_evento);
+
+			// cabeçalho
+			header("Content-type: text/html; charset=iso-8859-1");
+			// modelo de certificado em html
+			$html = '
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+			<html xmlns="http://www.w3.org/1999/xhtml">
+			<head>
+			<link rel="shortcut icon" href="../img/favicon.ico" />
+			<link rel="icon" type="image/gif" href="../img/animated_favicon1.gif" />
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+			</head>
+			<body>
+				<table align="center" width="800" border="0">
+					<tr>
+						<td align="left"><img src="../../img/rede_doctum.png" border="0" /></td>
+					</tr>
+					<tr>
+						<td align="center"><h3>Certificado</h3></td>
+					</tr>
+				</table>
+				<br/><br />
+				<div align="center">
+				<table width="800" border="0" align="center" class="certificado">
+				  <tr>
+					<td>
+						<p align="justify" style="color:#000000; font: 20px Verdana, Geneva, sans-serif; padding:0px; font-size: 20px; margin: 0px;">
+						Conferimos a <b>'.ucwords($palestrante['nome']).'</b> o presente certificado por ter ministrado o evento <b>'.ucwords($evento['nome']).'</b>, realizado em <b>'.$evento['data_inicio'].'</b>.Pela institui&ccedil;&atilde;o de ensino <b>Faculdades Unificadas Doctum de Teofilo Otoni</b> com carga hor&aacute;ria de <b>'.$evento['carga_horaria'].'</b> horas.
+						</p>
+						<br/><br/><br/>
+						<p class="certificado">
+						<center>Te&oacute;filo Otoni, '.$data_atual.'.</center>
+						</p>
+					</td>
+				  	</tr>
+				</table>';
+
+			$tabela = '<table width="800" border="0" align="center" class="certificado">
+			<tr>';
+
+			$tabela = $tabela.'</tr>
+					</table>
+					<p align="center"><big>Chave de Valida&ccedil;&atilde;o: <b>'.$certificado['chave_validacao'].'</b></big></p>
+				</div>';
+
+			$html = utf8_encode($html);
+			$tabela = utf8_encode($tabela);
+			$html = $html.$tabela;
+
+			// cria um novo container PDF no formato A4 com orientação Landscape
+			$mpdf=new mPDF('utf-8', 'A4-L');
+
+			// muda o charset para aceitar caracteres acentuados iso UTF-8 utilizados por mim no banco de dados e na geracao do conteudo PHP com HTML
+			$mpdf->allow_charset_conversion=true;
+			$mpdf->charset_in='UTF-8';
+
+			// modo de visualização
+			$mpdf->SetDisplayMode('fullpage');
+			
+			$mpdf->SetFooter('Verificar Validade do Certificado em: www.sicade.com.br/validar_certificado');
+			//bacana este rodape, nao eh mesmo?
+			
+			//definindo o cabeçalho
+			$mpdf->SetHeader('Data do Evento: '.$evento['data_inicio'].' Certificado Gerado em: '.$data_certificado_gerado.'');
+			
+			// carrega uma folha de estilo - MAGICA!!!
+			$stylesheet = file_get_contents('../../css/style_certificado_aluno.css');
+
+			// incorpora a folha de estilo ao PDF
+			// O parâmetro 1 diz que este é um css/style e deverá ser interpretado como tal
+			$mpdf->WriteHTML($stylesheet,1);
+
+			// incorpora o corpo ao PDF na posição 2 e deverá ser interpretado como footage. Todo footage é posicao 2 ou 0(padrão).
+			$mpdf->WriteHTML($html,2);
+
+			// define um nome para o arquivo PDF
+			$arquivo = date("dmyhis").'_certificado.pdf';
+
+			// gera o relatório
+			$mpdf->Output($arquivo,'I');			
+		}
+
+		// retorna o hash de validação do certificado do palestrante
+		public function getPalestranteHashCertificado($id_palestrante, $id_evento){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM palestrante_certificado WHERE palestrante_id_palestrante = :id_palestrante AND evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_palestrante',$id_palestrante);
+				$statement->bindValue(':id_evento',$id_evento);
+				
+				$select_palestrante_certificado = $statement->execute();
+
+				if($select_palestrante_certificado){
+					if($statement->rowCount() != 0){
+						$palestrante_certificado = $statement->fetch(pdo::FETCH_ASSOC);
+						return $palestrante_certificado;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do palestrante.';
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do palestrante.';
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do palestrante: '.$e->getMessage();
+			}
+		}
 	}
  ?>

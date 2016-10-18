@@ -1,6 +1,7 @@
 <?php 
 	session_start();
-
+	define('_MPDF_PATH', '../../mpdf60/');// indica o caminho dos arquivos da biblioteca MPDF
+	include(_MPDF_PATH.'mpdf.php');// Inclui o arquivo de configuração da biblioteca MPDF
 	include '../../include/config.php';
 	include '../../model/Palestrante.class.php';
 	include '../../controller/PalestranteDAO.class.php';
@@ -193,13 +194,17 @@
 			$_SESSION['msg']['error'] = 'Falha ao realizar chamada, tente novamente.';
 			header('Location:../index.php');
 		}	
-	}else if($_POST['action'] == 'gerar_certificado'){
-		echo "<pre>";
-		var_dump($_POST);
-		echo "</pre>";
-
-		foreach($_POST as $key => $value){
-				$$key = $value;
-		}
+	}else if($_GET['action'] == 'gerar_certificado'){
+		// tratamento para caso as variaveis enviadas via get sejam modificadas na url com valores invalidos
+		if(empty($_GET['id_palestrante']) || empty($_GET['id_evento'])){
+			$_SESSION['msg']['error'] = 'Erro ao Gerar Certificado.';
+			 header('Location:../index.php');
+		}else{
+			foreach($_GET as $key => $value){
+					$$key = $value;
+			}
+			$palestranteDAO = new PalestranteDAO();
+			$palestranteDAO->gerarCertificadoPalestrante($id_palestrante, $id_evento);
+		}// fechamento do else
 	}
  ?>
