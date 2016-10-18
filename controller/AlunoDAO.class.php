@@ -480,5 +480,41 @@
 				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do aluno: '.$e->getMessage();
 			}
 		}
+
+		// retorna o true caso a chave informada seja valida
+		public function verificarValidadeCertificado($chave_validacao_certificado){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM aluno_certificado WHERE chave_validacao = :chave_validacao_certificado";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':chave_validacao_certificado',$chave_validacao_certificado);
+				
+				$select_aluno_certificado = $statement->execute();
+
+				if($select_aluno_certificado){
+					if($statement->rowCount() != 0){
+						//$aluno_certificado = $statement->fetch(pdo::FETCH_ASSOC);
+						//return $aluno_certificado;
+						$PDO->rollBack();
+						return true;
+					}else{
+						$PDO->rollBack();
+						return false;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do aluno.';
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do aluno: '.$e->getMessage();
+			}
+		}
 	}
  ?>

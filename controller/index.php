@@ -123,6 +123,43 @@
 				header('Location:../login.php');
 			}
 		}	
+	}else if($_POST['action'] == 'consultar_validade_certificado'){
+		foreach ($_POST as $key => $value) {
+			$$key = $value;
+		}
+
+		// verifica o nivel do usuario e direciona para a consulta correta de chave do certificado
+		if($nivel == '1'){// palestrante
+			$palestranteDAO = new PalestranteDAO();
+
+			if($palestranteDAO->verificarValidadeCertificado($chave_validacao_certificado)){
+				$_SESSION['certificado']['valido'] = "Certificado Válido.";
+				header('Location:../validar_certificado.php');
+			}else{
+				$_SESSION['certificado']['invalido'] = "Certificado Inválido.";
+				header('Location:../validar_certificado.php');
+			}
+		}else if($nivel == '2'){// aluno
+			$alunoDAO = new AlunoDAO();
+
+			if($alunoDAO->verificarValidadeCertificado($chave_validacao_certificado)){
+				$_SESSION['certificado']['valido'] = "Certificado Válido.";
+				header('Location:../validar_certificado.php');
+			}else{
+				$_SESSION['certificado']['invalido'] = "Certificado Inválido.";
+				header('Location:../validar_certificado.php');
+			}
+		}else if($nivel == '3'){// visitante
+			$visitanteDAO = new VisitanteDAO();
+
+			if($visitanteDAO->verificarValidadeCertificado($chave_validacao_certificado)){
+				$_SESSION['certificado']['valido'] = "Certificado Válido.";
+				header('Location:../validar_certificado.php');
+			}else{
+				$_SESSION['certificado']['invalido'] = "Certificado Inválido.";
+				header('Location:../validar_certificado.php');
+			}
+		}
 	}else{
 		$_SESSION['msg']['error'] = 'Faça Login';
 		header('Location:../login.php');

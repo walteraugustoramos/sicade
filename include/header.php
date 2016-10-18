@@ -52,6 +52,13 @@
               <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Home</a></li>
                 <li><a href="login.php">Login</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Certificado<span class="caret"></span></a>
+                <!--dropdown home-->
+                  <ul class="dropdown-menu">
+                    <li><a href="validar_certificado.php">Verificar Validade</a></li>
+                  </ul><!--dropdown home-->                  
+                </li>
               </ul><!--ul-->
             </div><!--navbar-collapse-->
           </div><!--col-md-12-->

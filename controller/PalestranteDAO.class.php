@@ -459,5 +459,41 @@
 				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do palestrante: '.$e->getMessage();
 			}
 		}
+
+		// retorna o true caso a chave informada seja valida
+		public function verificarValidadeCertificado($chave_validacao_certificado){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM palestrante_certificado WHERE chave_validacao = :chave_validacao_certificado";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':chave_validacao_certificado',$chave_validacao_certificado);
+				
+				$select_palestrante_certificado = $statement->execute();
+
+				if($select_palestrante_certificado){
+					if($statement->rowCount() != 0){
+						$palestrante_certificado = $statement->fetch(pdo::FETCH_ASSOC);
+						//return $palestrante_certificado;
+						$PDO->rollBack();
+						return true;
+					}else{
+						$PDO->rollBack();
+						return false;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do palestrante.';
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do palestrante: '.$e->getMessage();
+			}
+		}
 	}
  ?>
