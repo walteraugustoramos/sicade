@@ -409,7 +409,7 @@
 			$mpdf->SetHeader('Data do Evento: '.$evento['data_inicio'].' Certificado Gerado em: '.$data_certificado_gerado.'');
 			
 			// carrega uma folha de estilo - MAGICA!!!
-			$stylesheet = file_get_contents('../../css/style_certificado_aluno.css');
+			$stylesheet = file_get_contents('../../css/style_certificado_palestrante.css');
 
 			// incorpora a folha de estilo ao PDF
 			// O parâmetro 1 diz que este é um css/style e deverá ser interpretado como tal
