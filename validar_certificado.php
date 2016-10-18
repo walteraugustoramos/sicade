@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-md-4 col-md-offset-4 form-group has-feedback" style="margin-top: 2em;">
         <center>
-          <label for="chave_validacao_certificado">Informe a chave para verificar a validade do seu certificado.</label>
+          <label for="chave_validacao_certificado" style="color: #FF8A8A">Para verificar a autenticidade do certificado emitido pelo Sicade, informe a chave de validação do certificado.</label>
           <input type="text" name="chave_validacao_certificado" required="true" class="form-control" maxlength="32" minlength="32" data-error="Digite a chave de validação impressa no certificado." placeholder="d7466182cfe8de0de09e4d064290d6e3">
           <span class="glyphicon form-control-feedback"></span>
           <small class="help-block with-errors"></small>
