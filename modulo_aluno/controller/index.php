@@ -1,11 +1,14 @@
 <?php 
 	session_start();
+	define('_MPDF_PATH', '../../mpdf60/');// indica o caminho dos arquivos da biblioteca MPDF
+	include(_MPDF_PATH.'mpdf.php');// Inclui o arquivo de configuração da biblioteca MPDF
 	include '../../include/config.php';
 	include '../../model/Aluno.class.php';
 	include '../../controller/AlunoDAO.class.php';
 	include '../../model/UserLogin.class.php';
 	include '../../controller/UserLoginDAO.class.php';
 	include '../../controller/EventoDAO.class.php';
+	include '../../controller/PalestranteDAO.class.php';
 		// verifico se existe sessão para o usuario, caso não exista redireciono para a pagina de login
 	if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){
 		$_SESSION['msg']['error'] = 'Faça Login';
@@ -96,5 +99,17 @@
 		foreach($_POST as $key => $value){
 				$$key = $value;
 		}
+	}else if($_GET['action'] == 'gerar_certificado'){
+		// tratamento para caso as variaveis enviadas via get sejam modificadas na url com valores invalidos
+		if(empty($_GET['id_aluno']) || empty($_GET['id_evento'])){
+			$_SESSION['msg']['error'] = 'Erro ao Gerar Certificado.';
+			 header('Location:../index.php');
+		}else{
+			foreach($_GET as $key => $value){
+					$$key = $value;
+			}
+			$alunoDAO = new AlunoDAO();
+			$alunoDAO->gerarCertificadoAluno($id_aluno, $id_evento);
+		}// fechamento do else
 	}
  ?>
