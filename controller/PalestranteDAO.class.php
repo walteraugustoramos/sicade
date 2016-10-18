@@ -246,5 +246,80 @@
 				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o palestrante palestrou: '.$e->getMessage();
 			}
 		}
+
+		// retorna um array com o dados do palestrante que palestra tal evento
+		public function getPalestranteByIdEvento($id_evento){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM palestrante_has_evento WHERE evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_evento',$id_evento);
+
+				$select_palestrante_has_evento = $statement->execute();
+
+				if($select_palestrante_has_evento){
+					if($statement->rowCount() != 0){
+						$palestrante_has_evento = $statement->fetch(pdo::FETCH_ASSOC);
+						return $palestrante_has_evento;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar os dados do evento cadastrado pelo palestrante';
+						header('Location:index.php');
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os dados do evento cadastrado pelo palestrante';
+					header('Location:index.php');
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do evento cadastrado pelo palestrante: '.$e->getMessage();
+				header('Location:index.php');
+			}
+		}
+
+		public function getPalestranteById($id_palestrante){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM palestrante WHERE id_palestrante = :id_palestrante";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_palestrante',$id_palestrante);
+
+				$select_palestrante = $statement->execute();
+
+				if($select_palestrante){
+					if($statement->rowCount() != 0){
+						$palestrante_dados = $statement->fetch(pdo::FETCH_ASSOC);
+						return $palestrante_dados;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar dados do palestrante';
+						header('Location:../index.php');
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar dados do palestrante';
+					header('Location:../index.php');
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar dados do palestrante: '.$e->getMessage();
+				header('Location:../index.php');
+			}
+		}
+
 	}
  ?>
