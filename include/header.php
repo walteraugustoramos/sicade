@@ -21,8 +21,10 @@
     <!--Script Combobox Estados e Cidades-->
     <script language="JavaScript" type="text/javascript" src="js/cidades-estados-1.4-utf8.js"></script>
     
-    <!--Css style JqueryUi necessario para funcionamento do autocomplete-->
+    <!--Css style JqueryUi necessario para funcionamento do autocomplete
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/smoothness/jquery-ui.css">
+    -->
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
 
     <!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
     <!-- ALERTA: Respond.js não funciona se você visualizar uma página file:// -->

@@ -1,7 +1,9 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!--JavaScript JqueryUi necessario para funcionamento do autocomplete-->
+    <!--JavaScript JqueryUi necessario para funcionamento do autocomplete
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+    -->
+    <script src="js/jquery-ui.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <!--Script Combobox Cidade e Estados-->
@@ -45,7 +47,7 @@
 
     <!--Inclusão do style da biblioteca DataTable-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
-
+    
     <!--Inclusão da biblioteca DataTable-->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     

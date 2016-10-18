@@ -1,7 +1,9 @@
 <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!--JavaScript JqueryUi necessario para funcionamento do autocomplete-->
+    <!--JavaScript JqueryUi necessario para funcionamento do autocomplete
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+    -->
+    <script src="js/jquery-ui.min.js"></script>
     <!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
     <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <!--Script Combobox Cidade e Estados-->
