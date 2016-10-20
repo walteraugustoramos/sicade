@@ -264,7 +264,7 @@
 				$statement->bindValue(':id_visitante', $id_visitante);
 				$statement->bindValue(':id_evento', $id_evento);
 				$statement->bindValue(':id_palestrante', $id_palestrante);
-				$statement->bindValue(':chave_validacao', md5(rand()));
+				$statement->bindValue(':chave_validacao', md5(date('Y-m-d H:i:s').microtime()));
 
 				$insert_visitante_certificado = $statement->execute();
 

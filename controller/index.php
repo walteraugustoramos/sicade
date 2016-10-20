@@ -160,6 +160,12 @@
 				header('Location:../validar_certificado.php');
 			}
 		}
+	}else if($_POST['action'] == 'recuperar_senha'){
+		foreach ($_POST as $key => $value) {
+			$$key = $value;
+		}
+
+		echo $email;
 	}else{
 		$_SESSION['msg']['error'] = 'Faça Login';
 		header('Location:../login.php');
