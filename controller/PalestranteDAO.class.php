@@ -17,7 +17,7 @@
 				$statement = $PDO->prepare($sql);
 
 				$statement->bindValue(':user_name',$user_login->getName());
-				$statement->bindValue(':password',password_hash($user_login->getPassword(),PASSWORD_DEFAULT));
+				$statement->bindValue(':password',md5($user_login->getPassword()));
 				$statement->bindValue(':nivel',$user_login->getNivel());
 
 				$insert_users = $statement->execute();
