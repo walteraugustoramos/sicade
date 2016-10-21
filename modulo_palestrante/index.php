@@ -26,9 +26,9 @@
   }
 ?>
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
-			<?php
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <?php
               if(!empty($_SESSION['msg']['success'])){?>
                 <div class="alert alert-success" role="alert">
                   <center><?=$_SESSION['msg']['success']?>
@@ -38,7 +38,7 @@
                   unset($_SESSION['msg']['success']);
                 }
             ?>
-			<?php
+      <?php
               if(!empty($_SESSION['msg']['error'])){?>
                 <div class="alert alert-danger" role="alert">
                   <center><?=$_SESSION['msg']['error']?>
@@ -48,8 +48,8 @@
                   unset($_SESSION['msg']['error']);
                 }
             ?>
-		</div>
-	</div>
+    </div>
+  </div>
   <div id="list" class="row">
     <div class="table-responsive table-striped table-hover col-md-6 col-md-offset-3">
       <table class="table" id="list-eventos">
@@ -78,42 +78,13 @@
                       </div>
                       <div class="modal-body">
                         <?php
-                          // variaveis abaixo mudam o valor para true caso exista algum aluno ou visitante inscrito 
-                          $verifica_visitante = false;
-                          $verifica_aluno = false;
-                          
-                          // verifico se existe pelo menos 1 aluno ou 1 visitante inscrito no evento
-                          if($aluno_has_evento = $alunoDAO->getAlunohasEvento($evento['id_evento']) != 0 || $visitante_has_evento = $visitanteDAO->getVisitantehasEvento($evento['id_evento']) != 0){
-                            
-                            // verifico se existe aluno inscrito no evento
-                            if($aluno_has_evento = $alunoDAO->getAlunohasEvento($evento['id_evento']) != 0){
-                              // retorna um array contendo os ids dos alunos inscritos no evento
-                              $aluno_has_evento = $alunoDAO->getAlunohasEvento($evento['id_evento']);
-
-                              for($i = 0; $i < count($aluno_has_evento); $i++){
-                                // retorna um array contendo os dados dos alunos inscritos no evento
-                                $alunos_inscritos[] = $alunoDAO->getAlunoById($aluno_has_evento[$i]['aluno_id_aluno']);
-                              }
-                              $verifica_aluno = true;
-                            }
-
-                            // verifico se existe visitante inscrito no evento
-                            if($visitante_has_evento = $visitanteDAO->getVisitantehasEvento($evento['id_evento']) != 0){
-                              $visitante_has_evento = $visitanteDAO->getVisitantehasEvento($evento['id_evento']);
-
-                                for($i = 0; $i < count($visitante_has_evento); $i++){
-                                  // retorna um array contendo os dados dos visitantes inscritos no evento
-                                  $visitantes_inscritos[] = $visitanteDAO->getVisitanteById($visitante_has_evento[$i]['visitante_id_visitante']);
-                                }// fechamento for($i = 0; $i < count($visitante_has_evento); $i++)
-                                $verifica_visitante = true;
-                            }
+                          // verifica se existe pelo menos 1 aluno ou visitante inscrito no evento
+                          if($alunoDAO->getAllAlunoInscrito($evento['id_evento']) != false || $visitanteDAO->getAllVisitanteInscrito($evento['id_evento']) != false){
                             ?>
                             <form action="controller/index.php" method="post">
                               <input type="hidden" name="action" value="realizar_chamada">
                               <input type="hidden" name="id_palestrante" value="<?=$palestrante['id_palestrante']?>">
                               <input type="hidden" name="id_evento" value="<?=$evento['id_evento']?>">
-                              <input type="hidden" name="verifica_aluno" value="<?=$verifica_aluno?>">
-                              <input type="hidden" name="verifica_visitante" value="<?=$verifica_visitante?>">
 
                               <div class="table-responsive table-striped table-hover">
                                 <table class="table">
@@ -126,12 +97,15 @@
 
                                   <tbody>
                                     <?php
-                                      if($verifica_aluno == true){
-                                        foreach($alunos_inscritos as $aluno){
+                                    // verifico se existe aluno inscrito no evento
+                                    if($alunoDAO->getAllAlunoInscrito($evento['id_evento']) != false){
+                                      $alunos_inscritos = $alunoDAO->getAllAlunoInscrito($evento['id_evento']);
+                                      echo "<input type='hidden' name='verifica_aluno' value='1'>";
+                                      for($a = 0; $a < count($alunos_inscritos); $a++){
                                      ?>
                                       <tr>
-                                        <td><?echo $aluno['nome']?></td>
-                                        <input type="hidden" name="id_aluno[]" value="<?=$aluno['id_aluno']?>">
+                                        <td><?echo $alunos_inscritos[$a]['nome']?></td>
+                                        <input type="hidden" name="id_aluno[]" value="<?=$alunos_inscritos[$a]['id_aluno']?>">
                                         <td>
                                           <div class="col-md-5">
                                             <select name="presente[]" id="presente" class="form-control">
@@ -142,16 +116,19 @@
                                         </td>
                                       </tr>
                                      <?php
-                                        }// fechamento foreach($alunos_inscritos as $alunos) 
-                                      }// fechamento do if(count($alunos_inscritos) > 0)
+                                      }// fechamento do for($i = 0; $i < count($alunos_inscritos); $i++)
+                                    }// fechamento do if($alunoDAO->getAllAlunoInscrito($evento['id_evento']) != false)
                                       ?>
                                     <?php 
-                                      if($verifica_visitante == true){
-                                        foreach($visitantes_inscritos as $visitante){
+                                      // verifico se existe visitante inscrito no evento
+                                    if($visitanteDAO->getAllVisitanteInscrito($evento['id_evento'])){
+                                      $visitantes_inscritos = $visitanteDAO->getAllVisitanteInscrito($evento['id_evento']);
+                                      echo "<input type='hidden' name='verifica_visitante' value='1'>";
+                                      for($v = 0; $v < count($visitantes_inscritos); $v++){
                                      ?>
                                       <tr>
-                                        <td><?echo $visitante['nome']?></td>
-                                        <input type="hidden" name="id_visitante[]" value="<?=$visitante['id_visitante']?>">
+                                        <td><?echo $visitantes_inscritos[$v]['nome'];?></td>
+                                        <input type="hidden" name="id_visitante[]" value="<?=$visitantes_inscritos[$v]['id_visitante']?>">
                                         <td>
                                           <div class="col-md-5">
                                             <select name="presente[]" id="presente" class="form-control">
@@ -162,8 +139,8 @@
                                         </td>
                                       </tr>
                                      <?php
-                                        }// fechamento foreach($visitante_inscritos as $visitante) 
-                                      }// fechamento do if(count($visitante_inscritos) > 0)
+                                      }// fechamento do for($v = 0; $v < count($visitantes_inscritos); $v++)
+                                    }// fechamento do if($visitanteDAO->getAllVisitanteInscrito($evento['id_evento']))                                     
                                       ?>
                                   </tbody>
                                 </table>

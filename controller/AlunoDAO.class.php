@@ -516,5 +516,42 @@
 				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do aluno: '.$e->getMessage();
 			}
 		}
+
+		// retorna um array com os dados dos alunos que se inscreveram no evento
+		public function getAllAlunoInscrito($id_evento){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT aluno.id_aluno, aluno.nome FROM aluno, aluno_has_evento WHERE aluno_has_evento.aluno_id_aluno = aluno.id_aluno AND aluno_has_evento.evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_evento',$id_evento);
+
+				$select_aluno_has_evento = $statement->execute();
+
+				if($select_aluno_has_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$aluno_has_evento[] = $evento_dados;
+						}
+						return $aluno_has_evento;
+					}else{
+						$PDO->rollBack();
+						return false;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os alunos inscritos';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os alunos inscritos: '.$e->getMessage();
+			}
+		}
 	}
  ?>

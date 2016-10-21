@@ -501,5 +501,42 @@
 				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do visitante: '.$e->getMessage();
 			}
 		}
+
+		// retorna um array com os dados dos visitantes que se inscreveram no evento
+		public function getAllVisitanteInscrito($id_evento){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT visitante.id_visitante, visitante.nome FROM visitante, visitante_has_evento WHERE visitante_has_evento.visitante_id_visitante = visitante.id_visitante AND visitante_has_evento.evento_id_evento = :id_evento";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_evento',$id_evento);
+
+				$select_visitante_has_evento = $statement->execute();
+
+				if($select_visitante_has_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$visitante_has_evento[] = $evento_dados;
+						}
+						return $visitante_has_evento;
+					}else{
+						$PDO->rollBack();
+						return false;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os visitantes inscritos';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os visitantes inscritos: '.$e->getMessage();
+			}
+		}
 	}
  ?>

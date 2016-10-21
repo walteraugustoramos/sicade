@@ -193,7 +193,7 @@
 		}else{
 			$_SESSION['msg']['error'] = 'Falha ao realizar chamada, tente novamente.';
 			header('Location:../index.php');
-		}	
+		}
 	}else if($_GET['action'] == 'gerar_certificado'){
 		// tratamento para caso as variaveis enviadas via get sejam modificadas na url com valores invalidos
 		if(empty($_GET['id_palestrante']) || empty($_GET['id_evento'])){
