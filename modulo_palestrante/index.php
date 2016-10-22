@@ -15,15 +15,17 @@
   // retorna um array contendo todos os dados do palestrante que está logado no sistema
   $palestrante = $palestranteDAO->getPalestrante($_SESSION['user']['id']);
 
-  // retorna um array contendo os ids dos eventos cadastrados por o palestrante que está logado no sistema
-  $palestrante_has_evento = $palestranteDAO->getPalestrantehasEvento($palestrante['id_palestrante']);
+  //verifico se existem eventos cadastrados pelo palestrante
+  if($palestranteDAO->getPalestrantehasEvento($palestrante['id_palestrante']) != 0){
+	  // retorna um array contendo os ids dos eventos cadastrados por o palestrante que está logado no sistema
+	  $palestrante_has_evento = $palestranteDAO->getPalestrantehasEvento($palestrante['id_palestrante']);
 
-  for($i = 0; $i < count($palestrante_has_evento); $i++){
-    // retorna um arrauy contendo todas as informações dos eventos cadastrado pelo palestrante que ainda não aconteceram
-    if($eventoDAO->getEvento($palestrante_has_evento[$i]['evento_id_evento'],1) != 0){
-      $eventos_dados[] = $eventoDAO->getEvento($palestrante_has_evento[$i]['evento_id_evento'],1);
-    }
-  }
+	  for($i = 0; $i < count($palestrante_has_evento); $i++){
+	    // retorna um arrauy contendo todas as informações dos eventos cadastrado pelo palestrante que ainda não aconteceram
+	    if($eventoDAO->getEvento($palestrante_has_evento[$i]['evento_id_evento'],1) != 0){
+	      $eventos_dados[] = $eventoDAO->getEvento($palestrante_has_evento[$i]['evento_id_evento'],1);
+	    }
+	  }
 ?>
 <div class="container-fluid">
   <div class="row">
@@ -170,6 +172,18 @@
     </div>
   </div>
 </div>
+<?php 
+	}else{?>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3 col-md-offset-5">
+				<span class="alert alert-warning" role="alert">Cadastre um evento para palestrar.</span>
+			</div>
+		</div>
+	</div>
+	<?php
+	}// fechamento do else
+ ?>
 <!--Inclusão do rodapé-->
 <?php 
   include 'include/footer.php';

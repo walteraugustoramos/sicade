@@ -153,19 +153,16 @@
 						return $palestrante_has_evento;
 					}else{
 						$PDO->rollBack();
-						$_SESSION['msg']['error'] = 'Falha ao consultar os eventos cadastrados pelo palestrante';
-						header('Location:index.php');
+						return 0;
 					}
 				}else{
 					$PDO->rollBack();
 					$_SESSION['msg']['error'] = 'Falha ao consultar os eventos cadastrados pelo palestrante';
-					header('Location:index.php');
 				}
 
 			}catch(pdoexception $e){
 				$PDO->rollBack();
 				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos cadastrados pelo palestrante: '.$e->getMessage();
-				header('Location:index.php');
 			}
 		}
 
