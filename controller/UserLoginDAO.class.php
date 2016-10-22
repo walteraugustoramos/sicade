@@ -96,6 +96,79 @@
 			$retorno .= $caracteres[$rand-1];
 			}
 			return $retorno;
+		}
+
+		// função para envio de senha por email apos alteração 
+		// utilizando da biblioteca PHPMailer
+		public function sendPasswordForEmail($user_login){
+
+			$name = ucwords($user_login->getName());
+			$password = $user_login->getPassword();
+
+			// Instância do objeto PHPMailer
+			$mail = new PHPMailer;
+
+			// Configura para envio de e-mails usando SMTP
+			$mail->isSMTP();
+
+			// To load the French version
+			$mail->setLanguage('fr', '../PHPMailer/language/phpmailer.lang-br.php');
+
+			// Servidor SMTP
+			$mail->Host = 'smtp.gmail.com';
+
+			// Usar autenticação SMTP
+			$mail->SMTPAuth = true;
+
+			// Usuário da conta
+			$mail->Username = 'sicadedoctum@gmail.com';
+
+			// Senha da conta
+			$mail->Password = 'sicadedoctum2016';
+
+			// Tipo de encriptação que será usado na conexão SMTP
+			$mail->SMTPSecure = 'ssl';
+
+			// Porta do servidor SMTP
+			$mail->Port = 465;
+
+			// Informa se vamos enviar mensagens usando HTML
+			$mail->IsHTML(true);
+
+			// defino o charset para evitar problemas de acentuação
+			$mail->CharSet = 'UTF-8';
+
+			// Email do Remetente
+			$mail->From = 'sicadedoctum@gmail.com';
+
+			// Nome do Remetente
+			$mail->FromName = 'Sicade';
+
+			// email e nome para resposta
+			$mail->addReplyTo('sicadedoctum@gmail.com', 'Sicade');
+
+			// Endereço do e-mail do destinatário
+			$mail->addAddress('walteraugusto10@hotmail.com');
+
+			// Assunto do e-mail
+			$mail->Subject = 'Sua nova senha para sua conta do Sicade.';
+
+			$body = "
+					<p>Olá <b>$name</b> tudo bem?</p>
+					<p>Sua nova senha para acesso ao Sicade é: <b>$password</b></p>
+					</br></br></br></br><center><p>Sicade - Sistema Integrado de Cadastro de Eventos</p></center>
+					<center><p>www.sicade.com.br</p></center>
+					<center><p>sicadedoctum@gmail.com</p></center>";
+				
+			// Mensagem que vai no corpo do e-mail
+			$mail->Body = $body;
+
+			// Envia o e-mail e retorna true em caso de sucesso ou exibe uma mensagem com o erro
+			if($mail->Send()){
+				return true;
+			}else{
+				$_SESSION['msg']['error'] = 'Falha ao enviar email: '.$mail->ErrorInfo;
+			}
 		}	
 	}
  ?>

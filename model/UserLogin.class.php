@@ -1,6 +1,6 @@
 <?php 
 	class UserLogin{
-		private $id_user, $user_name, $password, $nivel;
+		private $id_user, $user_name, $password, $nivel, $email;
 
 		public function getId(){
 			return $this->id_user;
@@ -32,6 +32,14 @@
 
 		public function setNivel($nivel){
 			$this->nivel = $nivel;
+		}
+
+		public function getEmail(){
+			return $this->email;
+		}
+
+		public function setEmail($email){
+			$this->email = $email;
 		}
 	}
  ?>

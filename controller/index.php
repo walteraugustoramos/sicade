@@ -9,6 +9,7 @@
 	include 'AlunoDAO.class.php';
 	include '../model/Palestrante.class.php';
 	include 'PalestranteDAO.class.php';
+	require '../PHPMailer/PHPMailerAutoload.php';
 
 	// verifico se existe sessão para o usuario, se não existir redireciono para pagina de login com uma mensagem de error
 	if(!empty($_SESSION['user']['name']) && !empty($_SESSION['user']['password'])){
@@ -179,16 +180,24 @@
 
 				// seto o id do palestrante
 				$user_login->setId($palestrante['users_id_user']);
+				// seto o nome do palestrante
+				$user_login->setName($palestrante['nome']);
+
+				// seta o email para onde deve ser enviada a nova senha
+				$user_login->setEmail($email);
 
 				// gero a nova senha para o palestrante
 				$user_login->setPassword($user_loginDAO->gerarNovaSenha(10,true,true,false));
 
 				// gravo a nova senha no banco de dados
-				$user_loginDAO->editarUserLogin($user_login);
+				$user_edit = $user_loginDAO->editarUserLogin($user_login);
 
-				$_SESSION['msg']['success'] = "Sua senha nova senha foi enviada para o email: <b>".$email."</b>";
-				header('Location:../login.php');
+				$user_send = $user_loginDAO->sendPasswordForEmail($user_login);
 
+				if($user_edit == true && $user_send == true){
+					$_SESSION['msg']['success'] = "Sua senha nova senha foi enviada para o email: <b>".$email."</b>";
+					header('Location:../login.php');	
+				}
 			}else{
 				$_SESSION['msg']['error'] = 'Não existe palestrante com o email informado.';
 				header('Location:../login.php');
