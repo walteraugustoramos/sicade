@@ -553,5 +553,38 @@
 				$_SESSION['msg']['error'] = 'Falha ao consultar os alunos inscritos: '.$e->getMessage();
 			}
 		}
+
+		public function getAlunoByEmail($email){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM aluno WHERE email = :email";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':email',$email);
+
+				$select_aluno = $statement->execute();
+
+				if($select_aluno){
+					if($statement->rowCount() != 0){
+						$aluno_dados = $statement->fetch(pdo::FETCH_ASSOC);
+						return $aluno_dados;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno';
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno';
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno: '.$e->getMessage();
+			}
+		}
 	}
  ?>

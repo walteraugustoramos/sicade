@@ -167,6 +167,7 @@
 		}
 
 		$palestranteDAO = new PalestranteDAO();
+		$alunoDAO = new AlunoDAO();
 		$user_loginDAO = new UserLoginDAO();
 		$user_login = new UserLogin();
 
@@ -195,11 +196,42 @@
 				$user_send = $user_loginDAO->sendPasswordForEmail($user_login);
 
 				if($user_edit == true && $user_send == true){
-					$_SESSION['msg']['success'] = "Sua senha nova senha foi enviada para o email: <b>".$email."</b>";
+					$_SESSION['msg']['success'] = "Sua nova senha foi enviada para o email: <b>".$email."</b>";
 					header('Location:../login.php');	
 				}
 			}else{
 				$_SESSION['msg']['error'] = 'Não existe palestrante com o email informado.';
+				header('Location:../login.php');
+			}
+		}else if($nivel == '2'){// recupera senha aluno
+			// verifico se existe aluno com o email informado
+			if($alunoDAO->getAlunoByEmail($email) != false){
+
+				// recupero os dados do aluno
+				$aluno = $alunoDAO->getAlunoByEmail($email);
+
+				// seto o id do aluno
+				$user_login->setId($aluno['users_id_user']);
+				// seto o nome do aluno
+				$user_login->setName($aluno['nome']);
+
+				// seta o email para onde deve ser enviada a nova senha
+				$user_login->setEmail($email);
+
+				// gero a nova senha para o aluno
+				$user_login->setPassword($user_loginDAO->gerarNovaSenha(10,true,true,false));
+
+				// gravo a nova senha no banco de dados
+				$user_edit = $user_loginDAO->editarUserLogin($user_login);
+
+				$user_send = $user_loginDAO->sendPasswordForEmail($user_login);
+
+				if($user_edit == true && $user_send == true){
+					$_SESSION['msg']['success'] = "Sua nova senha foi enviada para o email: <b>".$email."</b>";
+					header('Location:../login.php');	
+				}
+			}else{
+				$_SESSION['msg']['error'] = 'Não existe aluno com o email informado.';
 				header('Location:../login.php');
 			}
 		}
