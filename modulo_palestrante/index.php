@@ -28,30 +28,6 @@
 	  }
 ?>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <?php
-              if(!empty($_SESSION['msg']['success'])){?>
-                <div class="alert alert-success" role="alert">
-                  <center><?=$_SESSION['msg']['success']?>
-                  </center>
-                </div>
-                <?php
-                  unset($_SESSION['msg']['success']);
-                }
-            ?>
-      <?php
-              if(!empty($_SESSION['msg']['error'])){?>
-                <div class="alert alert-danger" role="alert">
-                  <center><?=$_SESSION['msg']['error']?>
-                  </center>
-                </div>
-                <?php
-                  unset($_SESSION['msg']['error']);
-                }
-            ?>
-    </div>
-  </div>
   <div id="list" class="row">
     <div class="table-responsive table-striped table-hover col-md-6 col-md-offset-3">
       <table class="table" id="list-eventos">
@@ -177,13 +153,37 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3 col-md-offset-5">
-				<span class="alert alert-warning" role="alert">Cadastre um evento para palestrar.</span>
+				<center><span class="alert alert-warning" role="alert">Cadastre um evento para palestrar.</span></center>
 			</div>
 		</div>
 	</div>
 	<?php
 	}// fechamento do else
  ?>
+   <div class="row" style="margin-top: 2em;">
+    <div class="col-md-3 col-md-offset-5">
+      <?php
+              if(!empty($_SESSION['msg']['success'])){?>
+                <div class="alert alert-success" role="alert">
+                  <center><?=$_SESSION['msg']['success']?>
+                  </center>
+                </div>
+                <?php
+                  unset($_SESSION['msg']['success']);
+                }
+            ?>
+      <?php
+              if(!empty($_SESSION['msg']['error'])){?>
+                <div class="alert alert-danger" role="alert">
+                  <center><?=$_SESSION['msg']['error']?>
+                  </center>
+                </div>
+                <?php
+                  unset($_SESSION['msg']['error']);
+                }
+            ?>
+    </div>
+  </div>
 <!--Inclusão do rodapé-->
 <?php 
   include 'include/footer.php';
