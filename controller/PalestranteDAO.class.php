@@ -492,5 +492,39 @@
 				$_SESSION['msg']['error'] = 'Falha ao consultar os dados do certificado do palestrante: '.$e->getMessage();
 			}
 		}
+
+		public function getPalestranteByEmail($email){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM palestrante WHERE email = :email";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':email',$email);
+
+				$select_palestrante = $statement->execute();
+
+				if($select_palestrante){
+					if($statement->rowCount() != 0){
+						$palestrante_dados = $statement->fetch(pdo::FETCH_ASSOC);
+						return $palestrante_dados;
+					}else{
+						$PDO->rollBack();
+						return false;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar dados do palestrante';
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar dados do palestrante: '.$e->getMessage();
+				header('Location:../index.php');
+			}
+		}
 	}
  ?>

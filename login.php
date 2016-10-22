@@ -7,10 +7,18 @@
           <img src="img/logo_sicade.jpg" alt="" class="img-responsive img-rounded">
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-4 col-md-offset-4">      
-          <form action="controller/login.php" method="post" class="form-signin" data-toggle="validator">
-            
+      <div class="row" style="margin-top: 1em;">
+        <div class="col-md-4 col-md-offset-4">
+          <?php
+              if(!empty($_SESSION['msg']['success'])){?>
+                <div class="alert alert-success" role="alert">
+                  <center><?=$_SESSION['msg']['success']?>
+                  </center>
+                </div>
+                <?php
+                  unset($_SESSION['msg']['success']);
+                }
+            ?>
             <?php
               if(!empty($_SESSION['msg']['error'])){?>
                 <div class="alert alert-danger" role="alert">
@@ -20,7 +28,12 @@
                 <?php
                   unset($_SESSION['msg']['error']);
                 }
-                ?>
+              ?>          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">      
+          <form action="controller/login.php" method="post" class="form-signin" data-toggle="validator">
             <div class="form-group has-feedback">
               <label for="user_name">Usuario: </label>
               <input type="text" name="user_name" class="form-control" autofocus="true" required="true" placeholder="Username" data-error="Digite seu usuario">
@@ -52,15 +65,27 @@
         <h4 class="modal-title" id="myModalLabel">Esqueceu a senha?</h4>
       </div>
       <div class="modal-body">
-        <form action="#" method="post" data-toggle="validator">
+        <form action="controller/index.php" method="post" data-toggle="validator">
+          <input type="hidden" name="action" value="recuperar_senha">
           <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 col-md-offset-2 form-group has-feedback">
               <label for="email">Informe seu e-mail:</label>
               <input type="email" name="email" class="form-control" required="true" placeholder="Seu melhor email" data-error="Preencha este campo." pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
               <span class="glyphicon form-control-feedback"></span>
               <small class="help-block with-errors"></small>
             </div>
           </div><!--row < form-->
+
+          <div class="row">
+            <div class="col-md-3 col-md-offset-2 form-group">
+              <label for="nivel">Você é?</label>
+              <select name="nivel" id="nivel" class="form-control">
+                <option value="1">Palestrante</option>
+                <option value="2" selected="true">Aluno</option>
+                <option value="3">Visitante</option>
+              </select>
+            </div>
+          </div>
           
           <div class="row">
             <div class="col-md-2 col-md-offset-2">

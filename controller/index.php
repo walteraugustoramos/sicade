@@ -165,7 +165,35 @@
 			$$key = $value;
 		}
 
-		echo $email;
+		$palestranteDAO = new PalestranteDAO();
+		$user_loginDAO = new UserLoginDAO();
+		$user_login = new UserLogin();
+
+		// recupera senha palestrante
+		if($nivel == '1'){
+			// verifico se existe palestrante com o email informado
+			if($palestranteDAO->getPalestranteByEmail($email) != false){
+
+				// recupero os dados do palestrante
+				$palestrante = $palestranteDAO->getPalestranteByEmail($email);
+
+				// seto o id do palestrante
+				$user_login->setId($palestrante['users_id_user']);
+
+				// gero a nova senha para o palestrante
+				$user_login->setPassword($user_loginDAO->gerarNovaSenha(10,true,true,false));
+
+				// gravo a nova senha no banco de dados
+				$user_loginDAO->editarUserLogin($user_login);
+
+				$_SESSION['msg']['success'] = "Sua senha nova senha foi enviada para o email: <b>".$email."</b>";
+				header('Location:../login.php');
+
+			}else{
+				$_SESSION['msg']['error'] = 'Não existe palestrante com o email informado.';
+				header('Location:../login.php');
+			}
+		}
 	}else{
 		$_SESSION['msg']['error'] = 'Faça Login';
 		header('Location:../login.php');
