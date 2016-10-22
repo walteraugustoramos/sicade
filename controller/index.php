@@ -168,6 +168,7 @@
 
 		$palestranteDAO = new PalestranteDAO();
 		$alunoDAO = new AlunoDAO();
+		$visitanteDAO = new VisitanteDAO();
 		$user_loginDAO = new UserLoginDAO();
 		$user_login = new UserLogin();
 
@@ -232,6 +233,37 @@
 				}
 			}else{
 				$_SESSION['msg']['error'] = 'Não existe aluno com o email informado.';
+				header('Location:../login.php');
+			}
+		}else if($nivel == '3'){// recupera senha visitante
+			// verifico se existe visitante com o email informado
+			if($visitanteDAO->getVisitanteByEmail($email) != false){
+
+				// recupero os dados do visitante
+				$aluno = $visitanteDAO->getVisitanteByEmail($email);
+
+				// seto o id do visitante
+				$user_login->setId($visitante['users_id_user']);
+				// seto o nome do visitante
+				$user_login->setName($visitante['nome']);
+
+				// seta o email para onde deve ser enviada a nova senha
+				$user_login->setEmail($email);
+
+				// gero a nova senha para o aluno
+				$user_login->setPassword($user_loginDAO->gerarNovaSenha(10,true,true,false));
+
+				// gravo a nova senha no banco de dados
+				$user_edit = $user_loginDAO->editarUserLogin($user_login);
+
+				$user_send = $user_loginDAO->sendPasswordForEmail($user_login);
+
+				if($user_edit == true && $user_send == true){
+					$_SESSION['msg']['success'] = "Sua nova senha foi enviada para o email: <b>".$email."</b>";
+					header('Location:../login.php');	
+				}
+			}else{
+				$_SESSION['msg']['error'] = 'Não existe visitante com o email informado.';
 				header('Location:../login.php');
 			}
 		}

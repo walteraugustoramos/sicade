@@ -538,5 +538,38 @@
 				$_SESSION['msg']['error'] = 'Falha ao consultar os visitantes inscritos: '.$e->getMessage();
 			}
 		}
+
+		public function getVisitanteByEmail($email){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM visitante WHERE email = :email";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':email',$email);
+
+				$select_aluno = $statement->execute();
+
+				if($select_aluno){
+					if($statement->rowCount() != 0){
+						$aluno_dados = $statement->fetch(pdo::FETCH_ASSOC);
+						return $aluno_dados;
+					}else{
+						$PDO->rollBack();
+						$_SESSION['msg']['error'] = 'Falha ao consultar dados do visitante.';
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar dados do visitante.';
+				}
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar dados do visitante: '.$e->getMessage();
+			}
+		}
 	}
  ?>
