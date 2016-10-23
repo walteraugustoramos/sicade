@@ -206,5 +206,41 @@
 
 		    return $dateObj->format($outputFormat);
 		}
+
+		public function getAllEvento($status){
+			$PDO = connection();
+
+			try{
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM evento WHERE status = :status";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':status',$status);
+
+				$select_evento = $statement->execute();
+
+				if($select_evento){
+					if($statement->rowCount() != 0){
+						while($evento_dados = $statement->fetch(pdo::FETCH_ASSOC)){
+							$eventos[] = $evento_dados;
+						}
+						$PDO->commit();
+						return $eventos;
+					}else{
+						$PDO->rollBack();
+						return 0;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar informações sobre os eventos.';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar informações sobre os eventos: '.$e->getMessage();
+			}
+		}
 	}
  ?>
