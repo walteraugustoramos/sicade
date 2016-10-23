@@ -61,7 +61,8 @@
           			<!--dropdown administrador-->
           			<ul class="dropdown-menu">
             			<li><a href="form_cadastrar_administrador.php">Cadastrar</a></li>
-            			<li><a href="form_editar_administrador.php">Editar Meus Dados</a></li>
+            			<li><a href="form_editar_administrador.php">Alterar Meus Dados</a></li>
+                  <li><a href="form_editar_senha_administrador.php">Alterar Senha</a></li>
           			</ul><!--dropdown administrador-->
         		</li><!--dropdown-->
 

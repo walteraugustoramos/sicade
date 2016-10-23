@@ -17,6 +17,7 @@
 	include '../../controller/AlunoDAO.class.php';
 	include '../../model/Evento.class.php';
 	include '../../controller/EventoDAO.class.php';
+	include '../../controller/UserLoginDAO.class.php';
 
 	// verifico se existe sessão para o usuario, caso não exista redireciono para a pagina de login
 	if(empty($_SESSION['user']['name']) && empty($_SESSION['user']['password'])){
@@ -324,6 +325,29 @@
 				header("Location:../index.php");
 			}else{
 				$_SESSION['msg']['error'] = "Erro ao Editar Dados!!!";
+				header("Location:../index.php");
+			}
+		}
+	}else if($_POST['action'] == 'editar_senha_administrador'){
+		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
+			$_SESSION['msg']['error'] = 'Preencha todos os campos';
+			header('Location:../form_editar_senha_administrador.php');
+		}else{// todos os campos do formulario foram preenchidos executa o else
+			foreach ($_POST as $key => $value) {
+				$$key = $value;
+			}
+
+			$user_login = new UserLogin();
+			$user_login_DAO = new UserLoginDAO();
+
+			$user_login->setId($_SESSION['user']['id']);
+			$user_login->setPassword($password);
+
+			if($user_login_DAO->editarUserLogin($user_login)){
+				$_SESSION['msg']['success'] = "Senha Editada com Sucesso!!!";
+				header("Location:../index.php");
+			}else{
+				$_SESSION['msg']['error'] = "Erro ao Editar Senha!!!";
 				header("Location:../index.php");
 			}
 		}
