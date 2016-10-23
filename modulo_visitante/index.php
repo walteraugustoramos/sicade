@@ -30,11 +30,13 @@
 </div>
 
 <div class="container-fluid">
-  <div class="row">
-    <h1 class="text-center">Sistema Integrado de Cadastro de Eventos</h1>
-  </div>
+  <div class="row" style="margin-top: 2em;">
+    <div class="col-md-4 col-md-offset-5 col-xs-4 col-xs-offset-4">
+      <img src="../img/sicade.png" alt="" class="img-responsive">
+    </div>
+  </div>  
 
-  <div class="row">
+  <div class="row" style="margin-top: 1em;">
     <div class="col-md-6 col-md-offset-3 form-group">
       <input type="text" id="busca" class="form-control">
     </div>

@@ -71,7 +71,6 @@
           			<!--dropdown palestrante-->
           			<ul class="dropdown-menu">
             			<li><a href="form_cadastrar_palestrante.php">Cadastrar</a></li>
-            			<li><a href="#">Pesquisar</a></li>
           			</ul><!--dropdown palestrante-->
         		</li><!--dropdown-->
 
@@ -80,7 +79,6 @@
                 <!--dropdown curso-->
                 <ul class="dropdown-menu">
                   <li><a href="form_cadastrar_curso.php">Cadastrar</a></li>
-                  <li><a href="#">Pesquisar</a></li>
                 </ul><!--dropdown curso-->
             </li><!--dropdown-->
 
@@ -89,7 +87,6 @@
           			<!--dropdown aluno-->
           			<ul class="dropdown-menu">
             			<li><a href="form_cadastrar_aluno.php">Cadastrar</a></li>
-            			<li><a href="#">Pesquisar</a></li>
           			</ul><!--dropdown aluno-->
         		</li><!--dropdown-->
 
@@ -98,7 +95,6 @@
           			<!--dropdown visitante-->
           			<ul class="dropdown-menu">
             			<li><a href="form_cadastrar_visitante.php">Cadastrar</a></li>
-            			<li><a href="#">Pesquisar</a></li>
           			</ul><!--dropdown visitante-->
         		</li><!--dropdown-->
 
@@ -107,7 +103,6 @@
           			<!--dropdown evento-->
           			<ul class="dropdown-menu">
             			<li><a href="form_cadastrar_evento.php">Cadastrar</a></li>
-            			<li><a href="#">Pesquisar</a></li>
           			</ul><!--dropdown evento-->
         		</li><!--dropdown-->
 

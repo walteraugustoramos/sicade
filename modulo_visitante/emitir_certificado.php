@@ -23,6 +23,11 @@
     }
 ?>
 <div class="container-fluid">
+  <div class="row" style="margin-bottom: 2em;">
+    <div class="col-md-3 col-md-offset-4">
+      <center><h3>Certificados</h3></center>
+    </div>
+  </div>
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4">
 			<?php
