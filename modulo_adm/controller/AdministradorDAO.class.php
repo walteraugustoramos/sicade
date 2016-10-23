@@ -52,5 +52,42 @@
 				$PDO->rollBack();
 			}
 		}
+
+		public function editarAdministrador($administrador){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "UPDATE funcionario SET nome = :nome, email = :email, endereco = :endereco, numero = :numero, bairro = :bairro, estado = :estado, cidade = :cidade, celular = :celular WHERE id_administrador = :id_administrador";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':nome', $administrador->getName());
+				$statement->bindValue(':email', $administrador->getEmail());
+				$statement->bindValue(':endereco', $administrador->getEndereco());
+				$statement->bindValue(':numero', $administrador->getNumero());
+				$statement->bindValue(':bairro', $administrador->getBairro());
+				$statement->bindValue(':estado', $administrador->getEstado());
+				$statement->bindValue(':cidade', $administrador->getCidade());
+				$statement->bindValue(':celular', $administrador->getCelular());
+				$statement->bindValue(':id_administrador', $administrador->getId());
+				
+				$update_palestrante = $statement->execute();
+
+				if($update_palestrante){
+					$PDO->commit();
+					return true;
+				}else{
+					$PDO->rollBack();
+					return false;
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = "Erro ao Alterar Dados do Funcionario!!!";
+			}
+		}
 	}
  ?>

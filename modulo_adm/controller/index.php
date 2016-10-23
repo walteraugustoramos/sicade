@@ -4,7 +4,7 @@
 	var_dump($_SESSION);
 
 	include '../../include/config.php';
-	include '../model/Administrador.class.php';
+	include '../../model/Administrador.class.php';
 	include 'AdministradorDAO.class.php';
 	include '../../model/UserLogin.class.php';
 	include '../../model/Palestrante.class.php';
@@ -297,5 +297,35 @@
 				header("Location:../index.php");
 			}
 		}	
+	}else if($_POST['action'] == 'editar_funcionario'){
+		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
+			$_SESSION['msg']['error'] = 'Preencha todos os campos';
+			header('Location:../form_editar_administrador.php');
+		}else{// todos os campos do formulario foram preenchidos executa o else
+			foreach ($_POST as $key => $value) {
+				$$key = $value;
+			}
+
+			$administrador = new Administrador();
+			$administradorDAO = new AdministradorDAO();
+
+			$administrador->setId($id_funcionario);
+			$administrador->setName($name);
+			$administrador->setEmail($email);
+			$administrador->setEndereco($endereco);
+			$administrador->setNumero($numero);
+			$administrador->setBairro($bairro);
+			$administrador->setEstado($estado);
+			$administrador->setCidade($cidade);
+			$administrador->setCelular($celular);
+
+			if($administradorDAO->editarAdministrador($administrador)){
+				$_SESSION['msg']['success'] = "Dados Editados com Sucesso!!!";
+				header("Location:../index.php");
+			}else{
+				$_SESSION['msg']['error'] = "Erro ao Editar Dados!!!";
+				header("Location:../index.php");
+			}
+		}
 	}
  ?>

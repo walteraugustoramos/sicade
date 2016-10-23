@@ -61,7 +61,7 @@
           			<!--dropdown administrador-->
           			<ul class="dropdown-menu">
             			<li><a href="form_cadastrar_administrador.php">Cadastrar</a></li>
-            			<li><a href="#">Pesquisar</a></li>
+            			<li><a href="form_editar_administrador.php">Editar Meus Dados</a></li>
           			</ul><!--dropdown administrador-->
         		</li><!--dropdown-->
 
