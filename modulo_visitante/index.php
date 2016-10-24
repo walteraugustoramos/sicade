@@ -1,6 +1,26 @@
 <!--Inclusão do menu principal do visitante-->
 <?php
   include 'include/header.php';
+  include '../include/config.php';
+  include '../controller/VisitanteDAO.class.php';
+  include '../controller/EventoDAO.class.php';
+
+  if(!empty($_SESSION['evento']['id_evento'])){
+
+    $visitanteDAO = new VisitanteDAO();
+    $eventoDAO = new EventoDAO();
+
+    $id_evento = $_SESSION['evento']['id_evento'];
+
+    $evento = $eventoDAO->getEvento($id_evento, 1);
+
+    $visitante = $visitanteDAO->getVisitante($_SESSION['user']['id']);
+
+    
+    if($visitanteDAO->inscreverVisitante($visitante['id_visitante'],$id_evento) && $eventoDAO->setQuantidadeInscritosEvento($id_evento,($evento['quantidade_inscritos']+1))){
+      $_SESSION['msg']['success'] = 'Inscrição realizada com sucesso.';
+    }     
+  }
 ?>
 <div class="container-fluid">
 	<div class="row">

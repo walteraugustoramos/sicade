@@ -1,6 +1,24 @@
 <!--Inclusão do menu principal do aluno-->
 <?php
   include 'include/header.php';
+  include '../include/config.php';
+  include '../controller/AlunoDAO.class.php';
+  include '../controller/EventoDAO.class.php';
+
+  if(!empty($_SESSION['evento']['id_evento'])){
+      $alunoDAO = new AlunoDAO();
+      $eventoDAO = new EventoDAO();
+
+      $id_evento = $_SESSION['evento']['id_evento'];
+
+      $evento = $eventoDAO->getEvento($id_evento, 1);
+
+      $aluno = $alunoDAO->getAluno($_SESSION['user']['id']);
+
+      if($alunoDAO->inscreverAluno($aluno['id_aluno'],$id_evento) && $eventoDAO->setQuantidadeInscritosEvento($id_evento,($evento['quantidade_inscritos']+1))){
+        $_SESSION['msg']['success'] = 'Inscrição realizada com sucesso.';
+      }
+  }
 ?>
 <div class="container-fluid">
 	<div class="row">

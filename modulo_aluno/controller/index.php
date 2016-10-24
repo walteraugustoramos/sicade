@@ -89,7 +89,6 @@
 				$_SESSION['msg']['error'] = 'Desculpe mas você já se inscreveu neste evento.';
 			 	header('Location:../index.php');
 			}
-			
 		}
 	}else if($_POST['action'] == 'gerar_certificado'){
 		echo "<pre>";
