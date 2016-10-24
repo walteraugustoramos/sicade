@@ -63,18 +63,18 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-11 col-md-offset-1">
       <div class="row">
         <form action="controller/index.php" method="post">
         <input type="hidden" name="action" value="inscrever_visitante">
         <input type="hidden" name="id_evento" id="id_evento">
         <input type="hidden" name="quantidade_inscritos" id="quantidade_inscritos">
-        <div class="col-md-2 col-md-offset-2 form-group">
+        <div class="col-md-3 form-group">
           <label for="nome">Evento</label>
           <input type="text" name="nome" id="nome" class="form-control form_evento" readonly required="true">
         </div>
 
-        <div class="col-md-2 form-group">
+        <div class="col-md-3 form-group">
           <label for="nome">Data</label>
           <input type="text" name="data_inicio" id="data_inicio" class="form-control form_evento" readonly required="true">
         </div>

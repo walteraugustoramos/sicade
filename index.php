@@ -16,16 +16,16 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-11 col-md-offset-1">
 			<div class="row form_dados">
 				<form action="confirme_login.php" method="post">
           <input type="hidden" id="id_evento" name="id_evento">
-  				<div class="col-md-2 col-md-offset-2 form-group">
+  				<div class="col-md-3 form-group">
   					<label for="nome">Evento</label>
   					<input type="text" id="nome" class="form-control form_evento" readonly>
   				</div>
 
-  				<div class="col-md-2 form-group">
+  				<div class="col-md-3 form-group">
   					<label for="nome">Data</label>
   					<input type="text" id="data_inicio" class="form-control form_evento" readonly>
   				</div>
