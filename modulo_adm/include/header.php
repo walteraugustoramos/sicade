@@ -74,13 +74,9 @@
           			</ul><!--dropdown palestrante-->
         		</li><!--dropdown-->
 
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Curso <span class="caret"></span></a>
-                <!--dropdown curso-->
-                <ul class="dropdown-menu">
-                  <li><a href="form_cadastrar_curso.php">Cadastrar</a></li>
-                </ul><!--dropdown curso-->
-            </li><!--dropdown-->
+            <li>
+                <a href="curso.php">Cursos</a>
+            </li>
 
         		<li class="dropdown">
           			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aluno <span class="caret"></span></a>

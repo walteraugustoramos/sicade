@@ -110,6 +110,20 @@
 			$_SESSION['msg']['error'] = "Erro ao Cadastrar Curso!!!";
 			header("Location:../index.php");
 			}
+	}else if($_POST['action'] == 'editar_curso'){
+		foreach ($_POST as $key => $value) {
+			$$key = $value;
+		}
+		$cursoDAO = new CursoDAO();
+
+		
+		if($cursoDAO->editarCurso($curso_name, $id_curso) != false){
+			$_SESSION['msg']['success'] = "Curso editado com Sucesso!!!";
+			header("Location:../curso.php");
+		}else{
+			$_SESSION['msg']['error'] = "Erro ao editar Curso!!!";
+			header("Location:../curso.php");
+		}
 	}else if($_POST['action'] == 'cadastrar_visitante'){
 		if(empty($_POST) && isset($_POST)){// verifica se todos os campos foram preenchidos
 			$_SESSION['msg']['error'] = 'Preencha todos os campos.';
