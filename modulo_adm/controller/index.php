@@ -351,5 +351,106 @@
 				header("Location:../index.php");
 			}
 		}
+	}else if($_POST['action'] == 'consultar_validade_certificado'){
+		foreach ($_POST as $key => $value) {
+			$$key = $value;
+		}
+		$palestranteDAO = new PalestranteDAO();
+		$eventoDAO = new EventoDAO();
+		$alunoDAO = new AlunoDAO();
+		$visitanteDAO = new VisitanteDAO();
+
+		// verifica o nivel do usuario e direciona para a consulta correta de chave do certificado
+		if($nivel == '1'){// palestrante
+
+			if($palestranteDAO->verificarValidadeCertificado($chave_validacao_certificado) != false){
+				$palestrante_certificado = $palestranteDAO->verificarValidadeCertificado($chave_validacao_certificado);
+				
+				$palestrante = $palestranteDAO->getPalestranteById($palestrante_certificado['palestrante_id_palestrante']);
+
+				$evento = $eventoDAO->getEvento($palestrante_certificado['evento_id_evento'], 0);
+
+				// conversão data
+				$evento['data_inicio'] = strftime('%d de %B de %Y', strtotime($evento['data_inicio']));
+				// conversão data
+				$evento['data_fim'] = strftime('%d de %B de %Y', strtotime($evento['data_fim']));
+				
+				$_SESSION['certificado']['valido'] = "Certificado Válido.";
+				$_SESSION['certificado']['evento'] = ucwords($evento['nome']);
+				$_SESSION['certificado']['data_inicio'] = $evento['data_inicio'];
+				$_SESSION['certificado']['data_fim'] = $evento['data_fim'];
+				$_SESSION['certificado']['carga_horaria'] = $evento['carga_horaria'];
+				$_SESSION['certificado']['palestrante'] = ucwords($palestrante['nome']);
+				$_SESSION['certificado']['participante'] = ucwords($palestrante['nome']);
+				$_SESSION['certificado']['chave_validacao'] = $chave_validacao_certificado;
+				header('Location:../validar_certificado.php');
+			}else{
+				$_SESSION['certificado']['invalido'] = "Certificado Inválido.";
+				header('Location:../validar_certificado.php');
+			}
+		}else if($nivel == '2'){// aluno
+
+
+			if($alunoDAO->verificarValidadeCertificado($chave_validacao_certificado) != false){
+
+				$aluno_certificado = $alunoDAO->verificarValidadeCertificado($chave_validacao_certificado);
+
+				$aluno = $alunoDAO->getAlunoById($aluno_certificado['aluno_id_aluno']);
+
+				$palestrante = $palestranteDAO->getPalestranteById($aluno_certificado['palestrante_id_palestrante']);
+
+				$evento = $eventoDAO->getEvento($aluno_certificado['evento_id_evento'], 0);
+
+				// conversão data
+				$evento['data_inicio'] = strftime('%d de %B de %Y', strtotime($evento['data_inicio']));
+				// conversão data
+				$evento['data_fim'] = strftime('%d de %B de %Y', strtotime($evento['data_fim']));
+				
+				$_SESSION['certificado']['valido'] = "Certificado Válido.";
+				$_SESSION['certificado']['evento'] = ucwords($evento['nome']);
+				$_SESSION['certificado']['data_inicio'] = $evento['data_inicio'];
+				$_SESSION['certificado']['data_fim'] = $evento['data_fim'];
+				$_SESSION['certificado']['carga_horaria'] = $evento['carga_horaria'];
+				$_SESSION['certificado']['palestrante'] = ucwords($palestrante['nome']);
+				$_SESSION['certificado']['participante'] = ucwords($aluno['nome']);
+				$_SESSION['certificado']['chave_validacao'] = $chave_validacao_certificado;				
+				$_SESSION['certificado']['valido'] = "Certificado Válido.";
+				header('Location:../validar_certificado.php');
+			}else{
+				$_SESSION['certificado']['invalido'] = "Certificado Inválido.";
+				header('Location:../validar_certificado.php');
+			}
+		}else if($nivel == '3'){// visitante
+
+			if($visitanteDAO->verificarValidadeCertificado($chave_validacao_certificado) != false){
+
+				$visitante_certificado = $visitanteDAO->verificarValidadeCertificado($chave_validacao_certificado);
+				
+				$visitante = $visitanteDAO->getVisitanteById($visitante_certificado['visitante_id_visitante']);
+
+				$palestrante = $palestranteDAO->getPalestranteById($visitante_certificado['palestrante_id_palestrante']);
+
+				$evento = $eventoDAO->getEvento($visitante_certificado['evento_id_evento'], 0);
+
+				// conversão data
+				$evento['data_inicio'] = strftime('%d de %B de %Y', strtotime($evento['data_inicio']));
+				// conversão data
+				$evento['data_fim'] = strftime('%d de %B de %Y', strtotime($evento['data_fim']));
+				
+				$_SESSION['certificado']['valido'] = "Certificado Válido.";
+				$_SESSION['certificado']['evento'] = ucwords($evento['nome']);
+				$_SESSION['certificado']['data_inicio'] = $evento['data_inicio'];
+				$_SESSION['certificado']['data_fim'] = $evento['data_fim'];
+				$_SESSION['certificado']['carga_horaria'] = $evento['carga_horaria'];
+				$_SESSION['certificado']['palestrante'] = ucwords($palestrante['nome']);
+				$_SESSION['certificado']['participante'] = ucwords($visitante['nome']);
+				$_SESSION['certificado']['chave_validacao'] = $chave_validacao_certificado;				
+				$_SESSION['certificado']['valido'] = "Certificado Válido.";
+				header('Location:../validar_certificado.php');
+			}else{
+				$_SESSION['certificado']['invalido'] = "Certificado Inválido.";
+				header('Location:../validar_certificado.php');
+			}
+		}
 	}
  ?>
