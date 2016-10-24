@@ -133,7 +133,7 @@
 			}
 		}
 
-		public function inscreverAluno($id_aluno,$id_evento){
+		public function inscreverAluno($id_aluno,$id_evento, $numero_inscricao){
 			$PDO = connection();
 
 			try{
@@ -156,13 +156,14 @@
 						return false;
 					}else{// aluno não esta incrito neste evento faço a sua inscrição
 
-						$sql = "INSERT INTO aluno_has_evento(aluno_id_aluno,evento_id_evento,presente) VALUES(:id_aluno, :id_evento, :presente)";
+						$sql = "INSERT INTO aluno_has_evento(aluno_id_aluno,evento_id_evento,presente,numero_inscricao) VALUES(:id_aluno, :id_evento, :presente, :numero_inscricao)";
 
 						$statement = $PDO->prepare($sql);
 
 						$statement->bindValue(':id_aluno',$id_aluno);
 						$statement->bindValue(':id_evento',$id_evento);
 						$statement->bindValue(':presente','0');// por padrão o aluno não está presente até que o palestrante realize a chamada
+						$statement->bindValue(':numero_inscricao',$numero_inscricao);
 
 						$insert_aluno_has_evento = $statement->execute();
 
@@ -588,6 +589,40 @@
 			}catch(pdoexception $e){
 				$PDO->rollBack();
 				$_SESSION['msg']['error'] = 'Falha ao consultar dados do aluno: '.$e->getMessage();
+			}
+		}
+
+		public function getAlunohasEventoById($id_aluno){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM aluno_has_evento WHERE aluno_id_aluno = :id_aluno";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_aluno',$id_aluno);
+
+				$select_aluno_has_evento = $statement->execute();
+
+				if($select_aluno_has_evento){
+					if($statement->rowCount() != 0){
+						$aluno_has_evento = $statement->fetch(pdo::FETCH_ASSOC);
+						return $aluno_has_evento;
+					}else{
+						$PDO->rollBack();
+						return 0;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o aluno participou.';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o aluno participou: '.$e->getMessage();
 			}
 		}
 	}

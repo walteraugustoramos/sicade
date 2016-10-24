@@ -1,5 +1,5 @@
 <?php
-
+	
 	class EventoDAO{
 
 		public function cadastrarEvento($evento,$palestrante_id,$user_id){
@@ -240,6 +240,106 @@
 			}catch(pdoexception $e){
 				$PDO->rollBack();
 				$_SESSION['msg']['error'] = 'Falha ao consultar informações sobre os eventos: '.$e->getMessage();
+			}
+		}
+
+		public function gerarNumeroInscricao($tamanho = 8, $maiusculas = true, $numeros = true, $simbolos = false){
+			// Caracteres de cada tipo
+			$lmin = 'abcdefghijklmnopqrstuvwxyz';
+			$lmai = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			$num = '1234567890';
+			$simb = '!@#$%*-';
+			// Variáveis internas
+			$retorno = '';
+			$caracteres = '';
+			// Agrupamos todos os caracteres que poderão ser utilizados
+			$caracteres .= $lmin;
+			if ($maiusculas) $caracteres .= $lmai;
+			if ($numeros) $caracteres .= $num;
+			if ($simbolos) $caracteres .= $simb;
+			// Calculamos o total de caracteres possíveis
+			$len = strlen($caracteres);
+			for ($n = 1; $n <= $tamanho; $n++) {
+			// Criamos um número aleatório de 1 até $len para pegar um dos caracteres
+			$rand = mt_rand(1, $len);
+			// Concatenamos um dos caracteres na variável $retorno
+			$retorno .= $caracteres[$rand-1];
+			}
+			return $retorno;
+		}
+
+		// função para envio de numero de inscrição por email apos inscrição no evento 
+		// utilizando da biblioteca PHPMailer
+		public function sendNumeroInscricaoForEmail($user_login, $nome_evento){
+
+			$name = ucwords($user_login->getName());
+			$numero_inscricao = $user_login->getNumeroInscricao();
+			$nome_evento = ucwords($nome_evento);
+
+			// Instância do objeto PHPMailer
+			$mail = new PHPMailer;
+
+			// Configura para envio de e-mails usando SMTP
+			$mail->isSMTP();
+
+			// To load the French version
+			$mail->setLanguage('fr', '../PHPMailer/language/phpmailer.lang-br.php');
+
+			// Servidor SMTP
+			$mail->Host = 'smtp.gmail.com';
+
+			// Usar autenticação SMTP
+			$mail->SMTPAuth = true;
+
+			// Usuário da conta
+			$mail->Username = 'sicadedoctum@gmail.com';
+
+			// Senha da conta
+			$mail->Password = 'sicadedoctum2016';
+
+			// Tipo de encriptação que será usado na conexão SMTP
+			$mail->SMTPSecure = 'ssl';
+
+			// Porta do servidor SMTP
+			$mail->Port = 465;
+
+			// Informa se vamos enviar mensagens usando HTML
+			$mail->IsHTML(true);
+
+			// defino o charset para evitar problemas de acentuação
+			$mail->CharSet = 'UTF-8';
+
+			// Email do Remetente
+			$mail->From = 'sicadedoctum@gmail.com';
+
+			// Nome do Remetente
+			$mail->FromName = 'Sicade';
+
+			// email e nome para resposta
+			$mail->addReplyTo('sicadedoctum@gmail.com', 'Sicade');
+
+			// Endereço do e-mail do destinatário
+			$mail->addAddress($user_login->getEmail());
+
+			// Assunto do e-mail
+			$mail->Subject = "Seu numero de inscrição para o Evento $nome_evento";
+
+			$body = "
+					<p>Olá <b>$name</b> tudo bem?</p>
+					<p>Guarde bem o seu numero de inscrição, ele será necessário para confirmar a sua participação no evento <b>$nome_evento</b></p>
+					<p>Seu numero de inscrição: <b>$numero_inscricao</b></p>
+					</br></br></br></br><center><p>Sicade - Sistema Integrado de Cadastro de Eventos</p></center>
+					<center><p>www.sicade.com.br</p></center>
+					<center><p>sicadedoctum@gmail.com</p></center>";
+				
+			// Mensagem que vai no corpo do e-mail
+			$mail->Body = $body;
+
+			// Envia o e-mail e retorna true em caso de sucesso ou exibe uma mensagem com o erro
+			if($mail->Send()){
+				return true;
+			}else{
+				$_SESSION['msg']['error'] = 'Falha ao enviar email: '.$mail->ErrorInfo;
 			}
 		}
 	}

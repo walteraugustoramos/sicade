@@ -119,7 +119,7 @@
 			}
 		}
 
-		public function inscreverVisitante($id_visitante,$id_evento){
+		public function inscreverVisitante($id_visitante,$id_evento, $numero_inscricao){
 			$PDO = connection();
 
 			try{
@@ -142,13 +142,14 @@
 						return false;
 					}else{// visitante não esta incrito neste evento faço a sua inscrição
 
-						$sql = "INSERT INTO visitante_has_evento(visitante_id_visitante,evento_id_evento,presente) VALUES(:id_visitante, :id_evento, :presente)";
+						$sql = "INSERT INTO visitante_has_evento(visitante_id_visitante,evento_id_evento,presente,numero_inscricao) VALUES(:id_visitante, :id_evento, :presente, :numero_inscricao)";
 
 						$statement = $PDO->prepare($sql);
 
 						$statement->bindValue(':id_visitante',$id_visitante);
 						$statement->bindValue(':id_evento',$id_evento);
 						$statement->bindValue(':presente','0');// por padrão o visitante não está presente até que o palestrante realize a chamada
+						$statement->bindValue(':numero_inscricao',$numero_inscricao);
 
 						$insert_visitante_has_evento = $statement->execute();
 
@@ -573,6 +574,40 @@
 			}catch(pdoexception $e){
 				$PDO->rollBack();
 				$_SESSION['msg']['error'] = 'Falha ao consultar dados do visitante: '.$e->getMessage();
+			}
+		}
+
+		public function getVisitantehasEventoById($id_visitante){
+			$PDO = connection();
+
+			try{
+				// inicia a transação
+				$PDO->beginTransaction();
+
+				$sql = "SELECT *FROM visitante_has_evento WHERE visitante_id_visitante = :id_visitante";
+
+				$statement = $PDO->prepare($sql);
+
+				$statement->bindValue(':id_visitante',$id_visitante);
+
+				$select_visitante_has_evento = $statement->execute();
+
+				if($select_visitante_has_evento){
+					if($statement->rowCount() != 0){
+						$visitante_has_evento = $statement->fetch(pdo::FETCH_ASSOC);
+						return $visitante_has_evento;
+					}else{
+						$PDO->rollBack();
+						return 0;
+					}
+				}else{
+					$PDO->rollBack();
+					$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o visitante participou.';
+				}
+
+			}catch(pdoexception $e){
+				$PDO->rollBack();
+				$_SESSION['msg']['error'] = 'Falha ao consultar os eventos que o visitante participou: '.$e->getMessage();
 			}
 		}
 	}

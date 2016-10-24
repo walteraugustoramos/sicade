@@ -1,7 +1,6 @@
 <?php 
 	session_start();
-	define('_MPDF_PATH', '../../mpdf60/');// indica o caminho dos arquivos da biblioteca MPDF
-	include(_MPDF_PATH.'mpdf.php');// Inclui o arquivo de configuração da biblioteca MPDF
+	require '../../PHPMailer/PHPMailerAutoload.php';
 	include '../../include/config.php';
 	include '../../model/Visitante.class.php';
 	include '../../controller/VisitanteDAO.class.php';
@@ -73,10 +72,21 @@
 
 			$visitanteDAO = new VisitanteDAO();
 			$eventoDAO = new EventoDAO();
+			$user_login = new UserLogin();
+
+			// recupera os dados do evento que o visitante está se inscrevendo
+			$evento = $eventoDAO->getEvento($id_evento, 1);
+
+			// gera o numero de inscrição
+			$numero_inscricao = $eventoDAO->gerarNumeroInscricao(10,false,true,false);
 
 			$visitante = $visitanteDAO->getVisitante($_SESSION['user']['id']);
 
-			if($visitanteDAO->inscreverVisitante($visitante['id_visitante'],$id_evento) && $eventoDAO->setQuantidadeInscritosEvento($id_evento,($quantidade_inscritos+1))){
+			$user_login->setNumeroInscricao($numero_inscricao);
+			$user_login->setName($visitante['nome']);
+			$user_login->setEmail($visitante['email']);
+
+			if($visitanteDAO->inscreverVisitante($visitante['id_visitante'],$id_evento, $numero_inscricao) && $eventoDAO->setQuantidadeInscritosEvento($id_evento,($quantidade_inscritos+1)) && $eventoDAO->sendNumeroInscricaoForEmail($user_login,$evento['nome'])){
 				$_SESSION['msg']['success'] = 'Inscrição realizada com sucesso.';
 			 	header('Location:../index.php');
 			}else{
