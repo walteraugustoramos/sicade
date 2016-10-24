@@ -148,7 +148,7 @@
 			$mail->addReplyTo('sicadedoctum@gmail.com', 'Sicade');
 
 			// Endereço do e-mail do destinatário
-			$mail->addAddress('walteraugusto10@hotmail.com');
+			$mail->addAddress($user_login->getEmail());
 
 			// Assunto do e-mail
 			$mail->Subject = 'Sua nova senha para sua conta do Sicade.';
