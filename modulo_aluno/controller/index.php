@@ -1,5 +1,7 @@
 <?php 
 	session_start();
+	define('_MPDF_PATH', '../../mpdf60/');// indica o caminho dos arquivos da biblioteca MPDF
+	include(_MPDF_PATH.'mpdf.php');// Inclui o arquivo de configuração da biblioteca MPDF
 	require '../../PHPMailer/PHPMailerAutoload.php';
 	include '../../include/config.php';
 	include '../../model/Aluno.class.php';
