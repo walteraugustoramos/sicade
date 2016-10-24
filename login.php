@@ -43,7 +43,7 @@
 
             <div class="form-group has-feedback">
               <label for="password">Senha: </label>
-              <input type="password" name="password" class="form-control" required="true" placeholder="Password" data-error="Digite sua senha">
+              <input type="password" name="password" class="form-control" required="true" placeholder="Password" data-error="Digite sua senha" minlength="8">
               <span class="glyphicon form-control-feedback"></span>
               <small class="help-block with-errors">Por favor, digite sua senha.</small>
             </div>
