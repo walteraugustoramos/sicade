@@ -499,10 +499,8 @@
 
 				if($select_aluno_certificado){
 					if($statement->rowCount() != 0){
-						//$aluno_certificado = $statement->fetch(pdo::FETCH_ASSOC);
-						//return $aluno_certificado;
-						$PDO->rollBack();
-						return true;
+						$aluno_certificado = $statement->fetch(pdo::FETCH_ASSOC);
+						return $aluno_certificado;
 					}else{
 						$PDO->rollBack();
 						return false;

@@ -476,9 +476,7 @@
 				if($select_palestrante_certificado){
 					if($statement->rowCount() != 0){
 						$palestrante_certificado = $statement->fetch(pdo::FETCH_ASSOC);
-						//return $palestrante_certificado;
-						$PDO->rollBack();
-						return true;
+						return $palestrante_certificado;
 					}else{
 						$PDO->rollBack();
 						return false;

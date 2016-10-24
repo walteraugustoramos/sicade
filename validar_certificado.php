@@ -3,14 +3,14 @@
   include 'include/header.php';
 ?>
 <div class="container-fluid">
-  <div class="row" style="margin-top: 2em;">
+  <div class="row" style="margin-top: 1em;">
     <div class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4">
       <center><img src="img/sicade.png" alt="" class="img-responsive"></center>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-md-4 col-md-offset-4" style="margin-top: 2em;">
+    <div class="col-md-4 col-md-offset-4" style="margin-top: 1em;">
       <h2><center>Validação de Certificado</center></h2>
     </div>
   </div>
@@ -18,7 +18,7 @@
   <form action="controller/index.php" method="post" data-toggle="validator">
     <input type="hidden" name="action" value="consultar_validade_certificado">
     <div class="row">
-      <div class="col-md-4 col-md-offset-4 form-group has-feedback" style="margin-top: 2em;">
+      <div class="col-md-4 col-md-offset-4 form-group has-feedback" style="margin-top: 1em;">
         <center>
           <label for="chave_validacao_certificado" style="color: #FF8A8A">Para verificar a autenticidade do certificado emitido pelo Sicade, informe a chave de validação do certificado.</label>
           <input type="text" name="chave_validacao_certificado" required="true" class="form-control" maxlength="32" minlength="32" data-error="Digite a chave de validação impressa no certificado." placeholder="d7466182cfe8de0de09e4d064290d6e3">
@@ -55,7 +55,6 @@
                   </center>
                 </div>
                 <?php
-                  unset($_SESSION['certificado']['valido']);
                 }
             ?>
       <?php
@@ -70,6 +69,42 @@
             ?>
     </div>
   </div>
+  <?php 
+    if(!empty($_SESSION['certificado']['valido'])){
+   ?>
+  <div id="list" class="row">
+    <div class="table-responsive table-hover table-striped col-md-10 col-md-offset-1">
+      <table class="table" id="dados-certificado">
+        <thead>
+          <tr>
+            <th>Evento</th>
+            <th>Data Inicio</th>
+            <th>Data Fim</th>
+            <th>Carga Horária</th>
+            <th>Palestrante</th>
+            <th>Participante</th>
+            <th>Chave Validação</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><?echo $_SESSION['certificado']['evento']?></td>
+            <td><?echo $_SESSION['certificado']['data_inicio']?></td>
+            <td><?echo $_SESSION['certificado']['data_fim']?></td>
+            <td><?echo $_SESSION['certificado']['carga_horaria']?></td>
+            <td><?echo $_SESSION['certificado']['palestrante']?></td>
+            <td><?echo $_SESSION['certificado']['participante']?></td>
+            <td><?echo $_SESSION['certificado']['chave_validacao']?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <?php
+    unset($_SESSION['certificado']['valido']); 
+    }// fechamento do if
+   ?>
 </div><!--container-fluid-->
 <!--Inclusão do rodapé-->
 <?php 

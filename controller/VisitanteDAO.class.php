@@ -484,10 +484,8 @@
 
 				if($select_visitante_certificado){
 					if($statement->rowCount() != 0){
-						//$visitante_certificado = $statement->fetch(pdo::FETCH_ASSOC);
-						//return $palestrante_certificado;
-						$PDO->rollBack();
-						return true;
+						$visitante_certificado = $statement->fetch(pdo::FETCH_ASSOC);
+						return $visitante_certificado;
 					}else{
 						$PDO->rollBack();
 						return false;
