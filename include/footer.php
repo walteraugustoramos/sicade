@@ -29,5 +29,14 @@
     <script src="custom.js"></script>
     <!--Script para validar cpf-->
     <script type="text/javascript" src="js/validar-cpf.js"></script>
+    <!--INICIO RODAPÉ-->
+    <div class="container-fluid footer">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <center><p>Sicade - <b>S</b>istema <b>I</b>ntegrado de <b>C</b>adastro de <b>E</b>ventos© 2016 Copyright by Augusto Ramos Design by Caroline Assis. All rights reserved.</p></center>
+        </div>
+      </div>
+    </div><!--FIM container-fluid-->
+    <!--FIM RODAPÉ-->
   </body>
 </html>

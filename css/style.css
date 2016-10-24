@@ -1,11 +1,19 @@
-/*padding-top: 70px devido ao navbar-fixed-top*/
-body{ 
-	padding-top: 70px; 
-}
 *{
 	padding: 0;
 	margin: 0;
 }
+
+/*padding-top: 70px devido ao navbar-fixed-top*/
+body{ 
+	padding-top: 70px; 
+}
+
+.footer{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
 /*Style menu*/
 .menu ul li{
 	font-size: 16px;
