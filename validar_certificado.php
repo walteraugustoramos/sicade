@@ -73,7 +73,7 @@
     if(!empty($_SESSION['certificado']['valido'])){
    ?>
   <div id="list" class="row">
-    <div class="table-responsive table-hover table-striped col-md-10 col-md-offset-1">
+    <div class="table-responsive table-hover table-bordered table-striped col-md-10 col-md-offset-1">
       <table class="table" id="dados-certificado">
         <thead>
           <tr>
