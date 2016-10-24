@@ -147,45 +147,28 @@
 		$boolean_chamada_aluno = false;
 		$boolean_chamada_visitante = false;
 
+		// realizo chamada do palestrante e mudo o status do evento
 		if($palestranteDAO->realizarChamadaPalestrante($id_palestrante,$id_evento,1) && $eventoDAO->setStatusEvento($id_evento,0)){
-			$boolean_chamada_aluno = false;
-			$boolean_chamada_visitante = false;
 
-			// verifico se existe alunos ou visitantes na lista de chamada	
-			if($verifica_aluno == 1 || $verifica_visitante == 1){
+			if($quantidade_visitantes > 0){
 
-				// verifico se existe aluno na lista de chamada
-				if($verifica_aluno == 1){
-					// faço a chamada dos alunos
-					for($i = 0; $i < count($id_aluno); $i++){
-						for($j = 0; $j < count($id_aluno); $j++){
-							$boolean_chamada_aluno = $alunoDAO->realizarChamadaAluno($id_aluno[$i][$j],$id_evento,$presente[$i][$j],$id_palestrante);
-						}
-					}
+				// faço a chamada para os visitantes inscritos
+				for($i = 0, $j = 0; $i < $quantidade_visitantes; $i++){
+					$boolean_chamada_visitante = $visitanteDAO->realizarChamadaVisitante($id_visitante[$i][$j], $id_evento, $presenca_visitante[$i][$j], $id_palestrante);
 				}
+			}
 
-				// verifico se existe visitante na lista de chamada
-				if($verifica_visitante == 1){
-					// faço a chamada dos visitantes
-					for($i = 0; $i < count($id_visitante); $i++){
-						for($j = 0; $j < count($id_visitante); $j++){
-							$boolean_chamada_visitante = $visitanteDAO->realizarChamadaVisitante($id_visitante[$i][$j],$id_evento,$presente[$i][$j],$id_palestrante);
-						}
-					}
+			if($quantidade_visitantes > 0){
+
+				// faço a chamada para os alunos inscritos
+				for($i = 0, $j = 0; $i < $quantidade_alunos; $i++){
+					$boolean_chamada_aluno = $alunoDAO->realizarChamadaAluno($id_aluno[$i][$j], $id_evento, $presenca_aluno[$i][$j], $id_palestrante);
 				}
-			}//fechamento do if($verifica_aluno == 1 || $verifica_visitante == 1)
-			
+			}
+
 			if($boolean_chamada_aluno == true || $boolean_chamada_visitante == true){
-				if($boolean_chamada_aluno == true){
-					$_SESSION['msg']['success'] = 'Chamada Realizada com Sucesso!!!';
-					header('Location:../index.php');
-				}else if($boolean_chamada_visitante == true){
-					$_SESSION['msg']['success'] = 'Chamada Realizada com Sucesso!!!';
-					header('Location:../index.php');
-				}else{
-					$_SESSION['msg']['error'] = 'Falha ao realizar chamada, tente novamente.';
-					header('Location:../index.php');
-				}
+				$_SESSION['msg']['success'] = 'Chamada Realizada com Sucesso!!!';
+				header('Location:../index.php');
 			}else{
 				$_SESSION['msg']['error'] = 'Falha ao realizar chamada, tente novamente.';
 				header('Location:../index.php');

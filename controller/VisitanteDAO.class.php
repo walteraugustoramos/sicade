@@ -258,16 +258,22 @@
 				
 				$update_visitante_has_evento = $statement->execute();
 
-				$sql = "INSERT INTO visitante_certificado(visitante_id_visitante, evento_id_evento, palestrante_id_palestrante, chave_validacao) VALUES(:id_visitante, :id_evento, :id_palestrante, :chave_validacao)";
+				$insert_visitante_certificado = true;
 
-				$statement = $PDO->prepare($sql);
+				// se presente diferente de zero visitante está presente
+				if($presente != 0){
+					$sql = "INSERT INTO visitante_certificado(visitante_id_visitante, evento_id_evento, palestrante_id_palestrante, chave_validacao) VALUES(:id_visitante, :id_evento, :id_palestrante, :chave_validacao)";
 
-				$statement->bindValue(':id_visitante', $id_visitante);
-				$statement->bindValue(':id_evento', $id_evento);
-				$statement->bindValue(':id_palestrante', $id_palestrante);
-				$statement->bindValue(':chave_validacao', md5(date('Y-m-d H:i:s').microtime()));
+					$statement = $PDO->prepare($sql);
 
-				$insert_visitante_certificado = $statement->execute();
+					$statement->bindValue(':id_visitante', $id_visitante);
+					$statement->bindValue(':id_evento', $id_evento);
+					$statement->bindValue(':id_palestrante', $id_palestrante);
+					$statement->bindValue(':chave_validacao', md5(date('Y-m-d H:i:s').microtime()));
+
+					$insert_visitante_certificado = $statement->execute();
+				}
+
 
 				if($update_visitante_has_evento && $insert_visitante_certificado){
 					$PDO->commit();

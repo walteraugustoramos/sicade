@@ -273,16 +273,20 @@
 				
 				$update_aluno_has_evento = $statement->execute();
 
-				$sql = "INSERT INTO aluno_certificado(aluno_id_aluno, evento_id_evento, palestrante_id_palestrante, chave_validacao) VALUES(:id_aluno, :id_evento, :id_palestrante, :chave_validacao)";
+				$insert_aluno_certificado = true;
+				
+				if($presente != 0){
+					$sql = "INSERT INTO aluno_certificado(aluno_id_aluno, evento_id_evento, palestrante_id_palestrante, chave_validacao) VALUES(:id_aluno, :id_evento, :id_palestrante, :chave_validacao)";
 
-				$statement = $PDO->prepare($sql);
+					$statement = $PDO->prepare($sql);
 
-				$statement->bindValue(':id_aluno', $id_aluno);
-				$statement->bindValue(':id_evento', $id_evento);
-				$statement->bindValue(':id_palestrante', $id_palestrante);
-				$statement->bindValue(':chave_validacao', md5(date('Y-m-d H:i:s').microtime()));
+					$statement->bindValue(':id_aluno', $id_aluno);
+					$statement->bindValue(':id_evento', $id_evento);
+					$statement->bindValue(':id_palestrante', $id_palestrante);
+					$statement->bindValue(':chave_validacao', md5(date('Y-m-d H:i:s').microtime()));
 
-				$insert_aluno_certificado = $statement->execute();
+					$insert_aluno_certificado = $statement->execute();					
+				}
 
 				if($update_aluno_has_evento && $insert_aluno_certificado){
 					$PDO->commit();
