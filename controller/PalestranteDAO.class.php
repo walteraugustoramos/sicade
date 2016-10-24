@@ -328,6 +328,12 @@
 			// retorna um array contendo os dados do evento
 			$evento = $eventoDAO->getEvento($id_evento,0);
 
+			if($eventoDAO->parseDate($evento['data_inicio'], 'd/m/Y') < $eventoDAO->parseDate($evento['data_fim'], 'd/m/Y')){
+				$complemento = "a ".strftime('%d de %B de %Y', strtotime($evento['data_fim']));
+			}else{
+				$complemento = "";
+			}
+			
 			// conversão de data
 			$evento['data_inicio'] = strftime('%d de %B de %Y', strtotime($evento['data_inicio']));
 
@@ -367,7 +373,7 @@
 				  <tr>
 					<td>
 						<p align="justify" style="color:#000000; font: 20px Verdana, Geneva, sans-serif; padding:0px; font-size: 20px; margin: 0px;">
-						Conferimos a <b>'.ucwords($palestrante['nome']).'</b> o presente certificado por ter ministrado o evento <b>'.ucwords($evento['nome']).'</b>, realizado em <b>'.$evento['data_inicio'].'</b>.Pela institui&ccedil;&atilde;o de ensino <b>Faculdades Unificadas Doctum de Teofilo Otoni</b> com carga hor&aacute;ria de <b>'.$evento['carga_horaria'].'</b> horas.
+						Conferimos a <b>'.ucwords($palestrante['nome']).'</b> o presente certificado por ter ministrado o evento <b>'.ucwords($evento['nome']).'</b>, realizado em <b>'.$evento['data_inicio'].'</b> <b>'.$complemento.'</b>.Pela institui&ccedil;&atilde;o de ensino <b>Faculdades Unificadas Doctum de Teofilo Otoni</b> com carga hor&aacute;ria de <b>'.$evento['carga_horaria'].'</b> horas.
 						</p>
 						<br/><br/><br/>
 						<p class="certificado">
