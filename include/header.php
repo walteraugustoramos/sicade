@@ -9,6 +9,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sistema Integrado de Cadastro de Eventos">
+    <meta name=”keywords” content=”sicade,sicade-doctum,eventos,doctum,certificado,”>
+    <meta name="author" content="Augusto Ramos">
+    <!--<link rel="shortcut icon" href="img/iep.png" />-->   
     <!-- As 3 meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags -->
     <title>Sicade</title>
     

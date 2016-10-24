@@ -5,7 +5,9 @@
 <div class="container-fluid">
   <div class="row" style="margin-top: 1em;">
     <div class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4">
-      <center><img src="../img/sicade.png" alt="" class="img-responsive"></center>
+      <center>
+        <img src="../img/sicade.png" alt="Sicade" class="img-responsive" title="Sicade">
+      </center>
     </div>
   </div>
 

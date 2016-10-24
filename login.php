@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-2 col-md-offset-5 col-xs-6 col-xs-offset-3 col-sm-5">
-          <img src="img/logo_sicade.jpg" alt="" class="img-responsive img-rounded">
+          <img src="img/logo_sicade.jpg" alt="Sicade Logo" class="img-responsive img-rounded" title="logo_sicade">
         </div>
       </div>
       <div class="row" style="margin-top: 1em;">

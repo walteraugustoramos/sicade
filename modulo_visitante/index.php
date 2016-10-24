@@ -52,7 +52,7 @@
 <div class="container-fluid">
   <div class="row" style="margin-top: 2em;">
     <div class="col-md-4 col-md-offset-5 col-xs-4 col-xs-offset-4">
-      <img src="../img/sicade.png" alt="" class="img-responsive">
+      <img src="../img/sicade.png" alt="Sicade" class="img-responsive" title="Sicade">
     </div>
   </div>  
 
