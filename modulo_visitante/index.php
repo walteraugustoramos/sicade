@@ -4,21 +4,34 @@
   include '../include/config.php';
   include '../controller/VisitanteDAO.class.php';
   include '../controller/EventoDAO.class.php';
+  include '../model/UserLogin.class.php';
+  include '../PHPMailer/PHPMailerAutoload.php';
 
   if(!empty($_SESSION['evento']['id_evento'])){
 
     $visitanteDAO = new VisitanteDAO();
     $eventoDAO = new EventoDAO();
+    $user_login = new UserLogin();
+
+    // gera o numero de inscrição
+    $numero_inscricao = $eventoDAO->gerarNumeroInscricao(10,false,true,false);
+
+    $visitante = $visitanteDAO->getVisitante($_SESSION['user']['id']);
+
+    $user_login->setNumeroInscricao($numero_inscricao);
+    $user_login->setName($visitante['nome']);
+    $user_login->setEmail($visitante['email']);
 
     $id_evento = $_SESSION['evento']['id_evento'];
 
     $evento = $eventoDAO->getEvento($id_evento, 1);
-
-    $visitante = $visitanteDAO->getVisitante($_SESSION['user']['id']);
-
     
-    if($visitanteDAO->inscreverVisitante($visitante['id_visitante'],$id_evento) && $eventoDAO->setQuantidadeInscritosEvento($id_evento,($evento['quantidade_inscritos']+1))){
+    if($visitanteDAO->inscreverVisitante($visitante['id_visitante'],$id_evento,$numero_inscricao) && $eventoDAO->setQuantidadeInscritosEvento($id_evento,($evento['quantidade_inscritos']+1)) && $eventoDAO->sendNumeroInscricaoForEmail($user_login,$evento['nome'])){
       $_SESSION['msg']['success'] = 'Inscrição realizada com sucesso.';
+      unset($_SESSION['evento']['id_evento']);
+    }else{
+      $_SESSION['msg']['error'] = 'Desculpe mais você já esta inscrito neste evento.';
+      unset($_SESSION['evento']['id_evento']);
     }     
   }
 ?>
