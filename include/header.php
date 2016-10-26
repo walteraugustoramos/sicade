@@ -14,7 +14,7 @@
     <meta name="author" content="Augusto Ramos">
     <!--<link rel="shortcut icon" href="img/iep.png" />-->   
     <!-- As 3 meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags -->
-    <title>Sicade</title>
+    <title>Sicade - Sistema Integrado de Cadastro de Eventos</title>
     
     <!--Style Personalizado-->
     <link rel="stylesheet" href="css/style.css">

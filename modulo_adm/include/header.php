@@ -16,7 +16,7 @@
     <meta name=”keywords” content=”sicade,sicade-doctum,eventos,doctum,certificado,”>
     <meta name="author" content="Augusto Ramos">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Sicade Adm</title>
+    <title>Sicade - Sistema Integrado de Cadastro de Eventos</title>
 
     <link rel="stylesheet" href="css/style.css">
 
