@@ -2,15 +2,9 @@
 <?php
   include 'include/header.php';
   include '../include/config.php';
-  include '../controller/PalestranteDAO.class.php';
-  include '../controller/EventoDAO.class.php';
-  include '../controller/AlunoDAO.class.php';
-  include '../controller/VisitanteDAO.class.php';
+  include '../controller/EventoDAO.class.php';;
 
-  $palestranteDAO = new PalestranteDAO();
   $eventoDAO = new EventoDAO();
-  $alunoDAO = new AlunoDAO();
-  $visitanteDAO = new VisitanteDAO();
 
   // verifico se existe algum evento cadastrado
   if($eventoDAO->getAllEvento(1) != 0){
@@ -40,100 +34,7 @@
           <tr>
             <td><?=$evento['nome']?></td>
             <td class="actions">
-              <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-chamada<?php echo $evento['id_evento']?>">Chamada</a>
-              <!--modal chamada-->
-                <div class="modal fade" id="modal-chamada<?php echo $evento['id_evento']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-                  <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Faça a Chamada</h4>
-                      </div>
-                      <div class="modal-body">
-                        <?php
-                          // verifica se existe pelo menos 1 aluno ou visitante inscrito no evento
-                          if($alunoDAO->getAllAlunoInscrito($evento['id_evento']) != false || $visitanteDAO->getAllVisitanteInscrito($evento['id_evento']) != false){
-                              // retorna um array contendo os dados do palestrante que palestra o evento
-                              $palestrante = $palestranteDAO->getPalestranteByIdEvento($evento['id_evento']);
-                            ?>
-                            <form action="controller/index.php" method="post">
-                              <input type="hidden" name="action" value="realizar_chamada">
-                              <input type="hidden" name="id_palestrante" value="<?=$palestrante['palestrante_id_palestrante']?>">
-                              <input type="hidden" name="id_evento" value="<?=$evento['id_evento']?>">
-
-                              <div class="table-responsive table-striped table-hover">
-                                <table class="table">
-                                  <thead>
-                                    <tr>
-                                      <th>Participante</th>
-                                      <th>Status</th>
-                                    </tr>
-                                  </thead>
-
-                                  <tbody>
-                                    <?php
-                                    // verifico se existe aluno inscrito no evento
-                                    if($alunoDAO->getAllAlunoInscrito($evento['id_evento']) != false){
-                                      $alunos_inscritos = $alunoDAO->getAllAlunoInscrito($evento['id_evento']);
-                                      echo "<input type='hidden' name='verifica_aluno' value='1'>";
-                                      for($a = 0; $a < count($alunos_inscritos); $a++){
-                                     ?>
-                                      <tr>
-                                        <td><?echo $alunos_inscritos[$a]['nome']?></td>
-                                        <input type="hidden" name="id_aluno[]" value="<?=$alunos_inscritos[$a]['id_aluno']?>">
-                                        <td>
-                                          <div class="col-md-5">
-                                            <select name="presente[]" id="presente" class="form-control">
-                                              <option value="1" selected="true">Presente</option>
-                                              <option value="0">Ausente</option>
-                                            </select>
-                                          </div>  
-                                        </td>
-                                      </tr>
-                                     <?php
-                                      }// fechamento do for($i = 0; $i < count($alunos_inscritos); $i++)
-                                    }// fechamento do if($alunoDAO->getAllAlunoInscrito($evento['id_evento']) != false)
-                                      ?>
-                                    <?php 
-                                      // verifico se existe visitante inscrito no evento
-                                    if($visitanteDAO->getAllVisitanteInscrito($evento['id_evento'])){
-                                      $visitantes_inscritos = $visitanteDAO->getAllVisitanteInscrito($evento['id_evento']);
-                                      echo "<input type='hidden' name='verifica_visitante' value='1'>";
-                                      for($v = 0; $v < count($visitantes_inscritos); $v++){
-                                     ?>
-                                      <tr>
-                                        <td><?echo $visitantes_inscritos[$v]['nome'];?></td>
-                                        <input type="hidden" name="id_visitante[]" value="<?=$visitantes_inscritos[$v]['id_visitante']?>">
-                                        <td>
-                                          <div class="col-md-5">
-                                            <select name="presente[]" id="presente" class="form-control">
-                                              <option value="1" selected="true">Presente</option>
-                                              <option value="0">Ausente</option>
-                                            </select>
-                                          </div>  
-                                        </td>
-                                      </tr>
-                                     <?php
-                                      }// fechamento do for($v = 0; $v < count($visitantes_inscritos); $v++)
-                                    }// fechamento do if($visitanteDAO->getAllVisitanteInscrito($evento['id_evento']))                      
-                                      ?>
-                                  </tbody>
-                                </table>
-                              </div>
-                              <button type="submit" class="btn btn-primary">Realizar Chamada</button>
-                            </form>
-                        <?php
-                          }else{
-                            echo "<span class='alert-danger'>Ainda não há nenhum participante inscrito neste evento.</span>";
-                          }
-                        ?>
-                      </div><!--modal-body-->
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                      </div>
-                    </div>
-                  </div>
-                </div><!--fim modal chamada-->
+              <a href="chamada_evento.php?id_evento=<?=$evento['id_evento']?>" class="btn btn-success btn-xs">Chamada</a>
               <a href="form_editar_evento.php?id_evento=<?=$evento['id_evento']?>" class="btn btn-warning btn-xs">Editar</a>
             </td>
           </tr>
